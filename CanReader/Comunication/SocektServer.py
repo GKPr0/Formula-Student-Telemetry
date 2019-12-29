@@ -1,16 +1,15 @@
-"""
-Class socket server will ensure communication with remote device. Data can be received with method called "get_data()".
-"""
-
 import socket
 
 class SocketServer:
+    """
+    Class socket server will ensure communication with remote device.
+    Data can be received with method called "get_data()".
+    """
 
     def __init__(self, address, port):
         # Check if address and port are valid
         self.check_address(address)
-        self.check_port_value(port)
-        self.check_port_type(port)
+        self.check_port(port)
 
         self.__address = address
         self.__port = port
@@ -49,22 +48,19 @@ class SocketServer:
             raise OSError("IP address in not valid.")
 
     @staticmethod
-    def check_port_value(port):
-        # Will check validity of port range, must be in range of 1 to 65535
+    def check_port(port):
+        # Will check validity of port range, must be in range of 1 to 65535 and must be integer.
         try:
             if port <= 0 or port >= 65535:
                 raise ValueError
-        except ValueError:
-            raise ValueError("Port number must be in range 1 - 65535.")
-
-    @staticmethod
-    def check_port_type(port):
-        # Will check validity of port type, must be int
-        try:
             if type(port) != int:
                 raise TypeError
+        except ValueError:
+            raise ValueError("Port number must be in range 1 - 65535.")
         except TypeError:
             raise TypeError("Port must be integer.")
+
+
 
 
 

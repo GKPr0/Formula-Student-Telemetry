@@ -1,11 +1,10 @@
-"""
-Unit test definition for class called SocketServer.
-"""
-
 import unittest
 from CanReader.Comunication.SocektServer import SocketServer
 
 class TestSocketServer(unittest.TestCase):
+    """
+    Unit test definition for class called SocketServer.
+    """
 
     def test_ip(self):
         # Make sure given IP address is valid
@@ -16,15 +15,16 @@ class TestSocketServer(unittest.TestCase):
 
     def test_port_value(self):
         # Make sure port number is in range of 1 - 65535
-        self.assertRaises(ValueError, SocketServer.check_port_value, 0)
-        self.assertRaises(ValueError, SocketServer.check_port_value, -564)
-        self.assertRaises(ValueError, SocketServer.check_port_value, 648292)
+        self.assertRaises(ValueError, SocketServer.check_port, 0)
+        self.assertRaises(ValueError, SocketServer.check_port, -564)
+        self.assertRaises(ValueError, SocketServer.check_port, 648292)
 
 
     def test_port_type(self):
         # Make sure port number is integer
-        self.assertRaises(TypeError, SocketServer.check_port_type, "String")
-        self.assertRaises(TypeError, SocketServer.check_port_type, 54.4)
-        self.assertRaises(TypeError, SocketServer.check_port_type, True)
+        self.assertRaises(TypeError, SocketServer.check_port, "String")
+        self.assertRaises(TypeError, SocketServer.check_port, 'a')
+        self.assertRaises(TypeError, SocketServer.check_port, 54.5)
+        self.assertRaises(TypeError, SocketServer.check_port, True)
 
 
