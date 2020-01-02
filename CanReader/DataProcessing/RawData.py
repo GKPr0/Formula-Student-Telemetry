@@ -2,7 +2,7 @@
 
 class RawData:
     """
-    This class wil receive raw data split them into ID and data part.
+    This class wil receive raw data and split them into ID and data part.
     Data part will be converted to binary code with fixed length of 64 bit
     """
 
