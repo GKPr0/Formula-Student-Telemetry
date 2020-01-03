@@ -1,13 +1,39 @@
+"""
+.. module:: SocketServer
+   :synopsis: Contains model of communication
+
+.. moduleauthor:: Ondrej Vacek
+
+"""
+
 import socket
 
 class SocketServer:
     """
-    Class socket server will ensure communication with remote device.
-    Data can be received with method called "get_data()".
+        This class will ensure communication with remote device.
+
+        :param address: address of socket server
+        :type address: str
+        :param port: port for socket server
+        :type port: int
+
+        :raises OSError: If invalid IP address is given. Validity is handled by inner socket method
+        :raises TypeError: If port is not a int
+        :raises ValueError: If port is not i range 1 - 65536
+
+
+        - Example of valid constructor::
+
+            socket_server = SocketServer("192.168.1.100", 32001)
+
+        - Example of invalid constructor::
+
+            socket_server = SocketServer("A92.168.1.100", 320001)
+
     """
 
     def __init__(self, address, port):
-        # Check if address and port are valid
+
         self.check_address(address)
         self.check_port(port)
 
@@ -19,13 +45,21 @@ class SocketServer:
         return "Socket is connected to IP: {} on port {}".format(self.__address, self.__port)
 
     def __set(self):
-        # Prepare socket to begin communication
+        """
+        Prepare socket to begin communication.
+        """
+
         self.__sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.__sock.bind((self.__address, self.__port))
         self.__sock.listen(0)
 
     def get_data(self):
-        # Receive data from client and return them as a string
+        """
+        This function will received data from connected client and return them as a string.
+
+        :return: received data (:py:class:`str`)
+        """
+
         # TODO Změnit na příjem HEX
         client, addr = self.__sock.accept()
 
@@ -41,7 +75,8 @@ class SocketServer:
 
     @staticmethod
     def check_address(address):
-        # Will check validity of IP address
+        #Check validity of IP address.
+
         try:
             socket.inet_aton(address)
         except OSError:
@@ -49,9 +84,10 @@ class SocketServer:
 
     @staticmethod
     def check_port(port):
-        # Will check validity of port range, must be in range of 1 to 65535 and must be integer.
+        #Check validity of port type and range.
+
         try:
-            if port <= 0 or port >= 65535:
+            if port <= 0 or port >= 65536:
                 raise ValueError
             if type(port) != int:
                 raise TypeError
