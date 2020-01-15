@@ -3,7 +3,7 @@ class DataConfig:
         This class will contain data configuration.
         Data configuration are ID, Group id , Name, Unit, Can id, Start bit, length, Multiplier, Offset
 
-        :param id: id of widget in UI
+        :param id: unique id of variable
         :type id: int
         :param group_id: id of display group in UI
         :type group_id: int
@@ -30,7 +30,7 @@ class DataConfig:
         :raises ValueError:
             - ID or group_id are not in range 0 - 999
     """
-    def __init__(self,id, group_id, name, unit, can_id, start_bit, length, multiplier, offset):
+    def __init__(self, id, group_id, name, unit, can_id, start_bit, length, multiplier, offset):
         # Check validity of parameters
         self.check_id(id)
         self.check_group_id(group_id)
@@ -52,6 +52,9 @@ class DataConfig:
         self.multiplier = multiplier
         self.offset = offset
 
+    def __repr__(self):
+        return "ID: {} \nGroup ID: {} \nName: {} \nUnit: {} \nCan ID: {} \nStart bit: {} \nLength: {} \nMultiplier {} \nOffset {} \n"\
+            .format(self.id, self.group_id, self.name, self.unit, self.can_id, self.start_bit, self.length, self.multiplier, self.offset)
 
     @staticmethod
     def check_id(id):
