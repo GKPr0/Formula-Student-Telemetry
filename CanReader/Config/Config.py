@@ -2,7 +2,7 @@ from configparser import ConfigParser
 import os
 
 # TODO Předělat na object Config
-CONFIGFILE_NAME = "config.ini"
+CONFIGFILE_NAME = "config_file.ini"
 
 # Vytvoří config file, pokud  neexistuje
 if not os.path.isfile(CONFIGFILE_NAME):

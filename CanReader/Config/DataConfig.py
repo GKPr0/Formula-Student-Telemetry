@@ -1,7 +1,34 @@
 class DataConfig:
     """
-    This class will contain data configuration.
-    Data configuration are Id, Group id , Name, Unit, Can id, Start bit, length, Multiplier, Offset
+        This class will contain data configuration.
+        Data configuration are ID, Group id , Name, Unit, Can id, Start bit, length, Multiplier, Offset
+
+        :param id: id of widget in UI
+        :type id: int
+        :param group_id: id of display group in UI
+        :type group_id: int
+        :param name: name of variable
+        :type name: str
+        :param unit: unit type of value (°C, Km/h, ...)
+        :type unit: str
+        :param can_id: id of can message, on which is supposed to look for incoming data
+        :param can_id: int
+        :param start_bit: bit on which start data for selected variable
+        :type start_bit: int
+        :param length: number of bits to read from start bit
+        :type length: int
+        :param multiplier: multiplier for data bounded with start bit and length
+        :type multiplier: float, int
+        :param offset: offset of value gained from bounded data with start bit and length
+        :type offset: float, int
+
+        :raises TypeError:
+            - ID or group_id are not an integer.
+            - Name is not a str.
+            - Value is not a float or an int
+
+        :raises ValueError:
+            - ID or group_id are not in range 0 - 999
     """
     def __init__(self,id, group_id, name, unit, can_id, start_bit, length, multiplier, offset):
         # Check validity of parameters

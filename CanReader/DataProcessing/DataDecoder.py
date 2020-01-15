@@ -5,15 +5,18 @@ class DataDecoder:
         As result will be list of objects called DataPoint.
         These objects will contain information like name, value, id and group id
 
-        :param id: ID of CAN message
+        :param id: id of CAN message
         :type id: int
-        :param data: Data containing CAN message
+        :param data: data containing CAN message
         :type data: str
-        :param config: Config is list of DataConfig object. DataConfig is described in Config section.
+        :param config: config is list of DataConfig object. DataConfig is described in Config section.
         :type config: DataConfig
 
-        :raises TypeError: If id is not a int OR If data are not a str starting with '0b'
-        :raises ValueError: If id is not in range 0 - 999
+        :raises TypeError:
+            - ID is not a int.
+            - Data are not a str starting with leading '0b'.
+        :raises ValueError:
+            - ID is not in range 0 - 999.
 
         - Example of valid constructor::
 
@@ -34,6 +37,7 @@ class DataDecoder:
 
     @staticmethod
     def check_id(id):
+        # Check if id is valid. Expected Integer in range [0, 999]
         try:
             if id < 0 or id > 999:
                 raise ValueError
@@ -46,6 +50,7 @@ class DataDecoder:
 
     @staticmethod
     def check_data(data):
+        # Check if data are valid. Expected str with leading '0b'
         try:
             if type(data) != str or data[:2] != "0b":
                 raise TypeError

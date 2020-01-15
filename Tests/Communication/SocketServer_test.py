@@ -1,5 +1,5 @@
 import unittest
-from CanReader.Comunication.SocektServer import SocketServer
+from CanReader.Communication.SocketServer import SocketServer
 
 class TestSocketServer(unittest.TestCase):
     """
@@ -14,7 +14,7 @@ class TestSocketServer(unittest.TestCase):
         self.assertRaises(OSError, SocketServer.check_address, "-192.168.100.1.")
 
     def test_port_value(self):
-        # Make sure port number is in range of 1 - 65535
+        # Make sure port number is in range of 1 - 65536
         self.assertRaises(ValueError, SocketServer.check_port, 0)
         self.assertRaises(ValueError, SocketServer.check_port, -564)
         self.assertRaises(ValueError, SocketServer.check_port, 648292)

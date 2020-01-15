@@ -17,9 +17,12 @@ class SocketServer:
         :param port: port for socket server
         :type port: int
 
-        :raises OSError: If invalid IP address is given. Validity is handled by inner socket method
-        :raises TypeError: If port is not a int
-        :raises ValueError: If port is not i range 1 - 65536
+        :raises OSError:
+            - IP address is invalid.
+        :raises TypeError:
+            - Port is not a int.
+        :raises ValueError:
+            - Port is not i range 1 - 65536.
 
 
         - Example of valid constructor::
@@ -55,7 +58,7 @@ class SocketServer:
 
     def get_data(self):
         """
-        This function will received data from connected client and return them as a string.
+        This function will received data from connected client and return them as a str.
 
         :return: received data (:py:class:`str`)
         """

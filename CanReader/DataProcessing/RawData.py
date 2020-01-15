@@ -6,7 +6,8 @@ class RawData:
         :param raw_data: Raw data contains received data from remote device in its raw format
         :type raw_data: str
 
-        :raises TypeError: If raw_data are not a str
+        :raises TypeError:
+            - Rawdata are not a str.
 
         - Example of valid constructor::
 
