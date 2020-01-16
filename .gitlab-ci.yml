@@ -1,5 +1,8 @@
-demo_job_1:
+test_script:
         tags:
             - telemetry
+            - ci
         script:
-            - echo Hello World
+            - pip install -r requirements.txt
+            - python Test\CanReader_test.py test
+            - echo Done
