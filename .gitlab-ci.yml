@@ -3,5 +3,5 @@ test_script:
             - telemetry
             - ci
         script:
-            - python Test\CanReader_test.py test
+            - python Tests\CanReader_test.py test
             - echo Done
