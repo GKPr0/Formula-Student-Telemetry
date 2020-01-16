@@ -1,0 +1,5 @@
+demo_job_1:
+	tags:
+      - telemetry
+	script:
+      - echo Hello World
