@@ -3,6 +3,5 @@ test_script:
             - telemetry
             - ci
         script:
-            - pip install -r requirements.txt
             - python Test\CanReader_test.py test
             - echo Done
