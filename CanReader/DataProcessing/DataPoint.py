@@ -32,7 +32,9 @@ class DataPoint:
     
     @staticmethod
     def check_id(id):
-        # Check validity of id. Expected to be int in range [0, 999]
+        """
+            Check validity of id. Expected to be int in range [0, 999]
+        """
         try:
             if id < 0 or id > 999:
                 raise ValueError
@@ -45,7 +47,9 @@ class DataPoint:
 
     @staticmethod
     def check_group_id(id):
-        # Check validity of group id. Expected to be int in range [0, 999]
+        """
+            Check validity of group id. Expected to be int in range [0, 999]
+        """
         try:
             if id < 0 or id > 999:
                 raise ValueError
@@ -58,7 +62,9 @@ class DataPoint:
 
     @staticmethod
     def check_name(name):
-        # Check validity of name. Expected to be str.
+        """
+            Check validity of name. Expected to be str.
+        """
         try:
             if type(name) != str:
                 raise TypeError
@@ -67,7 +73,9 @@ class DataPoint:
 
     @staticmethod
     def check_value(value):
-        # Check validity of value. Expected to be float or int
+        """
+            Check validity of value. Expected to be float or int
+        """
         try:
             if type(value) not in [int, float]:
                 raise TypeError
