@@ -2,6 +2,8 @@ from configparser import ConfigParser
 from CanReader.Config.DataConfig import DataConfig
 import re
 import os
+from pathlib import Path
+
 
 class Config:
     """
@@ -20,13 +22,20 @@ class Config:
 
     """
 
-    def __init__(self, config_file_name = "config_file.ini"):
-        #Check config file name
+    def __init__(self, config_file_name="config_file.ini"):
+        # Check config file name
         self.check_config_file(config_file_name)
-
         self.config_file_name = config_file_name
         self.config = ConfigParser()
-        self.config.read(self.config_file_name)
+        self.setup_config()
+
+    def setup_config(self):
+        """
+            Setup path to config file
+        """
+        path = Path(__file__).parent.absolute()
+        file_path = str(path) + "/" + self.config_file_name
+        self.config.read(file_path)
 
     def save_config(self):
         """
@@ -47,7 +56,7 @@ class Config:
                 - Parameter data_config is not a DataConfig type.
 
         """
-        self.check_update_parametr_type(data_config)
+        self.check_update_parameter_type(data_config)
 
         section_id = str(data_config.id)
 
@@ -90,13 +99,16 @@ class Config:
 
     @staticmethod
     def check_config_file(config_file_name):
-        # Check if config file name ends with '.ini' and contains only allowed symbols A-Z, a-z , 0-9 and _
+        """
+            Check if config file name ends with '.ini' and contains only allowed symbols A-Z, a-z , 0-9 and
+        """
+
         try:
             if not config_file_name.endswith(".ini"):
                 raise TypeError
             if len(re.findall(r'[^A-Za-z0-9_\-\\]', config_file_name)) > 1:
                 raise TypeError
-            if not os.path.isfile(config_file_name):
+            if not os.path.isfile(str(Path(__file__).parent.absolute()) + "/" + config_file_name):
                 raise OSError
         except TypeError:
             raise TypeError("Config file can contain only A-Z, a-z , 0-9, _ and must ends with '.ini'")
@@ -104,7 +116,10 @@ class Config:
             raise OSError(config_file_name + " does not exist")
 
     @staticmethod
-    def check_update_parametr_type(data_config):
+    def check_update_parameter_type(data_config):
+        """
+            Check type of data config
+        """
         try:
             if type(data_config) != DataConfig:
                 raise TypeError
@@ -114,11 +129,7 @@ class Config:
 
 
 if __name__ == "__main__":
-    config = Config("kokot.ini")
+    config = Config("config_file.ini")
     data_config_list = config.load_from_config_file()
     print(data_config_list)
-
-
-
-
 
