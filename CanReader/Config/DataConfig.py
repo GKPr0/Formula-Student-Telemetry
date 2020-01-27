@@ -53,12 +53,16 @@ class DataConfig:
         self.offset = offset
 
     def __repr__(self):
-        return "ID: {} \nGroup ID: {} \nName: {} \nUnit: {} \nCan ID: {} \nStart bit: {} \nLength: {} \nMultiplier {} \nOffset {} \n"\
-            .format(self.id, self.group_id, self.name, self.unit, self.can_id, self.start_bit, self.length, self.multiplier, self.offset)
+        return "ID: {} \nGroup ID: {} \nName: {} \nUnit: {} \nCan ID: {}" \
+               " \nStart bit: {} \nLength: {} \nMultiplier {} \nOffset {} \n"\
+            .format(self.id, self.group_id, self.name, self.unit, self.can_id,
+                    self.start_bit, self.length, self.multiplier, self.offset)
 
     @staticmethod
     def check_id(id):
-        # Check validity of ID. Works for id, group id and can id
+        """
+            Check validity of ID. Works for id, group id and can id
+        """
         try:
             if id < 0 or id > 999:
                 raise ValueError
@@ -70,12 +74,14 @@ class DataConfig:
             raise TypeError("ID must be integer.")
 
     @staticmethod
-    def check_group_id(id):
-        # Check validity of group id
+    def check_group_id(group_id):
+        """
+            Check validity of group id
+        """
         try:
-            if id < 0 or id > 999:
+            if group_id < 0 or group_id > 999:
                 raise ValueError
-            if type(id) != int:
+            if type(group_id) != int:
                 raise TypeError
         except ValueError:
             raise ValueError("Group id must be number in range of 0 - 999.")
@@ -83,12 +89,14 @@ class DataConfig:
             raise TypeError("Group id must be integer.")
 
     @staticmethod
-    def check_can_id(id):
-        # Check validity of can id
+    def check_can_id(can_id):
+        """
+            Check validity of can id
+        """
         try:
-            if id < 0 or id > 999:
+            if can_id < 0 or can_id > 999:
                 raise ValueError
-            if type(id) != int:
+            if type(can_id) != int:
                 raise TypeError
         except ValueError:
             raise ValueError("Can id must be number in range of 0 - 999.")
@@ -97,7 +105,9 @@ class DataConfig:
 
     @staticmethod
     def check_name(name):
-        # Check validity of name
+        """
+            Check validity of name
+        """
         try:
             if type(name) != str:
                 raise TypeError
@@ -106,7 +116,9 @@ class DataConfig:
 
     @staticmethod
     def check_unit(unit):
-        # Check validity of unit
+        """
+            Check validity of unit
+        """
         try:
             if type(unit) != str:
                 raise TypeError
@@ -115,7 +127,9 @@ class DataConfig:
 
     @staticmethod
     def check_start_bit(start_bit):
-        # Check validity of star bit
+        """
+            Check validity of star bit
+        """
         try:
             if type(start_bit) != int:
                 raise TypeError
@@ -128,7 +142,9 @@ class DataConfig:
 
     @staticmethod
     def check_length(length):
-        # Check validity of length
+        """
+            Check validity of length
+        """
         try:
             if type(length) != int:
                 raise TypeError
@@ -141,7 +157,9 @@ class DataConfig:
 
     @staticmethod
     def check_multiplier(multiplier):
-        # Check validity of multiplier
+        """
+            Check validity of multiplier
+        """
         try:
             if type(multiplier) not in [int, float]:
                 raise TypeError
@@ -154,10 +172,11 @@ class DataConfig:
 
     @staticmethod
     def check_offset(offset):
-        # Check validity of offset
+        """
+            Check validity of offset
+        """
         try:
             if type(offset) not in [int, float]:
                 raise TypeError
         except TypeError:
             raise TypeError("Offset must be integer or float.")
-
