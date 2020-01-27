@@ -28,7 +28,7 @@ class DataPoint:
         self.value = value
 
     def __repr__(self):
-        return "{} has id {}, is in group {} and have value {}".format(self.__name, self.id, self.group_id, self.value)
+        return "{} has id {}, is in group {} and have value {}\n".format(self.__name, self.id, self.group_id, self.value)
     
     @staticmethod
     def check_id(id):
