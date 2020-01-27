@@ -1,12 +1,5 @@
-"""
-.. module:: SocketServer
-   :synopsis: Contains model of communication
-
-.. moduleauthor:: Ondrej Vacek
-
-"""
-
 import socket
+
 
 class SocketServer:
     """
@@ -71,14 +64,16 @@ class SocketServer:
 
             if len(data) == 0:
                 break
-            else:
-                return str(data.decode())
+
+            return str(data.decode())
 
         client.close()
 
     @staticmethod
     def check_address(address):
-        #Check validity of IP address.
+        """
+            Check validity of IP address.
+        """
 
         try:
             socket.inet_aton(address)
@@ -87,19 +82,16 @@ class SocketServer:
 
     @staticmethod
     def check_port(port):
-        #Check validity of port type and range.
+        """
+            Check validity of port type and range.
+        """
 
         try:
             if port <= 0 or port >= 65536:
                 raise ValueError
-            if type(port) != int:
+            if not isinstance(port, int):
                 raise TypeError
         except ValueError:
             raise ValueError("Port number must be in range 1 - 65535.")
         except TypeError:
             raise TypeError("Port must be integer.")
-
-
-
-
-
