@@ -17,4 +17,4 @@ if __name__ == "__main__":
         cmd = 'python -m unittest discover -s' + dir + ' -p "*_test.py"'
         print("\n Runing test in /" + dir)
         subprocess.call(cmd)
-
+    print("linux-test")
