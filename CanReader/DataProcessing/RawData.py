@@ -51,7 +51,9 @@ class RawData:
 
     @staticmethod
     def check_raw_data(raw_data):
-        #Check validity of raw_data type, str is expected.
+        """
+            Check validity of raw_data type, str is expected.
+        """
 
         try:
             if type(raw_data) != str:
