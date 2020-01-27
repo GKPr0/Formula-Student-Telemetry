@@ -93,7 +93,7 @@ class DataProcessing:
         try:
             if can_id < 0 or can_id > 999:
                 raise ValueError
-            if not isinstance(can_id, int):
+            if type(can_id) != int:
                 raise TypeError
         except ValueError:
             raise ValueError("ID must be number in range of 0 - 999.")
@@ -106,7 +106,7 @@ class DataProcessing:
             Check if data are valid. Expected str with leading '0b'
         """
         try:
-            if not isinstance(data, str) or data[:2] != "0b":
+            if type(data) != str or data[:2] != "0b":
                 raise TypeError
         except TypeError:
             raise TypeError("Data must be binary")
