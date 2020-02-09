@@ -21,9 +21,9 @@ class ConfigTest(unittest.TestCase):
 
     def test_update_function_parameter(self):
         # Make sure parameter in method update_section_in_config is DataConfig type.
-        self.assertRaises(TypeError, Config.check_update_parametr_type, 123)
-        self.assertRaises(TypeError, Config.check_update_parametr_type, 12.3)
-        self.assertRaises(TypeError, Config.check_update_parametr_type, "str")
-        self.assertRaises(TypeError, Config.check_update_parametr_type, True)
+        self.assertRaises(TypeError, Config.check_update_parameter_type, 123)
+        self.assertRaises(TypeError, Config.check_update_parameter_type, 12.3)
+        self.assertRaises(TypeError, Config.check_update_parameter_type, "str")
+        self.assertRaises(TypeError, Config.check_update_parameter_type, True)
 
 

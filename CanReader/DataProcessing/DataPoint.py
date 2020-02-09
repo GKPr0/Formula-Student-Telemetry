@@ -24,11 +24,11 @@ class DataPoint:
     def __init__(self, id, group_id, name, value):
         self.id = id
         self.group_id = group_id
-        self.__name = name
+        self.name = name
         self.value = value
 
     def __repr__(self):
-        return "{} has id {}, is in group {} and have value {}\n".format(self.__name, self.id, self.group_id, self.value)
+        return "{} has id {}, is in group {} and have value {}\n".format(self.name, self.id, self.group_id, self.value)
     
     @staticmethod
     def check_id(id):
