@@ -89,7 +89,7 @@ class SocketServer:
         try:
             if port <= 0 or port >= 65536:
                 raise ValueError
-            if not isinstance(port, int):
+            if type(port) != int:
                 raise TypeError
         except ValueError:
             raise ValueError("Port number must be in range 1 - 65535.")
