@@ -26,4 +26,17 @@ class ConfigTest(unittest.TestCase):
         self.assertRaises(TypeError, Config.check_update_parameter_type, "str")
         self.assertRaises(TypeError, Config.check_update_parameter_type, True)
 
+    def test_config_id_value(self):
+        # Make sure id is in valid range 0 - 999
+        self.assertRaises(ValueError, Config.check_config_id, 1000)
+        self.assertRaises(ValueError, Config.check_config_id, -1)
+
+    def test_config_id_type(self):
+        # Make sure id is integer
+        self.assertRaises(TypeError, Config.check_config_id, True)
+        self.assertRaises(TypeError, Config.check_config_id, 15.6)
+        self.assertRaises(TypeError, Config.check_config_id, "String")
+        self.assertRaises(TypeError, Config.check_config_id, 'a')
+
+
 
