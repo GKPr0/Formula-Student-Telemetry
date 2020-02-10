@@ -10,6 +10,7 @@ from CanReader.Communication.SocketServer import SocketServer
 from CanReader.DataProcessing.RawData import RawData
 from CanReader.DataProcessing.DataProcessing import DataProcessing
 from CanReader.GUI.MainWindow import MainWindow
+import time
 
 
 class App:
@@ -25,17 +26,20 @@ class App:
     PORT = 32001
 
     def __init__(self):
-        self.config = Config(self.config_file_name)
+        self.update_config()
         #self.socket_server = SocketServer(self.IP, self.PORT)
 
         self.data_to_display = None
         self.data_from_formula = None
+        self.communication_status = "Offline"
 
         self.communication = threading.Thread(target=self.run_communication, name='communication')
         self.gui = threading.Thread(target=self.run_gui, name='gui')
 
         self.communication.start()
         self.gui.start()
+
+
 
     def run_communication(self):
         '''
@@ -54,11 +58,10 @@ class App:
             This method is called in temporary thread invoked by communication thread.
             Result is decoded and processed data packet prepared to be display in gui.
         """
-        data_config_list = self.config.load_from_config_file()
 
         raw_data = RawData(self.data_from_formula)
         can_id, can_data = raw_data.split_data()
-        data_decoder = DataProcessing(can_id, can_data, data_config_list)
+        data_decoder = DataProcessing(can_id, can_data, self.data_config_list)
         self.data_to_display = data_decoder.data_decode()
         #print(self.data_from_formula)
         #print(self.data_to_display)
@@ -72,6 +75,8 @@ class App:
 
         self.main_window = MainWindow()
 
+        self.main_window.update_config_signal.connect(self.update_config)
+
         timer = QtCore.QTimer()
         timer.timeout.connect(self.update_gui)
         timer.start(100)
@@ -83,6 +88,15 @@ class App:
             This method is called by gui to update it self´s data
         """
         self.main_window.update_labels(self.data_to_display)
+        self.main_window.update_can_msg(self.data_from_formula)
+        self.main_window.update_status(self.communication_status)
+
+    def update_config(self):
+        """
+            This method is called either at booting app or whenever data config is changed.
+        """
+        config = Config()
+        self.data_config_list = config.load_from_config_file()
 
 
 if __name__ == "__main__":
