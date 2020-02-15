@@ -1,7 +1,6 @@
-from PyQt5 import uic, QtWidgets, QtCore
+from PyQt5 import uic, QtCore
+from PyQt5.QtWidgets import QMainWindow, QPushButton, QLabel, QMessageBox
 
-from PyQt5.QtWidgets import QMainWindow, QPushButton, QWidget, QListWidget, QListWidgetItem, QHBoxLayout, QApplication, \
-    QLabel
 from CanReader.GUI.UpdateWindow.UpdateWindow import UpdateWindow
 
 

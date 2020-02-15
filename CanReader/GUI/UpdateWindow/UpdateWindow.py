@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QMainWindow,  QPushButton, QLineEdit
 
 from CanReader.Config.Config import Config
 from CanReader.Config.DataConfig import DataConfig
+from CanReader.GUI.UpdateWindow.WarningWindow import WarningWindow
 
 
 class UpdateWindow(QMainWindow):
@@ -73,25 +74,35 @@ class UpdateWindow(QMainWindow):
             validity of input parameters.
             Once config is updated signal for config update is emitted and received by main object App
         """
-        id = int(self.config_id)
-        group_id = int(self.data_config.group_id)
-        name = str(self.name_input.text())
-        unit = str(self.unit_input.text())
-        can_id = int(self.id_input.text())
-        start_bit = int(self.start_bit_input.text())
-        length = int(self.length_input.text())
-        multiplier = float(self.multiplier_input.text())
-        offset = float(self.offset_input.text())
+        id = self.config_id
+        group_id = self.data_config.group_id
+        name = self.name_input.text()
+        unit = self.unit_input.text()
+        can_id = self.id_input.text()
+        start_bit = self.start_bit_input.text()
+        length = self.length_input.text()
+        multiplier = self.multiplier_input.text()
+        offset = self.offset_input.text()
 
-        new_data_config = DataConfig(id, group_id, name, unit, can_id, start_bit, length, multiplier, offset)
+        warning_window = WarningWindow(can_id, start_bit, length, multiplier, offset)
 
-        self.config.update_section_in_config(new_data_config)
+        if warning_window.check_user_inputs():
 
-        self.main_window.update_config_signal.emit()
-        self.close()
+            new_data_config = DataConfig(int(id), int(group_id), str(name), str(unit), int(can_id), int(start_bit),
+                                         int(length), float(multiplier), float(offset))
+
+            self.config.update_section_in_config(new_data_config)
+
+            self.main_window.update_config_signal.emit()
+
+            self.close()
 
     @staticmethod
     def check_config_id(config_id):
+        """
+            This method check if input parametr config ID is in right format.
+            Config ID has to be integer in range of [0, number of data configs]
+        """
         try:
             if type(config_id) != int:
                 raise TypeError
