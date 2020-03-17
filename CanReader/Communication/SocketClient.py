@@ -20,15 +20,15 @@ class SocketClient:
 
         - Example of valid constructor::
 
-            socket_server = SocketServer("192.168.1.100", 32001)
+            socket_client = SocketClient("192.168.1.100", 32001)
 
         - Example of invalid constructor::
 
-            socket_server = SocketServer("A92.168.1.100", 320001)
+            socket_client = SocketClient("A92.168.1.100", 320001)
 
     """
 
-    def __init__(self, address, port):
+    def __init__(self, address='192.168.1.100', port=80):
 
         self.check_address(address)
         self.check_port(port)
@@ -44,8 +44,12 @@ class SocketClient:
         """
         Establish communication with server(ESP32).
         """
-        self.__sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.__sock.connect((self.__address, self.__port))
+        try:
+            self.__sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.__sock.connect((self.__address, self.__port))
+        except WindowsError:
+            print("A connection attempt failed because the connected party did not properly respond after a period of"
+                  " time, or established connection failed because connected host has failed to respond")
 
     def get_data(self):
         """
@@ -55,14 +59,17 @@ class SocketClient:
         """
 
         # TODO Změnit na příjem HEX
-
         while True:
-            data = self.__sock.recv(1024)
+            try:
+                data = self.__sock.recv(1024)
 
-            if len(data) == 0:
-                break
+                if len(data) == 0:
+                    break
 
-            return str(data.decode())
+                return str(data.decode())
+            except WindowsError:
+                print("Unable to reach network!")
+                self.__set()
 
         self.__sock.close()
 
