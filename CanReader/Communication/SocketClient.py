@@ -1,7 +1,7 @@
 import socket
 
 
-class SocketServer:
+class SocketClient:
     """
         This class will ensure communication with remote device.
 
@@ -42,32 +42,29 @@ class SocketServer:
 
     def __set(self):
         """
-        Prepare socket to begin communication.
+        Establish communication with server(ESP32).
         """
-
         self.__sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.__sock.bind((self.__address, self.__port))
-        self.__sock.listen(0)
+        self.__sock.connect((self.__address, self.__port))
 
     def get_data(self):
         """
-        This function will received data from connected client and return them as a str.
+        This function will receive data from server and return them as a str.
 
         :return: received data (:py:class:`str`)
         """
 
         # TODO Změnit na příjem HEX
-        client, addr = self.__sock.accept()
 
         while True:
-            data = client.recv(22)
+            data = self.__sock.recv(1024)
 
             if len(data) == 0:
                 break
 
             return str(data.decode())
 
-        client.close()
+        self.__sock.close()
 
     @staticmethod
     def check_address(address):
@@ -95,3 +92,19 @@ class SocketServer:
             raise ValueError("Port number must be in range 1 - 65535.")
         except TypeError:
             raise TypeError("Port must be integer.")
+
+
+if __name__ == "__main__":
+
+    from datetime import datetime
+
+    addr = '192.168.1.100'
+    port = 80
+    com = SocketClient(addr, port)
+    count = 0
+    while True:
+        now = datetime.now()
+        current_time = now.strftime("%H:%M:%S")
+        print("Current Time = ", current_time , " ")
+        print(com.get_data() + str(count), "\n")
+        count += 1
