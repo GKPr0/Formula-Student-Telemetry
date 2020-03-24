@@ -53,7 +53,7 @@ class DataProcessing:
         """
         for data_config in self.__config_list:
             if data_config.can_id == self.__can_id:
-                widget_id = data_config.id
+                widget_id = data_config.widget_id
                 group_id = data_config.group_id
                 name = data_config.name
                 value = self.data_process(self.__can_data, data_config)

@@ -33,30 +33,30 @@ class DataPoint:
     @staticmethod
     def check_id(id):
         """
-            Check validity of id. Expected to be int in range [0, 999]
+            Check validity of id. Expected to be int in range [1, 10]
         """
         try:
-            if id < 0 or id > 999:
+            if id < 1 or id > 10:
                 raise ValueError
             if type(id) != int:
                 raise TypeError
         except ValueError:
-            raise ValueError("ID must be number in range of 0 - 999.")
+            raise ValueError("ID must be number in range of 1 - 10.")
         except TypeError:
             raise TypeError("ID must be integer.")
 
     @staticmethod
     def check_group_id(id):
         """
-            Check validity of group id. Expected to be int in range [0, 999]
+            Check validity of group id. Expected to be int in range [1, 10]
         """
         try:
-            if id < 0 or id > 999:
+            if id < 1 or id > 10:
                 raise ValueError
             if type(id) != int:
                 raise TypeError
         except ValueError:
-            raise ValueError("Group id must be number in range of 0 - 999.")
+            raise ValueError("Group id must be number in range of 1 - 10.")
         except TypeError:
             raise TypeError("Group id must be integer.")
 

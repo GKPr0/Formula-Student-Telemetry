@@ -6,10 +6,11 @@ import threading
 import sys
 from PyQt5 import QtWidgets, QtCore
 from CanReader.Config.Config import Config
-from CanReader.Communication.SocketServer import SocketServer
+from CanReader.Communication.SocketClient import SocketClient
 from CanReader.DataProcessing.RawData import RawData
 from CanReader.DataProcessing.DataProcessing import DataProcessing
 from CanReader.GUI.MainWindow import MainWindow
+from CanReader.Logger.DataLogger import DataLogger
 import time
 
 
@@ -26,8 +27,9 @@ class App:
     PORT = 32001
 
     def __init__(self):
+        self.data_logger = DataLogger()
         self.update_config()
-        #self.socket_server = SocketServer(self.IP, self.PORT)
+        #self.socket_client = SocketClient(self.IP, self.PORT)
 
         self.data_to_display = None
         self.data_from_formula = None
@@ -39,8 +41,6 @@ class App:
         self.communication.start()
         self.gui.start()
 
-
-
     def run_communication(self):
         '''
             This method runs in separate thread, that invoke communication with formula.
@@ -50,6 +50,7 @@ class App:
         while True:
             # self.data_from_formula = self.socket_server.get_data()
             self.data_from_formula = "ID100XAB000800B00C00"
+            #self.push_to_data_logger()
             data_processing = threading.Thread(target=self.run_data_processing, name='data_processing')
             data_processing.start()
 
@@ -63,8 +64,6 @@ class App:
         can_id, can_data = raw_data.split_data()
         data_decoder = DataProcessing(can_id, can_data, self.data_config_list)
         self.data_to_display = data_decoder.data_decode()
-        #print(self.data_from_formula)
-        #print(self.data_to_display)
 
     def run_gui(self):
         """
@@ -76,6 +75,7 @@ class App:
         self.main_window = MainWindow()
 
         self.main_window.update_config_signal.connect(self.update_config)
+        self.main_window.action_save.triggered.connect(self.data_logger.save_raw_can)
 
         timer = QtCore.QTimer()
         timer.timeout.connect(self.update_gui)
@@ -97,6 +97,9 @@ class App:
         """
         config = Config()
         self.data_config_list = config.load_from_config_file()
+
+    def push_to_data_logger(self):
+        self.data_logger.get_raw_can(self.data_from_formula)
 
 
 if __name__ == "__main__":

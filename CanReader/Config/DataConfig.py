@@ -3,9 +3,11 @@ class DataConfig:
         This class will contain data configuration.
         Data configuration are ID, Group id , Name, Unit, Can id, Start bit, length, Multiplier, Offset
 
-        :param id: unique id of variable
+        :param id: unique id
         :type id: int
         :param group_id: id of display group in UI
+        :type group_id: int
+        :param group_id: id of widget in tab
         :type group_id: int
         :param name: name of variable
         :type name: str
@@ -23,17 +25,19 @@ class DataConfig:
         :type offset: float, int
 
         :raises TypeError:
-            - ID or group_id are not an integer.
+            - ID, group_id, widget_id or can_id are not an integer.
             - Name is not a str.
             - Value is not a float or an int
 
         :raises ValueError:
-            - ID or group_id are not in range 0 - 999
+            - ID or can_id are not in range 0 - 999
+            - Group_id or widget_id are not in range 1-10
     """
-    def __init__(self, id, group_id, name, unit, can_id, start_bit, length, multiplier, offset):
+    def __init__(self, id, group_id, widget_id, name, unit, can_id, start_bit, length, multiplier, offset):
         # Check validity of parameters
         self.check_id(id)
         self.check_group_id(group_id)
+        self.check_widget_id(widget_id)
         self.check_can_id(can_id)
         self.check_name(name)
         self.check_unit(unit)
@@ -44,6 +48,7 @@ class DataConfig:
 
         self.id = id
         self.group_id = group_id
+        self.widget_id = widget_id
         self.name = name
         self.unit = unit
         self.can_id = can_id
@@ -53,9 +58,9 @@ class DataConfig:
         self.offset = offset
 
     def __repr__(self):
-        return "ID: {} \nGroup ID: {} \nName: {} \nUnit: {} \nCan ID: {}" \
+        return "ID: {} \nGroup ID: {} \nWidget ID: {} \n Name: {} \nUnit: {} \nCan ID: {}" \
                " \nStart bit: {} \nLength: {} \nMultiplier {} \nOffset {} \n"\
-            .format(self.id, self.group_id, self.name, self.unit, self.can_id,
+            .format(self.id, self.group_id, self.widget_id, self.name, self.unit, self.can_id,
                     self.start_bit, self.length, self.multiplier, self.offset)
 
     @staticmethod
@@ -87,6 +92,21 @@ class DataConfig:
             raise ValueError("Group id must be number in range of 0 - 999.")
         except TypeError:
             raise TypeError("Group id must be integer.")
+
+    @staticmethod
+    def check_widget_id(widget_id):
+        """
+            Check validity of widget id
+        """
+        try:
+            if widget_id < 0 or widget_id > 10:
+                raise ValueError
+            if type(widget_id) != int:
+                raise TypeError
+        except ValueError:
+            raise ValueError("Can id must be number in range of 1 - 10.")
+        except TypeError:
+            raise TypeError("Can id must be integer.")
 
     @staticmethod
     def check_can_id(can_id):

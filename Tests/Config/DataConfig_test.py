@@ -19,16 +19,28 @@ class TestDataConfig(unittest.TestCase):
         self.assertRaises(TypeError, DataConfig.check_id, True)
 
     def test_group_id_value(self):
-        # Make sure group id is in valid range 0 - 999
+        # Make sure group id is in valid range 0 - 10
         self.assertRaises(ValueError, DataConfig.check_group_id, -1)
-        self.assertRaises(ValueError, DataConfig.check_group_id, 1000)
+        self.assertRaises(ValueError, DataConfig.check_group_id, 15)
 
     def test_group_id_type(self):
         # Make sure group id is a valid type -> integer
         self.assertRaises(TypeError, DataConfig.check_group_id, "string")
         self.assertRaises(TypeError, DataConfig.check_group_id, 'a')
-        self.assertRaises(TypeError, DataConfig.check_group_id, 43.5)
+        self.assertRaises(TypeError, DataConfig.check_group_id, 45.5)
         self.assertRaises(TypeError, DataConfig.check_group_id, True)
+
+    def test_widget_id_value(self):
+        # Make sure group id is in valid range 0 - 10
+        self.assertRaises(ValueError, DataConfig.check_widget_id, -1)
+        self.assertRaises(ValueError, DataConfig.check_widget_id, 15)
+
+    def test_widget_id_type(self):
+        # Make sure group id is a valid type -> integer
+        self.assertRaises(TypeError, DataConfig.check_widget_id, "string")
+        self.assertRaises(TypeError, DataConfig.check_widget_id, 'a')
+        self.assertRaises(TypeError, DataConfig.check_widget_id, 45.5)
+        self.assertRaises(TypeError, DataConfig.check_widget_id, True)
 
     def test_can_id_value(self):
         # Make sure can id is in valid range 0 - 999

@@ -38,7 +38,6 @@ class Config:
         self.config.read(self.file_path)
 
         self.number_of_data_configs = len(self.config.sections())
-        print(self.number_of_data_configs)
 
     def save_config(self):
         """
@@ -64,6 +63,7 @@ class Config:
         section_id = str(data_config.id)
 
         self.config.set(section_id, "Group id", str(data_config.group_id))
+        self.config.set(section_id, "Widget id", str(data_config.widget_id))
         self.config.set(section_id, "Name", data_config.name)
         self.config.set(section_id, "Unit", data_config.unit)
         self.config.set(section_id, "Can id", str(data_config.can_id))
@@ -108,6 +108,7 @@ class Config:
         self.check_config_id(config_id)
 
         section = str(config_id)
+        widget_id = self.config.getint(section, "Widget id")
         group_id = self.config.getint(section, "Group id")
         name = self.config.get(section, "Name")
         unit = self.config.get(section, "Unit")
@@ -117,7 +118,7 @@ class Config:
         multiplier = self.config.getfloat(section, "Multiplier")
         offset = self.config.getfloat(section, "Offset")
 
-        return DataConfig(config_id, group_id, name, unit, can_id, start_bit, length, multiplier, offset)
+        return DataConfig(config_id, group_id, widget_id, name, unit, can_id, start_bit, length, multiplier, offset)
 
     @staticmethod
     def check_config_file(config_file_name):
