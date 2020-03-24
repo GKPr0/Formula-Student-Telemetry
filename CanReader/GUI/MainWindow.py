@@ -1,8 +1,10 @@
 from PyQt5 import uic, QtCore
-from PyQt5.QtWidgets import QMainWindow, QPushButton, QLabel, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QTabWidget, QPushButton, QLabel, QAction, QListWidget
 
 from CanReader.GUI.UpdateWindow.UpdateWindow import UpdateWindow
-
+from CanReader.GUI.OverviewTab.OverviewTab import OverviewTab
+from CanReader.GUI.GraphTabs.GraphTab import GraphTab
+from CanReader.Config.Config import Config
 
 class MainWindow(QMainWindow):
     """
@@ -16,18 +18,44 @@ class MainWindow(QMainWindow):
         QMainWindow.__init__(self)
         uic.loadUi('CanReader/GUI/MainWindow.ui', self)
 
+        self.data_config_list = []
+        self.get_data_config_list()
+
+        self.action_save = self.findChild(QAction, "action_save")
+
         self.can_msg = self.findChild(QLabel, "label_can_msg")
         self.status = self.findChild(QLabel, "label_status")
 
         self.button_update = self.findChild(QPushButton, "button_update")
         self.button_update.clicked.connect(self.open_update_window)
 
-        self.label_1_name = self.findChild(QLabel, "label")
-        self.label_1_value = self.findChild(QLabel, "label_3")
-        self.label_2_name = self.findChild(QLabel, "label_6")
-        self.label_2_value = self.findChild(QLabel, "label_5")
+        self.variable_list = self.findChild(QListWidget, "variable_list_widget")
+        self.variable_id_list = []
+
+        #Load tab widget add fill it
+        self.tab_widget = self.findChild(QTabWidget, "tabWidget")
+        self.tab_widget.addTab(OverviewTab(), "General")
+        self.tab_widget.addTab(GraphTab(), "Engine")
+        self.tab_widget.addTab(GraphTab(), "Suspension")
+        self.tab_widget.currentChanged.connect(self.show_variable_list_used_in_current_tab)
+        self.show_variable_list_used_in_current_tab()
 
         self.show()
+
+    def test(self):
+        print("ok")
+
+    def show_variable_list_used_in_current_tab(self):
+        current_widget = self.tab_widget.currentWidget()
+        self.variable_list.clear()
+        self.variable_id_list = []
+
+        for config in self.data_config_list:
+            if config.group_id == current_widget.group_id:
+                self.variable_list.addItem(config.name)
+                self.variable_id_list.append(config.id)
+
+
 
     def update_labels(self, data):
         """
@@ -35,15 +63,7 @@ class MainWindow(QMainWindow):
             :param data: list of DataPoints containing decoded and processed data from formula
             :type data: DataPoint
         """
-        value1 = data[0].value
-        name1 = data[0].name
-        value2 = data[1].value
-        name2 = data[1].name
 
-        self.label_1_value.setText(str(value1))
-        self.label_1_name.setText(name1)
-        self.label_2_value.setText(str(value2))
-        self.label_2_name.setText(name2)
 
     def update_can_msg(self, can_msg):
         """
@@ -64,6 +84,10 @@ class MainWindow(QMainWindow):
             This method is invoked when update button is clicked.
             Open update window, where user can adjust configuration for selected variable
         """
-        self.update_win = UpdateWindow(self, 1)
+        selected_variable_position = self.variable_list.currentRow()
+        if selected_variable_position != -1:
+            self.update_win = UpdateWindow(self, self.variable_id_list[selected_variable_position])
 
-
+    def get_data_config_list(self):
+        config = Config()
+        self.data_config_list = config.load_from_config_file()
