@@ -72,9 +72,12 @@ class MainWindow(QMainWindow):
                 widget.add_config_variable(config)
 
     def let_tabs_generate_graphics(self):
-        for tab_index in range(1, self.tab_widget.count()-1):
+        for tab_index in range(1, self.tab_widget.count()):
             widget = self.tab_widget.widget(tab_index)
-            widget.create_graphs()
+            if type(widget) == GraphTab:
+                widget.create_graphs()
+            elif type(widget) == ErrorTab:
+                widget.create_error_widgets()
 
     def show_variable_list_used_in_current_tab(self):
         """
