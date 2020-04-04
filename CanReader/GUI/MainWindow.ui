@@ -148,13 +148,16 @@
       </widget>
       <widget class="QWidget" name="verticalLayoutWidget_2">
        <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="spacing">
+         <number>0</number>
+        </property>
         <item>
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
           <property name="sizeType">
-           <enum>QSizePolicy::Fixed</enum>
+           <enum>QSizePolicy::Minimum</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
@@ -168,7 +171,7 @@
          <widget class="QListWidget" name="variable_list_widget">
           <property name="maximumSize">
            <size>
-            <width>150</width>
+            <width>200</width>
             <height>16777215</height>
            </size>
           </property>
@@ -184,7 +187,7 @@
           </property>
           <property name="maximumSize">
            <size>
-            <width>150</width>
+            <width>200</width>
             <height>16777215</height>
            </size>
           </property>
