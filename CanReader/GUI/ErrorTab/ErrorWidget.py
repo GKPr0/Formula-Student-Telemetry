@@ -1,6 +1,6 @@
-from PyQt5 import uic, QtCore
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPixmap, QFont
 
 from CanReader.GUI.GraphTabs.Graph import Graph
 
@@ -22,17 +22,25 @@ class ErrorWidget(QWidget):
         layout = QVBoxLayout()
 
         img = QPixmap(self.ICONS["Yellow"])
-        label_img = QLabel()
-        label_img.setPixmap(img)
-        layout.addWidget(label_img)
+        self.label_img = QLabel()
+        self.label_img.setPixmap(img)
+        self.label_img.setAlignment(Qt.AlignCenter)
+        layout.addWidget(self.label_img)
 
         label = QLabel(self.name)
+        font = QFont("MS Shell", 9, QFont.Bold)
+        label.setFont(font)
+        label.setAlignment(Qt.AlignCenter)
         layout.addWidget(label)
 
         self.setLayout(layout)
 
-if __name__ == "__main__":
-    ICONS = {"Green": 0, "Red": 1, "Yellow": 2}
-    print(ICONS["Green"])
+    def update_status(self, status):
+        self.status = status
 
+        if self.status:
+            img = QPixmap(self.ICONS["Red"])
+        else:
+            img = QPixmap(self.ICONS["Green"])
 
+        self.label_img.setPixmap(img)

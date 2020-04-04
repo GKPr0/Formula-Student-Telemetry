@@ -61,7 +61,7 @@ class SocketClient:
         # TODO Změnit na příjem HEX
         while True:
             try:
-                data = self.__sock.recv(1024)
+                data = self.__sock.recv(22)
 
                 if len(data) == 0:
                     break
@@ -100,7 +100,6 @@ class SocketClient:
         except TypeError:
             raise TypeError("Port must be integer.")
 
-
 if __name__ == "__main__":
 
     from datetime import datetime
@@ -113,5 +112,11 @@ if __name__ == "__main__":
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
         print("Current Time = ", current_time , " ")
-        print(com.get_data() + str(count), "\n")
+        print(com.get_data() + "    " + str(count), "\n")
         count += 1
+
+
+
+
+
+
