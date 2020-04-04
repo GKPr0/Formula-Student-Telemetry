@@ -1,10 +1,26 @@
 from PyQt5 import uic, QtCore
-from PyQt5.QtWidgets import QWidget, QPushButton, QLabel, QAction
+from PyQt5.QtWidgets import QWidget, QVBoxLayout
+from CanReader.GUI.GraphTabs.Graph import Graph
+from CanReader.GUI.Tab import Tab
 
-class GraphTab(QWidget):
+class GraphTab(Tab):
 
-    def __init__(self):
-        QWidget.__init__(self)
-        uic.loadUi('CanReader/GUI/GraphTabs/GraphTab.ui', self)
+    def __init__(self, group_id):
+        Tab.__init__(self, group_id)
 
-        self.group_id = 0
+        self.graph_list = []
+
+    def create_graphs(self):
+        for var in self.config_variable_list:
+            name = var.name
+            unit = var.unit
+            self.graph_list.append(Graph(name, unit))
+
+        self.add_graphs_to_layout()
+
+    def add_graphs_to_layout(self):
+        layout = QVBoxLayout()
+        for graph in self.graph_list:
+            layout.addWidget(graph)
+
+        self.setLayout(layout)
