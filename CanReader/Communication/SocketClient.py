@@ -1,4 +1,6 @@
 import socket
+from PyQt5 import QtCore
+from PyQt5.QtWidgets import QWidget
 
 
 class SocketClient:
@@ -35,21 +37,25 @@ class SocketClient:
 
         self.__address = address
         self.__port = port
-        self.__set()
+
+        self.status = "Offline"
+
 
     def __repr__(self):
         return "Socket is connected to IP: {} on port {}".format(self.__address, self.__port)
 
-    def __set(self):
+    def connect_to_server(self):
         """
         Establish communication with server(ESP32).
         """
         try:
             self.__sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.__sock.connect((self.__address, self.__port))
+            self.status = "Online"
         except WindowsError:
             print("A connection attempt failed because the connected party did not properly respond after a period of"
                   " time, or established connection failed because connected host has failed to respond")
+            self.status = "Offline"
 
     def get_data(self):
         """
@@ -61,15 +67,17 @@ class SocketClient:
         # TODO Změnit na příjem HEX
         while True:
             try:
-                data = self.__sock.recv(22)
+                if self.status == "Online":
+                    data = self.__sock.recv(22)
 
-                if len(data) == 0:
-                    break
+                    if len(data) == 0:
+                        break
 
-                return str(data.decode())
+                    return str(data.decode())
             except WindowsError:
                 print("Unable to reach network!")
-                self.__set()
+            finally:
+                self.connect_to_server()
 
         self.__sock.close()
 
