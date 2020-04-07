@@ -114,14 +114,13 @@ class DataConfig:
             Check validity of can id
         """
         try:
-            if can_id < 0 or can_id > 999:
-                raise ValueError
-            if type(can_id) != int:
+            int(can_id, 16)
+            if type(can_id) != str:
                 raise TypeError
         except ValueError:
             raise ValueError("Can id must be number in range of 0 - 999.")
         except TypeError:
-            raise TypeError("Can id must be integer.")
+            raise TypeError("Can id must be string(hex).")
 
     @staticmethod
     def check_name(name):

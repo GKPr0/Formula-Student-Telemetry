@@ -32,7 +32,7 @@ class RawData:
         Data will be converted from hex to binary code with fixed length 64 bit.
 
         :returns:
-            - ID (:py:class:`int`)
+            - ID (:py:class:`str`)
             - Data (:py:class:`str`) -> (in python bin is str with leading '0b')
 
         - Example of valid method output::
@@ -44,8 +44,8 @@ class RawData:
             data = "0b1111111111111111111111110111100010101010101110111100110011111000"
         """
 
-        id = int(self.__raw_data[self.ID_START_BIT:(self.ID_START_BIT + self.ID_LENGTH)])
-        data = bin(int(self.__raw_data[self.DATA_START_BIT:], 16))
+        id = str(self.__raw_data[self.ID_START_BIT:(self.ID_START_BIT + self.ID_LENGTH)])
+        data = bin(int(self.__raw_data[self.DATA_START_BIT:], 16))[2:].zfill(64)
 
         return id, data
 

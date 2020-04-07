@@ -89,7 +89,7 @@ class UpdateWindow(QMainWindow):
 
         if warning_window.check_user_inputs():
 
-            new_data_config = DataConfig(int(id), int(group_id), int(widget_id), str(name), str(unit), int(can_id), int(start_bit),
+            new_data_config = DataConfig(int(id), int(group_id), int(widget_id), str(name), str(unit), str(can_id), int(start_bit),
                                          int(length), float(multiplier), float(offset))
 
             self.config.update_section_in_config(new_data_config)

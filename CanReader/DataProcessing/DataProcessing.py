@@ -77,7 +77,7 @@ class DataProcessing:
             :type data_config: DataConfig
             :return: Decoded and processed value corresponding to configuration
         """
-        start_bit = data_config.start_bit + 2
+        start_bit = data_config.start_bit
         end_bit = start_bit + data_config.length
         multiplier = data_config.multiplier
         offset = data_config.offset
@@ -91,14 +91,13 @@ class DataProcessing:
             Check if id is valid. Expected Integer in range [0, 999]
         """
         try:
-            if can_id < 0 or can_id > 999:
-                raise ValueError
-            if type(can_id) != int:
+            int(can_id, 16) #If id is not a hex will raise value error
+            if type(can_id) != str:
                 raise TypeError
         except ValueError:
             raise ValueError("ID must be number in range of 0 - 999.")
         except TypeError:
-            raise TypeError("ID must be integer.")
+            raise TypeError("ID must be string(hex).")
 
     @staticmethod
     def check_data(data):
@@ -106,7 +105,7 @@ class DataProcessing:
             Check if data are valid. Expected str with leading '0b'
         """
         try:
-            if type(data) != str or data[:2] != "0b":
+            if type(data) != str:
                 raise TypeError
         except TypeError:
             raise TypeError("Data must be binary")
