@@ -13,10 +13,11 @@ class ErrorWidget(QWidget):
         "Yellow": "CanReader/Images/yellow_led.png"
     }
 
-    def __init__(self, name):
+    def __init__(self, name, id):
         QWidget.__init__(self)
 
         self.name = name
+        self.id = id
         self.status = None
 
         layout = QVBoxLayout()
@@ -35,12 +36,12 @@ class ErrorWidget(QWidget):
 
         self.setLayout(layout)
 
-    def update_status(self, status):
-        self.status = status
+    def update_data(self, status):
+        if self.status != status:
+            self.status = status
+            if self.status:
+                img = QPixmap(self.ICONS["Red"])
+            else:
+                img = QPixmap(self.ICONS["Green"])
 
-        if self.status:
-            img = QPixmap(self.ICONS["Red"])
-        else:
-            img = QPixmap(self.ICONS["Green"])
-
-        self.label_img.setPixmap(img)
+            self.label_img.setPixmap(img)

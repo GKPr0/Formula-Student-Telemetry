@@ -11,14 +11,14 @@ class ErrorTab(Tab):
     def __init__(self, group_id):
         Tab.__init__(self, group_id)
 
-        self.error_widget_list = []
         self.max_row = 0
         self.max_col = 0
 
     def create_error_widgets(self):
         for var in self.config_variable_list:
             name = var.name
-            self.error_widget_list.append(ErrorWidget(name))
+            id = var.widget_id
+            self.widget_list.append(ErrorWidget(name, id))
 
         self.add_error_widget_to_layout()
 
@@ -28,7 +28,7 @@ class ErrorTab(Tab):
         layout = QGridLayout()
         col = 0
         row = 0
-        for err_widget in self.error_widget_list:
+        for err_widget in self.widget_list:
             layout.addWidget(err_widget, row, col)
             col += 1
             if col >= self.max_col:
@@ -38,7 +38,7 @@ class ErrorTab(Tab):
         self.setLayout(layout)
 
     def count_grid_size(self):
-        count = len(self.error_widget_list)
+        count = len(self.widget_list)
 
         sqrt = math.ceil(math.sqrt(count))
         if math.pow(sqrt, 2) == count:

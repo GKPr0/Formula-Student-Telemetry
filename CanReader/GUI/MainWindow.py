@@ -35,25 +35,27 @@ class MainWindow(QMainWindow):
         self.variable_id_list = []
 
         #Create tabs
-        self.overview_tab = OverviewTab()
-        self.intake_tab = GraphTab(1)
-        self.engine_tab = GraphTab(2)
-        self.exhaust_tab = GraphTab(3)
-        self.fluid_tab = GraphTab(4)
-        self.suspension_tab = GraphTab(5)
-        self.acc_gyro_tab = GraphTab(6)
-        self.error_tab = ErrorTab(7)
+        self.tab_list = {
+            "overview_tab": OverviewTab(),
+            "intake_tab": GraphTab(1),
+            "engine_tab" : GraphTab(2),
+            "exhaust_tab" : GraphTab(3),
+            "fluid_tab" : GraphTab(4),
+            "suspension_tab" : GraphTab(5),
+            "acc_gyro_tab" : GraphTab(6),
+            "error_tab" : ErrorTab(7)
+         }
 
         #Load tab widget add fill it with tabs
         self.tab_widget = self.findChild(QTabWidget, "tabWidget")
-        self.tab_widget.addTab(self.overview_tab, "General")
-        self.tab_widget.addTab(self.intake_tab, "Intake")
-        self.tab_widget.addTab(self.engine_tab, "Engine")
-        self.tab_widget.addTab(self.exhaust_tab, "Exhaust")
-        self.tab_widget.addTab(self.fluid_tab, "Fluid")
-        self.tab_widget.addTab(self.suspension_tab, "Suspension")
-        self.tab_widget.addTab(self.acc_gyro_tab, "Acc/Gyro")
-        self.tab_widget.addTab(self.error_tab, "Error")
+        self.tab_widget.addTab(self.tab_list["overview_tab"], "General")
+        self.tab_widget.addTab(self.tab_list["intake_tab"], "Intake")
+        self.tab_widget.addTab(self.tab_list["engine_tab"], "Engine")
+        self.tab_widget.addTab(self.tab_list["exhaust_tab"], "Exhaust")
+        self.tab_widget.addTab(self.tab_list["fluid_tab"], "Fluid")
+        self.tab_widget.addTab(self.tab_list["suspension_tab"], "Suspension")
+        self.tab_widget.addTab(self.tab_list["acc_gyro_tab"], "Acc/Gyro")
+        self.tab_widget.addTab(self.tab_list["error_tab"], "Error")
 
         self.tab_widget.currentChanged.connect(self.show_variable_list_used_in_current_tab)
         self.show_variable_list_used_in_current_tab()
@@ -93,13 +95,16 @@ class MainWindow(QMainWindow):
                 self.variable_id_list.append(config.id)
 
 
-    def update_labels(self, data):
+    def push_data_to_tabs(self, data_list):
         """
             This method takes data received from formula and sends them to place where will be displayed
-            :param data: list of DataPoints containing decoded and processed data from formula
-            :type data: DataPoint
+            :param data_list: list of DataPoints containing decoded and processed data from formula
+            :type data_list: DataPoint
         """
-
+        for tab in self.tab_list.values():
+            for data_point in data_list:
+                if tab.group_id == data_point.group_id:
+                    tab.update_data(data_point)
 
     def update_can_msg(self, can_msg):
         """
@@ -108,12 +113,15 @@ class MainWindow(QMainWindow):
         """
         self.can_msg.setText(str(can_msg))
 
+
     def update_status(self, status):
         """
             This method update connection status between app and formula
             :param status: Status can be "Offline" , "Online" , "Connecting"
         """
-        self.status.setText(status)
+        if status != self.status.text():
+            self.status.setText(status)
+
 
     def open_update_window(self):
         """
