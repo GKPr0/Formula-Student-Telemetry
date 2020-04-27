@@ -12,6 +12,8 @@ from CanReader.DataProcessing.DataProcessing import DataProcessing
 from CanReader.GUI.MainWindow import MainWindow
 from CanReader.Logger.DataLogger import DataLogger
 import time
+import queue
+import sys
 
 class App:
     '''
@@ -34,13 +36,15 @@ class App:
         self.data_to_display = None
         self.data_from_formula = None
 
+        self.data_queue = queue.Queue(maxsize= 25)
         self.gui_ready = False
 
-        self.communication = threading.Thread(target=self.run_communication, name='communication')
         self.gui = threading.Thread(target=self.run_gui, name='gui')
+        self.communication = threading.Thread(target=self.run_communication, name='communication')
 
-        self.communication.start()
         self.gui.start()
+
+
 
     def run_communication(self):
         '''
@@ -48,27 +52,51 @@ class App:
             Once data packet from formula arrived new thread will be created and communication will start over
             Thread created in this method will processed income data
         '''
-        #self.socket_client.status_changed_signal.connect(self.main_window.update_status)
+        # Whenever connection status changed signal to gui will be send
+        self.socket_client.status_changed.connect(self.main_window.update_connection_status_signal.emit)
+        # Client setup -> try to connect to a server
         self.socket_client.connect_to_server()
+        i = 0
         while True:
-            self.data_from_formula = self.socket_client.get_data()
-            #self.data_from_formula = "ID600XAB0000000BFFCFF"
-            #self.push_to_data_logger()
-            self.run_data_processing()
+            data_from_formula = self.socket_client.get_data()
+
+            #data_from_formula = ["ID600X00A5FFFFBFFCFF", "ID600X00B8FFFFBFFCFF", "ID600X00CACFFFFBFFCFF", "ID600X00D8FFFFBFFCFF"]
+
+            # Update Can msg shown in gui
+            self.main_window.update_can_msg_signal.emit(data_from_formula)
+
+            # Create threads that run in parallel.
+            data_processing_thread = threading.Thread(target=self.run_data_processing, name='data_processing',
+                                                      args=(data_from_formula,))
+            data_logging_thread = threading.Thread(target=self.push_to_data_logger, name='data_logging',
+                                                   args=(data_from_formula,))
+            data_processing_thread.start()
+            data_logging_thread.start()
+            # Wait for both threads to be done.
+            data_processing_thread.join()
+            data_logging_thread.join()
+
+            #i += 1
+            #if i > 3:
+            #    i = 0
 
 
-    def run_data_processing(self):
+    def run_data_processing(self, data_from_formula):
         """
             This method is called in temporary thread invoked by communication thread.
             Result is decoded and processed data packet prepared to be display in gui.
         """
 
-        raw_data = RawData(self.data_from_formula)
+        raw_data = RawData(data_from_formula)
         can_id, can_data = raw_data.split_data()
-        data_decoder = DataProcessing(can_id, can_data, self.data_config_list)
-        self.data_to_display = data_decoder.data_decode()
-        self.update_gui()
 
+        data_decoder = DataProcessing(can_id, can_data, self.data_config_list)
+        data_to_display = data_decoder.data_decode()
+        #if can_id == str(556):
+        #    print(can_id)
+        #    print(can_data)
+        #    print(data_to_display)
+        self.data_queue.put(data_to_display)
 
     def run_gui(self):
         """
@@ -79,22 +107,17 @@ class App:
         self.main_window = MainWindow()
 
         self.main_window.update_config_signal.connect(self.update_config)
-        self.main_window.action_save.triggered.connect(self.data_logger.save_raw_can)
+        self.main_window.action_save.triggered.connect(self.data_logger.set_save_path)
 
         self.gui_ready = True
+        self.communication.start()
+
+        timer = QtCore.QTimer()
+
+        timer.start(33)
+        timer.timeout.connect(self.update_gui)
+
         sys.exit(gui.exec_())
-
-
-    def update_gui(self):
-        """
-            This method is called by gui to update it self´s data
-        """
-        if self.gui_ready:
-            self.gui_ready = False
-            self.main_window.push_data_to_tabs(self.data_to_display)
-            self.main_window.update_can_msg(self.data_from_formula)
-            self.main_window.update_status(self.socket_client.status)
-            self.gui_ready = True
 
     def update_config(self):
         """
@@ -103,12 +126,11 @@ class App:
         config = Config()
         self.data_config_list = config.load_from_config_file()
 
-    def push_to_data_logger(self):
-        self.data_logger.get_raw_can(self.data_from_formula)
+    def update_gui(self):
+        self.main_window.update_data_signal.emit(self.data_queue)
 
-    def close_app(self):
-        quit()
-        print("test")
+    def push_to_data_logger(self, data_from_formula):
+        self.data_logger.get_raw_can(data_from_formula)
 
 
 if __name__ == "__main__":

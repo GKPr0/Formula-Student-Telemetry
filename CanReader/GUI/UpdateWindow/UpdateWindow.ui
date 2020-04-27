@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Setup new</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">color: rgb(189, 190, 191);
+background-color: rgb(79, 78, 78);</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_4">
     <property name="spacing">
@@ -101,6 +105,33 @@
         </item>
         <item>
          <widget class="QPushButton" name="save_button">
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+	color: rgb(189, 190, 191);
+	background-color: rgb(79, 78, 78);
+	border-style: solid;
+	border-color: rgb(189, 190, 191);
+	border-width: 1px;
+
+} 
+
+QPushButton:pressed {
+	background-color: rgb(89,88,88);
+
+}</string>
+          </property>
           <property name="text">
            <string>Save</string>
           </property>
@@ -108,6 +139,33 @@
         </item>
         <item>
          <widget class="QPushButton" name="button_close">
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>25</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+	color: rgb(189, 190, 191);
+	background-color: rgb(79, 78, 78);
+	border-style: solid;
+	border-color: rgb(189, 190, 191);
+	border-width: 1px;
+
+} 
+
+QPushButton:pressed {
+	background-color: rgb(89,88,88);
+
+}</string>
+          </property>
           <property name="text">
            <string>Close</string>
           </property>

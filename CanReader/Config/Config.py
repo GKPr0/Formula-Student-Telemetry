@@ -62,10 +62,16 @@ class Config:
 
         section_id = str(data_config.id)
 
+        if data_config.unit == "%":
+            unit = "%%"
+        else:
+            unit = data_config.unit
+
         self.config.set(section_id, "Group id", str(data_config.group_id))
         self.config.set(section_id, "Widget id", str(data_config.widget_id))
+        self.config.set(section_id, "Overview id", str(data_config.overview_id))
         self.config.set(section_id, "Name", data_config.name)
-        self.config.set(section_id, "Unit", data_config.unit)
+        self.config.set(section_id, "Unit", unit)
         self.config.set(section_id, "Can id", str(data_config.can_id))
         self.config.set(section_id, "Start bit", str(data_config.start_bit))
         self.config.set(section_id, "Length", str(data_config.length))
@@ -110,6 +116,7 @@ class Config:
         section = str(config_id)
         widget_id = self.config.getint(section, "Widget id")
         group_id = self.config.getint(section, "Group id")
+        overview_id = self.config.getint(section, "Overview id")
         name = self.config.get(section, "Name")
         unit = self.config.get(section, "Unit")
         can_id = self.config.get(section, "Can id")
@@ -118,7 +125,7 @@ class Config:
         multiplier = self.config.getfloat(section, "Multiplier")
         offset = self.config.getfloat(section, "Offset")
 
-        return DataConfig(config_id, group_id, widget_id, name, unit, can_id, start_bit, length, multiplier, offset)
+        return DataConfig(config_id, group_id, widget_id, overview_id, name, unit, can_id, start_bit, length, multiplier, offset)
 
     @staticmethod
     def check_config_file(config_file_name):

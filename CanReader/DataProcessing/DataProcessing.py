@@ -55,10 +55,11 @@ class DataProcessing:
             if data_config.can_id == self.__can_id:
                 widget_id = data_config.widget_id
                 group_id = data_config.group_id
+                overview_id = data_config.overview_id
                 name = data_config.name
                 value = self.data_process(self.__can_data, data_config)
 
-                data_point = DataPoint(widget_id, group_id, name, value)
+                data_point = DataPoint(widget_id, group_id, overview_id, name, value)
                 self.__data_point_list.append(data_point)
 
         return self.__data_point_list

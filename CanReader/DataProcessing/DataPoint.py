@@ -21,14 +21,15 @@ class DataPoint:
             - ID or group_id are not in range 0 - 999.
     """
 
-    def __init__(self, id, group_id, name, value):
+    def __init__(self, id, group_id, overview_id, name, value):
         self.id = id
         self.group_id = group_id
+        self.overview_id = overview_id
         self.name = name
         self.value = value
 
     def __repr__(self):
-        return "{} has id {}, is in group {} and have value {}\n".format(self.name, self.id, self.group_id, self.value)
+        return "{} has id {}, is in group {} and have value {}. It´s overview id is {}\n".format(self.name, self.id, self.group_id, self.value, self.overview_id)
     
     @staticmethod
     def check_id(id):
