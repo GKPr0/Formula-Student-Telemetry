@@ -1,9 +1,9 @@
 import socket
-from PyQt5 import QtCore
+from PyQt5.QtCore import QObject, pyqtSignal
 from PyQt5.QtWidgets import QWidget
 
 
-class SocketClient:
+class SocketClient(QObject):
     """
         This class will ensure communication with remote device.
 
@@ -30,7 +30,10 @@ class SocketClient:
 
     """
 
+    status_changed = pyqtSignal(str)
+
     def __init__(self, address='192.168.1.100', port=80):
+        QObject.__init__(self)
 
         self.check_address(address)
         self.check_port(port)
@@ -56,6 +59,8 @@ class SocketClient:
             print("A connection attempt failed because the connected party did not properly respond after a period of"
                   " time, or established connection failed because connected host has failed to respond")
             self.status = "Offline"
+        finally:
+            self.status_changed.emit(self.status)
 
     def get_data(self):
         """
@@ -67,16 +72,14 @@ class SocketClient:
         # TODO Změnit na příjem HEX
         while True:
             try:
-                if self.status == "Online":
-                    data = self.__sock.recv(22)
+                data = self.__sock.recv(22)
 
-                    if len(data) == 0:
-                        break
+                if len(data) == 0:
+                    break
 
-                    return str(data.decode())
+                return str(data.decode())
             except WindowsError:
                 print("Unable to reach network!")
-            finally:
                 self.connect_to_server()
 
         self.__sock.close()
