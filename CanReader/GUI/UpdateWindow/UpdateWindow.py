@@ -77,6 +77,7 @@ class UpdateWindow(QMainWindow):
         id = self.config_id
         group_id = self.data_config.group_id
         widget_id = self.data_config.widget_id
+        overview_id = self.data_config.overview_id
         name = self.name_input.text()
         unit = self.unit_input.text()
         can_id = self.id_input.text()
@@ -89,7 +90,7 @@ class UpdateWindow(QMainWindow):
 
         if warning_window.check_user_inputs():
 
-            new_data_config = DataConfig(int(id), int(group_id), int(widget_id), str(name), str(unit), str(can_id), int(start_bit),
+            new_data_config = DataConfig(int(id), int(group_id), int(widget_id), int(overview_id), str(name), str(unit), str(can_id), int(start_bit),
                                          int(length), float(multiplier), float(offset))
 
             self.config.update_section_in_config(new_data_config)

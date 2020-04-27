@@ -112,14 +112,14 @@ class WarningWindow:
             Check validity of multiplier
         """
         try:
-            if float(self.multiplier) <= 0:
+            if float(self.multiplier) == 0:
                 raise ArithmeticError
             return True
         except ValueError:
             self.show_warning_window("Multiplier Error", "Multiplier must be an integer or float")
             return False
         except ArithmeticError:
-            self.show_warning_window("Multiplier Error", "Multiplier must be positive number")
+            self.show_warning_window("Multiplier Error", "Multiplier cannot be 0")
             return False
 
     def check_offset(self):

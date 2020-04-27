@@ -33,11 +33,12 @@ class DataConfig:
             - ID or can_id are not in range 0 - 999
             - Group_id or widget_id are not in range 1-10
     """
-    def __init__(self, id, group_id, widget_id, name, unit, can_id, start_bit, length, multiplier, offset):
+    def __init__(self, id, group_id, widget_id, overview_id, name, unit, can_id, start_bit, length, multiplier, offset):
         # Check validity of parameters
         self.check_id(id)
         self.check_group_id(group_id)
         self.check_widget_id(widget_id)
+        self.check_widget_id(overview_id)
         self.check_can_id(can_id)
         self.check_name(name)
         self.check_unit(unit)
@@ -49,6 +50,7 @@ class DataConfig:
         self.id = id
         self.group_id = group_id
         self.widget_id = widget_id
+        self.overview_id = overview_id
         self.name = name
         self.unit = unit
         self.can_id = can_id
@@ -99,7 +101,7 @@ class DataConfig:
             Check validity of widget id
         """
         try:
-            if widget_id < 0 or widget_id > 10:
+            if widget_id < 0 or widget_id > 50:
                 raise ValueError
             if type(widget_id) != int:
                 raise TypeError
@@ -182,7 +184,7 @@ class DataConfig:
         try:
             if type(multiplier) not in [int, float]:
                 raise TypeError
-            if multiplier <= 0:
+            if multiplier == 0:
                 raise ValueError
         except TypeError:
             raise TypeError("Multiplier must be integer or float.")
