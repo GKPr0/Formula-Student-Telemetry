@@ -1,6 +1,7 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
 from PyQt5.QtGui import QPixmap, QFont
+from PyQt5 import QtCore
 
 from CanReader.GUI.GraphTabs.Graph import Graph
 
@@ -13,12 +14,16 @@ class ErrorWidget(QWidget):
         "Yellow": "CanReader/Images/yellow_led.png"
     }
 
+    update_signal = QtCore.pyqtSignal(float)
+
     def __init__(self, name, id):
         QWidget.__init__(self)
 
         self.name = name
         self.id = id
         self.status = None
+
+        self.update_signal.connect(self.update_data)
 
         layout = QVBoxLayout()
 
@@ -39,7 +44,7 @@ class ErrorWidget(QWidget):
     def update_data(self, status):
         if self.status != status:
             self.status = status
-            if self.status:
+            if bool(self.status):
                 img = QPixmap(self.ICONS["Red"])
             else:
                 img = QPixmap(self.ICONS["Green"])
