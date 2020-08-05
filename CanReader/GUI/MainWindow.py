@@ -43,6 +43,7 @@ class MainWindow(QMainWindow):
         self.button_update.clicked.connect(self.open_update_window)
 
         self.variable_list = self.findChild(QListWidget, "variable_list_widget")
+        self.variable_list.itemDoubleClicked.connect(self.open_update_window)
         self.variable_id_list = []
 
         #Create tabs
@@ -146,7 +147,7 @@ class MainWindow(QMainWindow):
             :param can_msg: last received can message
         """
 
-        self.can_msg.setText("\t ID:{} \t Data: {}".format(can_id, can_msg))
+        self.can_msg.setText(" ID:{} \t Data: {}".format(can_id, can_msg))
 
     def update_connection_status(self, status):
         """
