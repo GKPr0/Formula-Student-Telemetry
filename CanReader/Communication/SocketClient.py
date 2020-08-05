@@ -45,7 +45,10 @@ class SocketClient(QObject):
 
 
     def __repr__(self):
-        return "Socket is connected to IP: {} on port {}".format(self.__address, self.__port)
+        if self.status == "Offline":
+            return "You are disconnected"
+        else:
+            return "Socket is connected to IP: {} on port {}".format(self.__address, self.__port)
 
     def connect_to_server(self):
         """
@@ -72,12 +75,19 @@ class SocketClient(QObject):
         # TODO Změnit na příjem HEX
         while True:
             try:
-                data = self.__sock.recv(22)
+                """data = self.__sock.recv(22)
 
                 if len(data) == 0:
                     break
 
                 return str(data.decode())
+                """
+                self.__sock.settimeout(5.0)
+                data = self.__sock.recv(12)
+
+                if len(data) == 0:
+                    break
+                return data
             except WindowsError:
                 print("Unable to reach network!")
                 self.connect_to_server()
@@ -118,14 +128,21 @@ if __name__ == "__main__":
     addr = '192.168.1.100'
     port = 80
     com = SocketClient(addr, port)
-    count = 0
+    com.connect_to_server()
+    print(com)
+
     while True:
         now = datetime.now()
         current_time = now.strftime("%H:%M:%S")
         print("Current Time = ", current_time , " ")
-        print(com.get_data() + "    " + str(count), "\n")
-        count += 1
+        data = com.get_data()
 
+        id = int.from_bytes(data[:4], "big")
+        msg = data[4:]
+
+        print("ID: {}".format(id))
+        for i,m in enumerate(msg):
+            print("{}\t{}".format(i, m))
 
 
 

@@ -41,7 +41,6 @@ class App:
 
         self.gui = threading.Thread(target=self.run_gui, name='gui')
         self.communication = threading.Thread(target=self.run_communication, name='communication')
-
         self.gui.start()
 
 
@@ -59,7 +58,7 @@ class App:
         i = 0
         while True:
             data_from_formula = self.socket_client.get_data()
-
+            print(data_from_formula)
             #data_from_formula = ["ID600X00A5FFFFBFFCFF", "ID600X00B8FFFFBFFCFF", "ID600X00CACFFFFBFFCFF", "ID600X00D8FFFFBFFCFF"]
 
             # Update Can msg shown in gui
