@@ -77,6 +77,7 @@ class Config:
         self.config.set(section_id, "Length", str(data_config.length))
         self.config.set(section_id, "Multiplier", str(data_config.multiplier))
         self.config.set(section_id, "Offset", str(data_config.offset))
+        self.config.set(section_id, "Endian", str(data_config.endian))
 
         self.save_config()
 
@@ -124,8 +125,10 @@ class Config:
         length = self.config.getint(section, "Length")
         multiplier = self.config.getfloat(section, "Multiplier")
         offset = self.config.getfloat(section, "Offset")
+        endian = self.config.get(section, "Endian")
 
-        return DataConfig(config_id, group_id, widget_id, overview_id, name, unit, can_id, start_bit, length, multiplier, offset)
+        return DataConfig(config_id, group_id, widget_id, overview_id, name, unit, can_id, start_bit, length, multiplier
+                          , offset, endian)
 
     @staticmethod
     def check_config_file(config_file_name):

@@ -33,7 +33,7 @@ class DataConfig:
             - ID or can_id are not in range 0 - 999
             - Group_id or widget_id are not in range 1-10
     """
-    def __init__(self, id, group_id, widget_id, overview_id, name, unit, can_id, start_bit, length, multiplier, offset):
+    def __init__(self, id, group_id, widget_id, overview_id, name, unit, can_id, start_bit, length, multiplier, offset, endian):
         # Check validity of parameters
         self.check_id(id)
         self.check_group_id(group_id)
@@ -46,6 +46,7 @@ class DataConfig:
         self.check_length(length)
         self.check_multiplier(multiplier)
         self.check_offset(offset)
+        self.check_endian(endian)
 
         self.id = id
         self.group_id = group_id
@@ -58,12 +59,13 @@ class DataConfig:
         self.length = length
         self.multiplier = multiplier
         self.offset = offset
+        self.endian = endian
 
     def __repr__(self):
         return "ID: {} \nGroup ID: {} \nWidget ID: {} \n Name: {} \nUnit: {} \nCan ID: {}" \
-               " \nStart bit: {} \nLength: {} \nMultiplier {} \nOffset {} \n"\
+               " \nStart bit: {} \nLength: {} \nMultiplier {} \nOffset {} \n Endian {} \n"\
             .format(self.id, self.group_id, self.widget_id, self.name, self.unit, self.can_id,
-                    self.start_bit, self.length, self.multiplier, self.offset)
+                    self.start_bit, self.length, self.multiplier, self.offset, self.endian)
 
     @staticmethod
     def check_id(id):
@@ -200,3 +202,18 @@ class DataConfig:
                 raise TypeError
         except TypeError:
             raise TypeError("Offset must be integer or float.")
+
+    @staticmethod
+    def check_endian(endian):
+        """
+            Endian expected as "L" or "B" of type str
+        """
+        try:
+            if type(endian) != str:
+                raise TypeError
+            if endian not in ["L", "B"]:
+                raise ValueError
+        except TypeError:
+            raise TypeError("Endian must be string")
+        except ValueError:
+            raise ValueError("Endian is expected as 'L' or 'B'")

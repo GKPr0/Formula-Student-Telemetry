@@ -17,13 +17,14 @@ class WarningWindow:
         :type offset: float / int
     """
 
-    def __init__(self, can_id, start_bit, length, multiplier, offset):
+    def __init__(self, can_id, start_bit, length, multiplier, offset, endian):
 
         self.can_id = can_id
         self.start_bit = start_bit
         self.length = length
         self.multiplier = multiplier
         self.offset = offset
+        self.endian = endian
 
     def check_user_inputs(self):
         """
@@ -42,6 +43,8 @@ class WarningWindow:
         if not self.check_multiplier():
             return False
         if not self.check_offset():
+            return False
+        if not self.check_endian():
             return False
         return True
 
@@ -131,4 +134,21 @@ class WarningWindow:
             return True
         except ValueError:
             self.show_warning_window("Offset Error", "Offset must be an integer or float")
+            return False
+
+    def check_endian(self):
+        """
+            Endian expected as "L" or "B" of type str
+        """
+        try:
+            if type(self.endian) != str:
+                raise TypeError
+            if self.endian not in ["L", "B"]:
+                raise ValueError
+            return True
+        except TypeError:
+            self.show_warning_window("Endian Error", "Endian must be string")
+            return False
+        except ValueError:
+            self.show_warning_window("Endian Error", "Endian is expected as 'L' or 'B'")
             return False
