@@ -19,7 +19,7 @@ class MainWindow(QMainWindow):
     """
 
     update_config_signal = QtCore.pyqtSignal()
-    update_can_msg_signal = QtCore.pyqtSignal(str)
+    update_can_msg_signal = QtCore.pyqtSignal(int, str)
     update_connection_status_signal = QtCore.pyqtSignal(str)
     update_data_signal = QtCore.pyqtSignal(queue.Queue)
 
@@ -142,12 +142,13 @@ class MainWindow(QMainWindow):
 
 
 
-    def update_can_msg(self, can_msg):
+    def update_can_msg(self, can_id, can_msg):
         """
             This method update can message label in gui
             :param can_msg: last received can message
         """
-        self.can_msg.setText(can_msg)
+
+        self.can_msg.setText("\t ID:{} \t Data: {}".format(can_id, can_msg))
 
     def update_connection_status(self, status):
         """

@@ -113,16 +113,15 @@ class DataConfig:
     @staticmethod
     def check_can_id(can_id):
         """
-            Check validity of can id
+            Check if id is valid. Expected Integer in range [0, 999]
         """
         try:
-            int(can_id, 16)
-            if type(can_id) != str:
+            if type(can_id) != int:
                 raise TypeError
         except ValueError:
-            raise ValueError("Can id must be number in range of 0 - 999.")
+            raise ValueError("ID must be number in range of 0 - 999.")
         except TypeError:
-            raise TypeError("Can id must be string(hex).")
+            raise TypeError("ID must be int).")
 
     @staticmethod
     def check_name(name):

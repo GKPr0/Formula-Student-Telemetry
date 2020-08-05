@@ -17,16 +17,9 @@ class DataProcessing:
 
         :raises TypeError:
             - ID is not a int.
-            - Data are not a str starting with leading '0b'.
+            - Data are not a binary str.
         :raises ValueError:
             - ID is not in range 0 - 999.
-
-        - Example of valid use of object::
-
-            config_list = Config.load_from_config_file()
-            data_decoder = DataDecoder(100, "0b1111111111111111111111110111100010101010101110111100110011111000" , config list)
-            data_point_list = data_decoder.data_decode()
-
     """
     def __init__(self, can_id, can_data, config_list):
         # Validate ID and Data
@@ -44,9 +37,9 @@ class DataProcessing:
 
     def data_decode(self):
         """
-            This method will check if given can id is in configuration
+            Check if given can id is in configuration
             If so it will call method data_process(), for data processing.
-            For every configuration with can id same asi given can id, it will create new DataPoint
+            For every configuration where can id == given can id, create new DataPoint
 
             :return: List of DataPoints, that contains ( widget id ,group id , name and value)
             :rtype: DataPoint
@@ -67,13 +60,13 @@ class DataProcessing:
     @staticmethod
     def data_process(bin_data, data_config):
         """
-            This method will take binary data and suitable data configuration.
+            Take binary data and suitable data configuration.
             Suitability of configuration is established by corespondent can id-> Done by method caller
             Part of data (config choose which part) is converted from bin to dec.
             Decimal number is multiplied by configuration multiplier and magnified by configuration offset
 
             :param bin_data: Can data in binary form with fixed 64 bit length
-            :type bin_data: bin
+            :type bin_data: str
             :param data_config: Configuration
             :type data_config: DataConfig
             :return: Decoded and processed value corresponding to configuration
@@ -92,21 +85,20 @@ class DataProcessing:
             Check if id is valid. Expected Integer in range [0, 999]
         """
         try:
-            int(can_id, 16) #If id is not a hex will raise value error
-            if type(can_id) != str:
+            if type(can_id) != int:
                 raise TypeError
         except ValueError:
             raise ValueError("ID must be number in range of 0 - 999.")
         except TypeError:
-            raise TypeError("ID must be string(hex).")
+            raise TypeError("ID must be int).")
 
     @staticmethod
     def check_data(data):
         """
-            Check if data are valid. Expected str with leading '0b'
+            Check if data are valid. Expected binary string'
         """
         try:
             if type(data) != str:
                 raise TypeError
         except TypeError:
-            raise TypeError("Data must be binary")
+            raise TypeError("Data must be binary string")

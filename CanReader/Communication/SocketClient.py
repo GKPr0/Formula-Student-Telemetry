@@ -41,7 +41,7 @@ class SocketClient(QObject):
         self.__address = address
         self.__port = port
 
-        self.status = "Offline"
+
 
 
     def __repr__(self):
@@ -67,29 +67,23 @@ class SocketClient(QObject):
 
     def get_data(self):
         """
-        This function will receive data from server and return them as a str.
+        This function will receive data from server and return them as a byte array.
 
-        :return: received data (:py:class:`str`)
+        :return: received data (:py:class:`bytearray`)
         """
 
-        # TODO Změnit na příjem HEX
         while True:
             try:
-                """data = self.__sock.recv(22)
-
-                if len(data) == 0:
-                    break
-
-                return str(data.decode())
-                """
-                self.__sock.settimeout(5.0)
+                self.__sock.settimeout(1.0)
                 data = self.__sock.recv(12)
 
                 if len(data) == 0:
                     break
-                return data
+                return bytearray(data)
             except WindowsError:
                 print("Unable to reach network!")
+                self.status = "Offline"
+                self.status_changed.emit(self.status)
                 self.connect_to_server()
 
         self.__sock.close()
@@ -122,7 +116,9 @@ class SocketClient(QObject):
             raise TypeError("Port must be integer.")
 
 if __name__ == "__main__":
-
+    """
+        Useful for communication test
+    """
     from datetime import datetime
 
     addr = '192.168.1.100'

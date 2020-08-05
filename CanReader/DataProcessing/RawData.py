@@ -4,20 +4,13 @@ class RawData:
         This class wil receive raw data and split them into ID and data part.
 
         :param raw_data: Raw data contains received data from remote device in its raw format
-        :type raw_data: str
+        :type raw_data: bytearray
 
         :raises TypeError:
-            - Rawdata are not a str.
-
-        - Example of valid constructor::
-
-            raw_data = RawData("ID100XFFFFFF78AABBCCF8")
-
+            - Rawdata are not a bytearray.
     """
-
-    DATA_START_BIT = 6  # Bit where starts data
-    ID_START_BIT = 2  # Bit where start ID
-    ID_LENGTH = 3   # Length of ID
+    ID_BYTE_LENGTH = 4
+    DATA_BYTE_LENGTH = 8
 
     def __init__(self, raw_data):
         self.check_raw_data(raw_data)
@@ -29,25 +22,34 @@ class RawData:
     def split_data(self):
         """
         Will pull ID and data part from raw_data.
-        Data will be converted from hex to binary code with fixed length 64 bit.
+        Data will be returned in binary code with fixed length 64 bit.
 
         :returns:
-            - ID (:py:class:`str`)
+            - ID (:py:class:`int`)
             - Data (:py:class:`str`) -> (in python bin is str with leading '0b')
-
-        - Example of valid method output::
-
-            raw_data = RawData("ID100XFFFFFF78AABBCCF8")
-            [id , data] = raw_data.split_data()
-
-            id = 100
-            data = "0b1111111111111111111111110111100010101010101110111100110011111000"
         """
 
-        id = str(self.__raw_data[self.ID_START_BIT:(self.ID_START_BIT + self.ID_LENGTH)])
-        data = bin(int(self.__raw_data[self.DATA_START_BIT:], 16))[2:].zfill(64)
+        id = int.from_bytes(self.__raw_data[:self.ID_BYTE_LENGTH], "big")
+        #data = bin(int(self.__raw_data[self.DATA_START_BIT:], 16))[2:].zfill(64)
+        data = [self.access_bit(self.__raw_data[self.ID_BYTE_LENGTH:], i) for i in range(self.DATA_BYTE_LENGTH*8)]
+        data = ''.join(map(str, data))
 
         return id, data
+
+    def access_bit(self, data, num):
+        """
+        Get access to specific bit
+
+        :param data: data to be converted
+        :type data: bytearray
+        :param num: position to be converted
+        :type num: int
+        :return: binary number
+        :rtype: int
+        """
+        base = int(num // 8)
+        shift = int(num % 8)
+        return (data[base] & (1 << shift)) >> shift
 
     @staticmethod
     def check_raw_data(raw_data):
@@ -56,11 +58,11 @@ class RawData:
         """
 
         try:
-            if type(raw_data) != str:
+            if type(raw_data) != bytearray:
                 raise TypeError
 
         except TypeError:
-            raise TypeError("Raw data are expected as string")
+            raise TypeError("Raw data are expected as bytearray")
 
 
 
