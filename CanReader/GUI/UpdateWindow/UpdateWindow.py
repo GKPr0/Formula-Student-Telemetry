@@ -43,19 +43,17 @@ class UpdateWindow(QMainWindow):
         # Load radio buttons
         self.little_endian = self.findChild(QRadioButton, "little_endian")
         self.big_endian = self.findChild(QRadioButton, "big_endian")
-        self.big_endian.clicked.connect(self.is_big_endian_possible)
+        self.little_endian.clicked.connect(self.is_little_endian_possible)
 
         # Load textbox from gui
         self.name_input = self.findChild(QLineEdit, "name_input")
         self.id_input = self.findChild(QLineEdit, "id_input")
         self.start_bit_input = self.findChild(QLineEdit, "start_bit_input")
         self.length_input = self.findChild(QLineEdit, "length_input")
-        self.length_input.editingFinished.connect(self.is_big_endian_possible)
+        self.length_input.editingFinished.connect(self.is_little_endian_possible)
         self.multiplier_input = self.findChild(QLineEdit, "multiplier_input")
         self.offset_input = self.findChild(QLineEdit, "offset_input")
         self.unit_input = self.findChild(QLineEdit, "unit_input")
-
-
 
         # Load current data to textBoxes
         self.show_data()
@@ -74,12 +72,12 @@ class UpdateWindow(QMainWindow):
         self.offset_input.setText(str(self.data_config.offset))
         self.unit_input.setText(str(self.data_config.unit))
 
-        if self.is_big_endian_possible():
-            if str(self.data_config.endian) == "B":
-                self.big_endian.setChecked(True)
+        if self.is_little_endian_possible():
+            if str(self.data_config.endian) == "L":
+                self.little_endian.setChecked(True)
                 return
 
-        self.little_endian.setChecked(True)
+        self.big_endian.setChecked(True)
 
     def update_config(self):
         """
@@ -120,14 +118,14 @@ class UpdateWindow(QMainWindow):
 
             self.close()
 
-    def is_big_endian_possible(self):
-        if int(self.length_input.text()) % 8 != 0:
-            if self.big_endian.isChecked():
-                self.little_endian.setChecked(True)
-                self.big_endian.setCheckable(False)
+    def is_little_endian_possible(self):
+        if int(self.length_input.text()) % 8 != 0 or int(self.length_input.text()) <= 8:
+            if self.little_endian.isChecked():
+                self.big_endian.setChecked(True)
+                self.little_endian.setCheckable(False)
                 return False
         else:
-            self.big_endian.setCheckable(True)
+            self.little_endian.setCheckable(True)
             return True
 
 

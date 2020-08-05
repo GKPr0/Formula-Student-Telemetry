@@ -126,8 +126,6 @@ class MainWindow(QMainWindow):
             :param data_list: list of DataPoints containing decoded and processed data from formula
             :type data_list: DataPoint
         """
-        # Using multithreading will improve app performance, but tu use this it is necessary to implement some kind of
-        # time event that will update data in gui.
         while not queue.empty():
             data_list = queue.get()
             #with ThreadPoolExecutor(max_workers=32) as executur:

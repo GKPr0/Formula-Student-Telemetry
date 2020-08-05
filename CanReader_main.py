@@ -72,7 +72,7 @@ class App:
 
         raw_data = RawData(data_from_formula)
         can_id, can_data = raw_data.split_data()
-
+        print(can_data)
         data_logging_thread = threading.Thread(target=self.push_to_data_logger, name='data_logging',
                                                args=(can_id, can_data))
         data_logging_thread.start()

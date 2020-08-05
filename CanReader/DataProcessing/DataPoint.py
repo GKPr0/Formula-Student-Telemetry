@@ -29,7 +29,8 @@ class DataPoint:
         self.value = value
 
     def __repr__(self):
-        return "{} has id {}, is in group {} and have value {}. It´s overview id is {}\n".format(self.name, self.id, self.group_id, self.value, self.overview_id)
+        return "{} has id {}, is in group {} and have value {}. It´s overview id is {}\n"\
+            .format(self.name, self.id, self.group_id, self.value, self.overview_id)
     
     @staticmethod
     def check_id(id):

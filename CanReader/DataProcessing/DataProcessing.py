@@ -76,7 +76,12 @@ class DataProcessing:
         multiplier = data_config.multiplier
         offset = data_config.offset
 
-        data = int(bin_data[start_bit:end_bit], 2)
+        if data_config.endian == "L":
+            tmp = bin_data[start_bit:end_bit]
+            data = [tmp[i*8:(i+1)*8] for i in range(int(len(tmp) / 8)-1, -1, -1)]
+            data = int(''.join(map(str, data)), 2)
+        else:
+            data = int(bin_data[start_bit:end_bit], 2)
         return float((data * multiplier) + offset)
 
     @staticmethod

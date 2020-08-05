@@ -30,26 +30,12 @@ class RawData:
         """
 
         id = int.from_bytes(self.__raw_data[:self.ID_BYTE_LENGTH], "big")
-        #data = bin(int(self.__raw_data[self.DATA_START_BIT:], 16))[2:].zfill(64)
-        data = [self.access_bit(self.__raw_data[self.ID_BYTE_LENGTH:], i) for i in range(self.DATA_BYTE_LENGTH*8)]
+        #print(bin(int("00A5FFFFBFFCFF", 16))[2:].zfill(64))
+
+        data = ["{:08b}".format(self.__raw_data[i]) for i in range(self.ID_BYTE_LENGTH, self.DATA_BYTE_LENGTH + self.ID_BYTE_LENGTH)]
         data = ''.join(map(str, data))
 
         return id, data
-
-    def access_bit(self, data, num):
-        """
-        Get access to specific bit
-
-        :param data: data to be converted
-        :type data: bytearray
-        :param num: position to be converted
-        :type num: int
-        :return: binary number
-        :rtype: int
-        """
-        base = int(num // 8)
-        shift = int(num % 8)
-        return (data[base] & (1 << shift)) >> shift
 
     @staticmethod
     def check_raw_data(raw_data):
@@ -63,6 +49,3 @@ class RawData:
 
         except TypeError:
             raise TypeError("Raw data are expected as bytearray")
-
-
-
