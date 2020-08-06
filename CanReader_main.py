@@ -36,19 +36,18 @@ class App:
         self.data_from_formula = None
 
         self.data_queue = queue.Queue(maxsize=25)
+
         self.gui_ready = False
 
         self.gui = threading.Thread(target=self.run_gui, name='gui')
         self.communication = threading.Thread(target=self.run_communication, name='communication')
         self.gui.start()
 
-
-
     def run_communication(self):
         '''
-            Runs in separate thread, that invoke communication with formula.
-            Once data packet from formula arrived new data processing thread will be created and
-            communication will start over.
+        Runs in separate thread, that invoke communication with formula.
+        Once data packet from formula arrived new data processing thread will be created and
+        communication will start over.
         '''
         # Whenever connection status changed signal to gui will be send
         self.socket_client.status_changed.connect(self.main_window.update_connection_status_signal.emit)
@@ -61,7 +60,6 @@ class App:
                                                       args=(data_from_formula,))
             data_processing_thread.start()
             time.sleep(0.01)
-
 
     def run_data_processing(self, data_from_formula):
         """
@@ -93,7 +91,7 @@ class App:
 
         self.main_window.update_config_signal.connect(self.update_config)
         self.main_window.action_save.triggered.connect(self.data_logger.set_save_path)
-        gui.aboutToQuit.connect(sys.exit)
+        gui.aboutToQuit.connect(self.on_app_exit)
 
         self.gui_ready = True
         self.communication.start()
@@ -120,6 +118,16 @@ class App:
         self.main_window.update_can_msg_signal.emit(can_id, can_data)
 
         self.data_logger.get_raw_can(can_id, can_data)
+
+    def on_app_exit(self):
+        try:
+            print("Saving data ...")
+            self.data_logger.save_raw_can()
+            print("Data successfully saved")
+        except OSError:
+            raise OSError("Could not save data")
+        finally:
+            sys.exit()
 
 
 if __name__ == "__main__":

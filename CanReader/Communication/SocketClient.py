@@ -139,8 +139,3 @@ if __name__ == "__main__":
         print("ID: {}".format(id))
         for i,m in enumerate(msg):
             print("{}\t{}".format(i, m))
-
-
-
-
-

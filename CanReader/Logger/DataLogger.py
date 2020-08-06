@@ -1,5 +1,4 @@
 from PyQt5.QtWidgets import QFileDialog
-import pathlib
 from datetime import datetime
 
 
@@ -14,9 +13,6 @@ class DataLogger:
         self.raw_data = []
         self.save_path = ""
         self.automatic_path = "./AutomaticDataLog.txt"
-
-    def __del__(self):
-        pass # @TODO udělat automatické uložení v případě vypnutí
 
     def get_raw_can(self, can_id, can_data):
         """
