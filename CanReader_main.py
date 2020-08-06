@@ -13,7 +13,6 @@ from CanReader.GUI.MainWindow import MainWindow
 from CanReader.Logger.DataLogger import DataLogger
 import time
 import queue
-import sys
 
 class App:
     '''
@@ -94,6 +93,7 @@ class App:
 
         self.main_window.update_config_signal.connect(self.update_config)
         self.main_window.action_save.triggered.connect(self.data_logger.set_save_path)
+        gui.aboutToQuit.connect(sys.exit)
 
         self.gui_ready = True
         self.communication.start()

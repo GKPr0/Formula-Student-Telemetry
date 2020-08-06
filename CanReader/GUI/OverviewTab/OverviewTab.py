@@ -17,8 +17,8 @@ class OverviewTab(QQuickWidget, Tab):
         self.config_variable_list = []
         self.update_data_signal.connect(self.update_data)
 
-        # Create list of objects representing UI components
-        self.object_list = {
+        # Create dict of objects representing UI components
+        self.object_dict = {
             "rpm_gauge": QmlObjectManager(1),
             "gear": QmlObjectManager(2, type= "int"),
             "coolant_tmp": QmlObjectManager(3),
@@ -34,18 +34,18 @@ class OverviewTab(QQuickWidget, Tab):
         }
 
         # Bind created objects to qml context property
-        self.rootContext().setContextProperty("rpm_gauge", self.object_list["rpm_gauge"])
-        self.rootContext().setContextProperty("gear", self.object_list["gear"])
-        self.rootContext().setContextProperty("coolant_tmp", self.object_list["coolant_tmp"])
-        self.rootContext().setContextProperty("oil_tmp", self.object_list["oil_tmp"])
-        self.rootContext().setContextProperty("oil_pressure", self.object_list["oil_pressure"])
-        self.rootContext().setContextProperty("fuel_pressure", self.object_list["fuel_pressure"])
-        self.rootContext().setContextProperty("fl_dumper", self.object_list["fl_dumper"])
-        self.rootContext().setContextProperty("fr_dumper", self.object_list["fr_dumper"])
-        self.rootContext().setContextProperty("rl_dumper", self.object_list["rl_dumper"])
-        self.rootContext().setContextProperty("rr_dumper", self.object_list["rr_dumper"])
-        self.rootContext().setContextProperty("tps", self.object_list["tps"])
-        self.rootContext().setContextProperty("brake", self.object_list["brake"])
+        self.rootContext().setContextProperty("rpm_gauge", self.object_dict["rpm_gauge"])
+        self.rootContext().setContextProperty("gear", self.object_dict["gear"])
+        self.rootContext().setContextProperty("coolant_tmp", self.object_dict["coolant_tmp"])
+        self.rootContext().setContextProperty("oil_tmp", self.object_dict["oil_tmp"])
+        self.rootContext().setContextProperty("oil_pressure", self.object_dict["oil_pressure"])
+        self.rootContext().setContextProperty("fuel_pressure", self.object_dict["fuel_pressure"])
+        self.rootContext().setContextProperty("fl_dumper", self.object_dict["fl_dumper"])
+        self.rootContext().setContextProperty("fr_dumper", self.object_dict["fr_dumper"])
+        self.rootContext().setContextProperty("rl_dumper", self.object_dict["rl_dumper"])
+        self.rootContext().setContextProperty("rr_dumper", self.object_dict["rr_dumper"])
+        self.rootContext().setContextProperty("tps", self.object_dict["tps"])
+        self.rootContext().setContextProperty("brake", self.object_dict["brake"])
 
         directory = os.path.dirname(os.path.abspath(__file__))
         self.setSource(QUrl.fromLocalFile(os.path.join(directory, "OverviewTab2.qml")))
@@ -55,6 +55,6 @@ class OverviewTab(QQuickWidget, Tab):
         self.config_variable_list.append(variable)
 
     def update_data(self, data_point):
-        for obj in self.object_list.values():
+        for obj in self.object_dict.values():
             if obj.overview_id == data_point.overview_id:
                 obj.value = data_point.value

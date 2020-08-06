@@ -1,4 +1,4 @@
-from PyQt5 import uic, QtCore
+from PyQt5 import uic, QtCore, QtGui
 from PyQt5.QtWidgets import QMainWindow, QTabWidget, QPushButton, QLabel, QAction, QListWidget
 
 from CanReader.GUI.UpdateWindow.UpdateWindow import UpdateWindow
@@ -27,6 +27,8 @@ class MainWindow(QMainWindow):
         QMainWindow.__init__(self)
         uic.loadUi('CanReader/GUI/MainWindow.ui', self)
 
+        self.setWindowIcon(QtGui.QIcon('CanReader/Images/icon.png'))
+
         # Get dataConfig
         self.data_config_list = []
         self.set_data_config_list()
@@ -50,12 +52,12 @@ class MainWindow(QMainWindow):
         self.tab_list = {
             "overview_tab": OverviewTab(),
             "intake_tab": GraphTab(1),
-            "engine_tab" : GraphTab(2),
-            "exhaust_tab" : GraphTab(3),
-            "fluid_tab" : GraphTab(4),
-            "suspension_tab" : GraphTab(5),
-            "acc_gyro_tab" : GraphTab(6),
-            "error_tab" : ErrorTab(7)
+            "engine_tab": GraphTab(2),
+            "exhaust_tab": GraphTab(3),
+            "fluid_tab": GraphTab(4),
+            "suspension_tab": GraphTab(5),
+            "acc_gyro_tab": GraphTab(6),
+            "error_tab": ErrorTab(7)
          }
 
         #Load tab widget add fill it with tabs
@@ -70,6 +72,7 @@ class MainWindow(QMainWindow):
         self.tab_widget.addTab(self.tab_list["error_tab"], "Error")
 
         self.tab_widget.currentChanged.connect(self.show_variable_list_used_in_current_tab)
+        self.tab_widget.setStyleSheet("border: 0px; border-top: 1px solid white")
         self.show_variable_list_used_in_current_tab()
 
         #fill tabs with variable configs and generate proper UI

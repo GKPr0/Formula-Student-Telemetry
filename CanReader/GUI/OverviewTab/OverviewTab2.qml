@@ -5,6 +5,8 @@ import QtQuick.Controls.Styles 1.4
 
 Item {
     id: element
+    width: 1080
+    height: 720
 
     Connections {
         target: slider
@@ -99,8 +101,8 @@ Item {
 
             Item {
                 id: suspension
-                x: 474
-                width: 166
+                x: 857
+                width: 223
                 anchors.top: parent.top
                 anchors.topMargin: 0
                 anchors.bottomMargin: 0
@@ -110,8 +112,8 @@ Item {
                 Gauge {
                     id: flDumperGauge
                     width: 33
-                    anchors.right: frDumperGauge.left
-                    anchors.rightMargin: 80
+                    anchors.right: parent.horizontalCenter
+                    anchors.rightMargin: 60
                     anchors.bottom: parent.verticalCenter
                     anchors.bottomMargin: 10
                     anchors.topMargin: 0
@@ -152,12 +154,12 @@ Item {
 
                 Gauge {
                     id: frDumperGauge
-                    x: 85
                     width: 33
+                    anchors.left: parent.horizontalCenter
+                    anchors.leftMargin: 50
                     anchors.bottom: parent.verticalCenter
                     anchors.bottomMargin: 10
                     anchors.topMargin: 0
-                    anchors.right: parent.right
                     anchors.top: suspension_text.bottom
                     tickmarkStepSize: 0
                     value: fr_dumper.value
@@ -176,7 +178,6 @@ Item {
                             implicitWidth: 16
                         }
                     }
-                    anchors.rightMargin: 10
 
                     Label {
                         id: frlabel
@@ -200,8 +201,8 @@ Item {
                     width: 33
                     anchors.top: parent.verticalCenter
                     anchors.topMargin: 10
-                    anchors.right: rrDumperGauge.left
-                    anchors.rightMargin: 80
+                    anchors.right: parent.horizontalCenter
+                    anchors.rightMargin: 60
                     anchors.bottomMargin: 15
                     tickmarkStepSize: 0
                     anchors.bottom: parent.bottom
@@ -240,15 +241,14 @@ Item {
 
                 Gauge {
                     id: rrDumperGauge
-                    x: 74
                     width: 33
+                    anchors.left: parent.horizontalCenter
+                    anchors.leftMargin: 50
                     anchors.top: parent.verticalCenter
                     anchors.topMargin: 10
                     anchors.bottomMargin: 15
-                    anchors.right: parent.right
                     tickmarkStepSize: 0
                     anchors.bottom: parent.bottom
-                    anchors.rightMargin: 10
                     value: rr_dumper.value
                     minimumValue: 25
                     maximumValue: 50
@@ -287,7 +287,7 @@ Item {
                     x: 34
                     color: "#bdbebf"
                     text: qsTr("SUSPENSION")
-                    anchors.horizontalCenterOffset: 5
+                    anchors.horizontalCenterOffset: 0
                     anchors.top: parent.top
                     anchors.topMargin: 8
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -300,12 +300,27 @@ Item {
                     id: button
                     x: 66
                     y: 71
-                    width: 51
-                    height: 19
+                    width: 40
+                    height: 15
                     text: qsTr("SET")
-                    anchors.horizontalCenterOffset: 5
+                    anchors.verticalCenterOffset: 110
+                    anchors.horizontalCenterOffset: 0
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
+                }
+
+                Image {
+                    id: image
+                    x: -627
+                    y: -66
+                    width: 180
+                    height: 120
+                    anchors.verticalCenterOffset: 10
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    rotation: -90
+                    fillMode: Image.PreserveAspectFit
+                    source: "formule.png"
                 }
             }
 
@@ -325,6 +340,7 @@ Item {
                     x: 57
                     color: "#bdbebf"
                     text: qsTr("Stats")
+                    fontSizeMode: Text.Fit
                     anchors.top: parent.top
                     anchors.topMargin: 8
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -477,10 +493,12 @@ Item {
 
                 Slider {
                     id: slider
+                    anchors.right: parent.right
                     anchors.rightMargin: 0
-                    anchors.fill: parent
+                    anchors.bottom: parent.bottom
+                    anchors.left: parent.left
                     wheelEnabled: false
-                    anchors.top: rpmGauge.bottom
+                    anchors.top: parent.top
                     to: 150
                     value: 0
                     from: -50
@@ -522,7 +540,8 @@ Item {
             Gauge {
                 id: throttleGauge
                 width: 40
-                height: rectangle.height/5
+                height: 200
+                scale: 1
                 anchors.horizontalCenterOffset: 0
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 20
@@ -565,7 +584,7 @@ Item {
             Gauge {
                 id: brakeGauge
                 width: 40
-                height: rectangle.height/6
+                height: 170
                 anchors.horizontalCenterOffset: 0
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: -10
@@ -977,8 +996,11 @@ Item {
     }
 }
 
+
+
 /*##^##
 Designer {
-    D{i:0;autoSize:true;height:480;width:640}
+    D{i:13;anchors_width:33;anchors_x:85}D{i:21;anchors_width:33;anchors_x:74}D{i:27;anchors_x:-627;anchors_y:-66}
+D{i:8;anchors_width:204;anchors_x:876}D{i:40;anchors_width:161}
 }
 ##^##*/

@@ -29,14 +29,17 @@ class ErrorWidget(QWidget):
 
         img = QPixmap(self.ICONS["Yellow"])
         self.label_img = QLabel()
+        self.label_img.setStyleSheet("border: 0px")
         self.label_img.setPixmap(img)
         self.label_img.setAlignment(Qt.AlignCenter)
         layout.addWidget(self.label_img)
 
         label = QLabel(self.name)
+        label.setStyleSheet("border: 0px")
         font = QFont("MS Shell", 9, QFont.Bold)
         label.setFont(font)
         label.setAlignment(Qt.AlignCenter)
+        label.setWordWrap(True)
         layout.addWidget(label)
 
         self.setLayout(layout)
