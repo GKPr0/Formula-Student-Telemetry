@@ -3,8 +3,8 @@ from PyQt5.QtQuickWidgets import QQuickWidget
 from PyQt5.QtWidgets import QWidget, QPushButton, QLabel, QAction, QVBoxLayout
 from PyQt5.QtCore import QObject, QTimer, QUrl, pyqtSignal, pyqtProperty
 import os
-from CanReader.GUI.OverviewTab.QmlObjectManager import QmlObjectManager
-from CanReader.GUI.Tab import Tab
+from GUI.OverviewTab.QmlObjectManager import QmlObjectManager
+from GUI.Tab import Tab
 
 class OverviewTab(QQuickWidget, Tab):
 

@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
 from PyQt5.QtGui import QPixmap, QFont
 from PyQt5 import QtCore
 
-from CanReader.GUI.GraphTabs.Graph import Graph
+from GUI.GraphTabs.Graph import Graph
 
 
 class ErrorWidget(QWidget):

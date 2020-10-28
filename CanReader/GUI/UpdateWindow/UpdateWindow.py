@@ -1,9 +1,9 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow,  QPushButton, QLineEdit, QRadioButton
 
-from CanReader.Config.Config import Config
-from CanReader.Config.DataConfig import DataConfig
-from CanReader.GUI.UpdateWindow.WarningWindow import WarningWindow
+from Config.Config import Config
+from Config.DataConfig import DataConfig
+from GUI.UpdateWindow.WarningWindow import WarningWindow
 
 
 class UpdateWindow(QMainWindow):
@@ -26,7 +26,7 @@ class UpdateWindow(QMainWindow):
 
     def __init__(self, main_window, config_id):
         QMainWindow.__init__(self)
-        uic.loadUi('CanReader/GUI/UpdateWindow/UpdateWindow.ui', self)
+        uic.loadUi('GUI/UpdateWindow/UpdateWindow.ui', self)
         self.main_window = main_window
 
         # Check config_id

@@ -1,8 +1,8 @@
 from PyQt5 import uic, QtCore
 from PyQt5.QtWidgets import QWidget, QGridLayout
-from CanReader.GUI.GraphTabs.Graph import Graph
-from CanReader.GUI.Tab import Tab
-from CanReader.GUI.ErrorTab.ErrorWidget import ErrorWidget
+from GUI.GraphTabs.Graph import Graph
+from GUI.Tab import Tab
+from GUI.ErrorTab.ErrorWidget import ErrorWidget
 
 import math
 

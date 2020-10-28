@@ -1,5 +1,5 @@
 from configparser import ConfigParser
-from CanReader.Config.DataConfig import DataConfig
+from Config.DataConfig import DataConfig
 import re
 import os
 from pathlib import Path

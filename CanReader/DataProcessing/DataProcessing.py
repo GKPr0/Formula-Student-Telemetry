@@ -1,4 +1,4 @@
-from CanReader.DataProcessing.DataPoint import DataPoint
+from DataProcessing.DataPoint import DataPoint
 
 
 class DataProcessing:

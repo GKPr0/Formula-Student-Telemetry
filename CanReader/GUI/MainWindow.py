@@ -1,11 +1,11 @@
 from PyQt5 import uic, QtCore, QtGui
 from PyQt5.QtWidgets import QMainWindow, QTabWidget, QPushButton, QLabel, QAction, QListWidget
 
-from CanReader.GUI.UpdateWindow.UpdateWindow import UpdateWindow
-from CanReader.GUI.OverviewTab.OverviewTab import OverviewTab
-from CanReader.GUI.GraphTabs.GraphTab import GraphTab
-from CanReader.GUI.ErrorTab.ErrorTab import ErrorTab
-from CanReader.Config.Config import Config
+from GUI.UpdateWindow.UpdateWindow import UpdateWindow
+from GUI.OverviewTab.OverviewTab import OverviewTab
+from GUI.GraphTabs.GraphTab import GraphTab
+from GUI.ErrorTab.ErrorTab import ErrorTab
+from Config.Config import Config
 
 from concurrent.futures import ThreadPoolExecutor
 from threading import Lock
@@ -25,9 +25,9 @@ class MainWindow(QMainWindow):
 
     def __init__(self):
         QMainWindow.__init__(self)
-        uic.loadUi('CanReader/GUI/MainWindow.ui', self)
+        uic.loadUi('GUI/MainWindow.ui', self)
 
-        self.setWindowIcon(QtGui.QIcon('CanReader/Images/icon.png'))
+        self.setWindowIcon(QtGui.QIcon('Images/icon.png'))
 
         # Get dataConfig
         self.data_config_list = []

@@ -5,12 +5,12 @@ Main handler of project.
 import threading
 import sys
 from PyQt5 import QtWidgets, QtCore
-from CanReader.Config.Config import Config
-from CanReader.Communication.SocketClient import SocketClient
-from CanReader.DataProcessing.RawData import RawData
-from CanReader.DataProcessing.DataProcessing import DataProcessing
-from CanReader.GUI.MainWindow import MainWindow
-from CanReader.Logger.DataLogger import DataLogger
+from Config.Config import Config
+from Communication.SocketClient import SocketClient
+from DataProcessing.RawData import RawData
+from DataProcessing.DataProcessing import DataProcessing
+from GUI.MainWindow import MainWindow
+from Logger.DataLogger import DataLogger
 import time
 import queue
 
