@@ -1,9 +1,18 @@
 #include <Arduino.h>
+#include <Wifi.h>
+
+// WiFi credentials
+const char* ssid     = "Test_ESP_32";
+const char* password = "Fstulracing69";
 
 void setup() {
-  // put your setup code here, to run once:
+  Serial.begin(1024000);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  while(Serial.available())
+  {
+    Serial.write("Ahoj");
+  }
+  delay(1);
 }

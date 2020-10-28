@@ -17,6 +17,7 @@ void canSetup();
 canDataPack canReceive();
 
 String convertDataPackToString(canDataPack dataPack);
+void convertDataPackToByteArray(uint8_t* data, canDataPack & dataPack);
 
 String canDataToHexString(uint8_t rawData[]);
 String canIdToString(uint32_t rawId);

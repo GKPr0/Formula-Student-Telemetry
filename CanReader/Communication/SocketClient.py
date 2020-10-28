@@ -32,7 +32,7 @@ class SocketClient(QObject):
 
     status_changed = pyqtSignal(str)
 
-    def __init__(self, address='192.168.1.100', port=80):
+    def __init__(self, address='192.168.1.100', port = 80):
         QObject.__init__(self)
 
         self.check_address(address)
