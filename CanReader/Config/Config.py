@@ -120,7 +120,7 @@ class Config:
         overview_id = self.config.getint(section, "Overview id")
         name = self.config.get(section, "Name")
         unit = self.config.get(section, "Unit")
-        can_id = self.config.getint(section, "Can id")
+        can_id = self.config.get(section, "Can id")
         start_bit = self.config.getint(section, "Start bit")
         length = self.config.getint(section, "Length")
         multiplier = self.config.getfloat(section, "Multiplier")

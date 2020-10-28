@@ -73,8 +73,6 @@ class DataConfig:
             Check validity of ID. Works for id, group id and can id
         """
         try:
-            if id < 0 or id > 999:
-                raise ValueError
             if type(id) != int:
                 raise TypeError
         except ValueError:
@@ -118,12 +116,12 @@ class DataConfig:
             Check if id is valid. Expected Integer in range [0, 999]
         """
         try:
-            if type(can_id) != int:
+            if type(can_id) != str:
                 raise TypeError
         except ValueError:
             raise ValueError("ID must be number in range of 0 - 999.")
         except TypeError:
-            raise TypeError("ID must be int).")
+            raise TypeError("ID must be hex string.")
 
     @staticmethod
     def check_name(name):

@@ -45,7 +45,7 @@ Item {
     Connections {
         target: batteryValue
         onTextChanged:{
-            if(parseInt(batteryValue.text) < 11){
+            if(parseInt(batteryValue.text) < 11 && batteryImg.source != "battery_low.png"){
                 batteryImg.source = "battery_low.png"
             }else
             {
@@ -57,20 +57,76 @@ Item {
     Connections{
         target: cltGauge
         onValueChanged:{
-            if(cltGauge.value > 120 && cltGauge.value < 135){
+            if(cltGauge.value > 115 || parseInt(CLT_sensor.value) === 1 ){
                 waterTempStatus.source = "water_temp_error.png"
+            }
+            else if(cltGauge.value > 115){
+                waterTempStatus.source = "water_temp_warning.png"
+            }else{
+                waterTempStatus.source = "water_temp_normal.png"
+            }
+        }
+    }
+
+    Connections{
+        target: oilPressureGauge
+        onValueChanged:{
+            if(oilPressureGauge.value > 8){
+                 oilPressureStatus.source = "oil_pres_error.png"
+            }
+            else if(oilPressureGauge.value < 1){
+                oilPressureStatus.source = "oil_pres_warning.png"
+            }else{
+                oilPressureStatus.source = "oil_pres_normal.png"
+            }
+        }
+    }
+
+    Connections{
+        target: fuelPressureGauge
+        onValueChanged:{
+            if(fuelPressureGauge.value > 4 || parseInt(WBO_sensor.value) === 1
+                    || parseInt(FP_sensor.value) === 1 || parseInt(knock_detect.value) === 1){
+                engineStatus.source = "engine_error.png"
+            }
+            else if(fuelPressureGauge.value < 1){
+                engineStatus.source = "engine_warning.png"
+            }else{
+                engineStatus.source = "engine_normal.png"
             }
         }
     }
 
     Connections {
-        target: gearValue
-        onTextChanged:{
-            if(parseInt(batteryValue.text) === 0){
+        target: gear
+        onValueChanged:{
+            if(parseInt(gear.value) === 0){
                 gearValue.text = "N"
             }else
             {
                 gearValue.text = gear.value
+            }
+        }
+    }
+
+    Connections {
+        target: FPS
+        onValueChanged:{
+            if(parseInt(FPS.value) === 1){
+                fuelPumpState.active = true;
+            }else{
+                fuelPumpState.active = false;
+            }
+        }
+    }
+
+    Connections {
+        target: CFS
+        onValueChanged:{
+            if(parseInt(CFS.value) === 1){
+                coolantFanState.active = true;
+            }else{
+                coolantFanState.active = false;
             }
         }
     }
@@ -208,7 +264,7 @@ Item {
                     anchors.bottom: parent.bottom
                     value: rl_dumper.value
                     minimumValue: 25
-                    maximumValue: 50
+                    maximumValue: 75
 
                     Behavior on value {
                         NumberAnimation {
@@ -251,7 +307,7 @@ Item {
                     anchors.bottom: parent.bottom
                     value: rr_dumper.value
                     minimumValue: 25
-                    maximumValue: 50
+                    maximumValue: 75
 
                     Behavior on value {
                         NumberAnimation {
@@ -368,7 +424,7 @@ Item {
                         x: 3
                         y: 28
                         color: "#bdbebf"
-                        text: qsTr("Label")
+                        text: parseFloat(battery.value).toFixed(2)
                         anchors.verticalCenterOffset: 30
                         anchors.horizontalCenterOffset: -5
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -401,7 +457,7 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottom: parent.bottom
                     anchors.bottomMargin: 11
-                    source: "engine_normal.png"
+                    source: "engine_warning.png"
                     fillMode: Image.PreserveAspectFit
                 }
 
@@ -428,7 +484,7 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottom: parent.bottom
                     anchors.bottomMargin: 11
-                    source: "oil_pres_normal.png"
+                    source: "oil_pres_warning.png"
                     fillMode: Image.PreserveAspectFit
                 }
 
@@ -622,7 +678,7 @@ Item {
 
             CircularGauge {
                 id: rpmGauge
-                value: rpm_gauge.value
+                value: parseInt(rpm_gauge.value)/100
                 maximumValue: 150
                 anchors.left: parent.left
                 anchors.leftMargin: 189
@@ -714,7 +770,7 @@ Item {
                 }
 
                 value: oil_tmp.value
-                maximumValue: 120
+                maximumValue: 130
                 Label {
                     id: oilTmpLabel
                     y: 271
@@ -743,7 +799,7 @@ Item {
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
                 value: oil_pressure.value
-                maximumValue: 20
+                maximumValue: 10
 
                 Behavior on value {
                     NumberAnimation {
@@ -767,31 +823,31 @@ Item {
                             ctx.lineWidth = outerRadius * 0.02;
 
                             ctx.arc(outerRadius, outerRadius, outerRadius - ctx.lineWidth / 2,
-                                    degreesToRadians(valueToAngle(18) - 90), degreesToRadians(valueToAngle(20) - 90));
+                                    degreesToRadians(valueToAngle(8) - 90), degreesToRadians(valueToAngle(10) - 90));
                             ctx.stroke();
                         }
                     }
 
-                    minorTickmarkCount : 3
-                    tickmarkStepSize: 2
+                    minorTickmarkCount : 4
+                    tickmarkStepSize: 1
 
                     tickmark: Rectangle {
-                        color: styleData.value >= 18 ? "#e34c22" : "#e5e5e5"
+                        color: styleData.value >= 8 ? "#e34c22" : "#e5e5e5"
                         implicitWidth: outerRadius * 0.02
-                        visible: styleData.value < 18 || styleData.value % 1 == 0
+                        visible: styleData.value < 8 || styleData.value % 1 == 0
                         implicitHeight: outerRadius * 0.06
                         antialiasing: true
                     }
 
                     tickmarkLabel: Text {
-                        color: styleData.value >= 18 ? "#e34c22" : "#e5e5e5"
+                        color: styleData.value >= 8 ? "#e34c22" : "#e5e5e5"
                         text: styleData.value
                         font.pixelSize: Math.max(6, outerRadius * 0.1)
                         antialiasing: true
                     }
                     minorTickmark: Rectangle {
                         color: "#e5e5e5"
-                        visible: styleData.value < 18
+                        visible: styleData.value < 8
                         implicitWidth: outerRadius * 0.01
                         implicitHeight: outerRadius * 0.03
                         antialiasing: true
@@ -833,7 +889,7 @@ Item {
                     }
                 }
                 value: coolant_tmp.value
-                maximumValue: 120
+                maximumValue: 130
                 Label {
                     id: cltLabel
                     y: 271
@@ -892,7 +948,7 @@ Item {
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
                 value: fuel_pressure.value
-                maximumValue: 20
+                maximumValue: 5
 
 
 
@@ -918,32 +974,32 @@ Item {
                             ctx.lineWidth = outerRadius * 0.02;
 
                             ctx.arc(outerRadius, outerRadius, outerRadius - ctx.lineWidth / 2,
-                                    degreesToRadians(valueToAngle(18) - 90), degreesToRadians(valueToAngle(20) - 90));
+                                    degreesToRadians(valueToAngle(4) - 90), degreesToRadians(valueToAngle(5) - 90));
                             ctx.stroke();
                         }
                     }
 
-                    minorTickmarkCount : 3
-                    tickmarkStepSize: 2
+                    minorTickmarkCount : 4
+                    tickmarkStepSize: 0.5
 
                     tickmark: Rectangle {
-                        color: styleData.value >= 18 ? "#e34c22" : "#e5e5e5"
+                        color: styleData.value >= 4 ? "#e34c22" : "#e5e5e5"
                         implicitWidth: outerRadius * 0.02
-                        visible: styleData.value <= 18 || styleData.value % 1 == 0
+                        visible: styleData.value <= 4 || styleData.value % 1 == 0
                         implicitHeight: outerRadius * 0.06
                         antialiasing: true
                     }
 
 
                     tickmarkLabel: Text {
-                        color: styleData.value >= 18 ? "#e34c22" : "#e5e5e5"
+                        color: styleData.value >= 4 ? "#e34c22" : "#e5e5e5"
                         text: styleData.value
                         font.pixelSize: Math.max(6, outerRadius * 0.1)
                         antialiasing: true
                     }
                     minorTickmark: Rectangle {
                         color: "#e5e5e5"
-                        visible: styleData.value < 18
+                        visible: styleData.value < 4
                         implicitWidth: outerRadius * 0.01
                         implicitHeight: outerRadius * 0.03
                         antialiasing: true
@@ -968,7 +1024,7 @@ Item {
                 y: 86
                 width: 20
                 color: "#bdbebf"
-                text: gear.value
+                text: "N"
                 anchors.horizontalCenterOffset: 30
                 anchors.horizontalCenter: oilPressureGauge.horizontalCenter
                 anchors.verticalCenter: rpmGauge.verticalCenter
@@ -1000,7 +1056,7 @@ Item {
 
 /*##^##
 Designer {
-    D{i:13;anchors_width:33;anchors_x:85}D{i:21;anchors_width:33;anchors_x:74}D{i:27;anchors_x:-627;anchors_y:-66}
-D{i:8;anchors_width:204;anchors_x:876}D{i:40;anchors_width:161}
+    D{i:8;anchors_width:204;anchors_x:876}D{i:13;anchors_width:33;anchors_x:85}D{i:21;anchors_width:33;anchors_x:74}
+D{i:27;anchors_x:"-627";anchors_y:"-66"}D{i:40;anchors_width:161}
 }
 ##^##*/

@@ -19,7 +19,7 @@ class MainWindow(QMainWindow):
     """
 
     update_config_signal = QtCore.pyqtSignal()
-    update_can_msg_signal = QtCore.pyqtSignal(int, str)
+    update_can_msg_signal = QtCore.pyqtSignal(str, str)
     update_connection_status_signal = QtCore.pyqtSignal(str)
     update_data_signal = QtCore.pyqtSignal(queue.Queue)
 

@@ -40,9 +40,7 @@ class SocketClient(QObject):
 
         self.__address = address
         self.__port = port
-
-
-
+        self.status = "Offline"
 
     def __repr__(self):
         if self.status == "Offline":
@@ -74,16 +72,20 @@ class SocketClient(QObject):
 
         while True:
             try:
-                self.__sock.settimeout(1.0)
+                self.__sock.settimeout(3)
                 data = self.__sock.recv(12)
 
                 if len(data) == 0:
                     break
                 return bytearray(data)
             except WindowsError:
+                #TODO Printovat do GUI do statusbaru
                 print("Unable to reach network!")
                 self.status = "Offline"
                 self.status_changed.emit(self.status)
+                self.connect_to_server()
+            except AttributeError:
+                print("SocketClient was not set properly")
                 self.connect_to_server()
 
         self.__sock.close()
@@ -93,7 +95,6 @@ class SocketClient(QObject):
         """
             Check validity of IP address.
         """
-
         try:
             socket.inet_aton(address)
         except OSError:
@@ -104,7 +105,6 @@ class SocketClient(QObject):
         """
             Check validity of port type and range.
         """
-
         try:
             if port <= 0 or port >= 65536:
                 raise ValueError

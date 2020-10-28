@@ -30,22 +30,18 @@ class OverviewTab(QQuickWidget, Tab):
             "rl_dumper": QmlObjectManager(9),
             "rr_dumper": QmlObjectManager(10),
             "tps": QmlObjectManager(11),
-            "brake": QmlObjectManager(12)
+            "brake": QmlObjectManager(12),
+            "battery": QmlObjectManager(13),
+            "FPS": QmlObjectManager(14),
+            "CFS": QmlObjectManager(15),
+            "WBO_sensor": QmlObjectManager(16),
+            "FP_sensor" : QmlObjectManager(17),
+            "CLT_sensor": QmlObjectManager(18),
+            "knock_detect": QmlObjectManager(19)
         }
 
-        # Bind created objects to qml context property
-        self.rootContext().setContextProperty("rpm_gauge", self.object_dict["rpm_gauge"])
-        self.rootContext().setContextProperty("gear", self.object_dict["gear"])
-        self.rootContext().setContextProperty("coolant_tmp", self.object_dict["coolant_tmp"])
-        self.rootContext().setContextProperty("oil_tmp", self.object_dict["oil_tmp"])
-        self.rootContext().setContextProperty("oil_pressure", self.object_dict["oil_pressure"])
-        self.rootContext().setContextProperty("fuel_pressure", self.object_dict["fuel_pressure"])
-        self.rootContext().setContextProperty("fl_dumper", self.object_dict["fl_dumper"])
-        self.rootContext().setContextProperty("fr_dumper", self.object_dict["fr_dumper"])
-        self.rootContext().setContextProperty("rl_dumper", self.object_dict["rl_dumper"])
-        self.rootContext().setContextProperty("rr_dumper", self.object_dict["rr_dumper"])
-        self.rootContext().setContextProperty("tps", self.object_dict["tps"])
-        self.rootContext().setContextProperty("brake", self.object_dict["brake"])
+        for key in self.object_dict:
+            self.rootContext().setContextProperty(key, self.object_dict[key])
 
         directory = os.path.dirname(os.path.abspath(__file__))
         self.setSource(QUrl.fromLocalFile(os.path.join(directory, "OverviewTab2.qml")))

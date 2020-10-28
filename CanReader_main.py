@@ -52,14 +52,17 @@ class App:
         # Whenever connection status changed signal to gui will be send
         self.socket_client.status_changed.connect(self.main_window.update_connection_status_signal.emit)
         # Client setup -> try to connect to a server
-        self.socket_client.connect_to_server()
+        while self.socket_client.status == "offline":
+            self.socket_client.connect_to_server()
+
         while True:
             data_from_formula = self.socket_client.get_data()
 
-            data_processing_thread = threading.Thread(target=self.run_data_processing, name='data_processing',
-                                                      args=(data_from_formula,))
-            data_processing_thread.start()
-            time.sleep(0.01)
+            if len(data_from_formula) == 12:
+                data_processing_thread = threading.Thread(target=self.run_data_processing, name='data_processing',
+                                                          args=(data_from_formula,))
+                data_processing_thread.start()
+            time.sleep(0.001)
 
     def run_data_processing(self, data_from_formula):
         """
@@ -69,7 +72,7 @@ class App:
 
         raw_data = RawData(data_from_formula)
         can_id, can_data = raw_data.split_data()
-        print(can_data)
+
         data_logging_thread = threading.Thread(target=self.push_to_data_logger, name='data_logging',
                                                args=(can_id, can_data))
         data_logging_thread.start()

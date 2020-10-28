@@ -72,9 +72,11 @@ class WarningWindow:
         try:
             if int(self.can_id) < 0 or int(self.can_id) > 999:
                 raise ArithmeticError
+            if type(self.can_id) != str:
+                raise TypeError
             return True
-        except ValueError:
-            self.show_warning_window("Can ID Error", "Can ID must be an integer")
+        except TypeError:
+            self.show_warning_window("Can ID Error", "Can ID must be a hex string")
             return False
         except ArithmeticError:
             self.show_warning_window("Can ID Error", "Can ID must be in range 0 - 999")

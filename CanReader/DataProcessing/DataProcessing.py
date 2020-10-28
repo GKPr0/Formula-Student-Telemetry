@@ -87,15 +87,15 @@ class DataProcessing:
     @staticmethod
     def check_id(can_id):
         """
-            Check if id is valid. Expected Integer in range [0, 999]
+            Check if id is valid. Expected hex string in range [0, 999]
         """
         try:
-            if type(can_id) != int:
+            if type(can_id) != str:
                 raise TypeError
         except ValueError:
             raise ValueError("ID must be number in range of 0 - 999.")
         except TypeError:
-            raise TypeError("ID must be int).")
+            raise TypeError("ID must be string.")
 
     @staticmethod
     def check_data(data):

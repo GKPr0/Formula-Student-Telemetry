@@ -29,9 +29,8 @@ class RawData:
             - Data (:py:class:`str`) -> (in python bin is str with leading '0b')
         """
 
-        id = int.from_bytes(self.__raw_data[:self.ID_BYTE_LENGTH], "big")
-        #print(bin(int("00A5FFFFBFFCFF", 16))[2:].zfill(64))
-
+        id = self.__raw_data[:self.ID_BYTE_LENGTH].hex().lstrip("0")
+        print(id)
         data = ["{:08b}".format(self.__raw_data[i]) for i in range(self.ID_BYTE_LENGTH, self.DATA_BYTE_LENGTH + self.ID_BYTE_LENGTH)]
         data = ''.join(map(str, data))
 
@@ -42,7 +41,6 @@ class RawData:
         """
             Check validity of raw_data type, str is expected.
         """
-
         try:
             if type(raw_data) != bytearray:
                 raise TypeError
