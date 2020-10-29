@@ -7,6 +7,7 @@ import sys
 from PyQt5 import QtWidgets, QtCore
 from Config.Config import Config
 from Communication.SocketClient import SocketClient
+from Communication.SerialCom import SerialCom
 from DataProcessing.RawData import RawData
 from DataProcessing.DataProcessing import DataProcessing
 from GUI.MainWindow import MainWindow
@@ -23,46 +24,54 @@ class App:
     '''
 
     config_file_name = "config_file.ini"
+
     IP = "192.168.1.100"
     PORT = 80
+
+    SERIALPORT = 'COM4'
+    BAUDRATE = 921600
 
     def __init__(self):
         self.data_logger = DataLogger()
         self.update_config()
 
-        self.socket_client = SocketClient(self.IP, self.PORT)
-
-        self.data_to_display = None
-        self.data_from_formula = None
-
         self.data_queue = queue.Queue(maxsize=25)
 
+        # Prepare and run GUI in thread
         self.gui_ready = False
-
         self.gui = threading.Thread(target=self.run_gui, name='gui')
-        self.communication = threading.Thread(target=self.run_communication, name='communication')
         self.gui.start()
 
-    def run_communication(self):
-        '''
-        Runs in separate thread, that invoke communication with formula.
-        Once data packet from formula arrived new data processing thread will be created and
-        communication will start over.
-        '''
-        # Whenever connection status changed signal to gui will be send
-        self.socket_client.status_changed.connect(self.main_window.update_connection_status_signal.emit)
-        # Client setup -> try to connect to a server
-        while self.socket_client.status == "offline":
-            self.socket_client.connect_to_server()
 
-        while True:
-            data_from_formula = self.socket_client.get_data()
 
-            if len(data_from_formula) == 12:
-                data_processing_thread = threading.Thread(target=self.run_data_processing, name='data_processing',
-                                                          args=(data_from_formula,))
-                data_processing_thread.start()
-            time.sleep(0.001)
+    def setup_communication(self, type: str):
+        """
+            Creates and run communication thread depending on communication type.
+            Connect received data signal with data processing thread function
+
+            :param type: Type of communication Wifi or Serial COM
+            :type type: str
+        """
+
+        if type.lower() == "wifi":
+            self.communication = SocketClient(self.IP, self.PORT)
+        elif type.lower() == "serial":
+            self.communication = SerialCom(self.SERIALPORT, self.BAUDRATE)
+        else:
+            return
+
+        self.communication.status_changed.connect(self.main_window.update_connection_status_signal.emit)
+
+        self.communication.data_received.connect(self.start_data_processing_thread)
+
+        self.communication.start()
+
+    def start_data_processing_thread(self, data_from_formula):
+        print(data_from_formula)
+        if len(data_from_formula) == 12:
+            data_processing_thread = threading.Thread(target=self.run_data_processing, name='data_processing',
+                                                      args=(data_from_formula,))
+            data_processing_thread.start()
 
     def run_data_processing(self, data_from_formula):
         """
@@ -97,7 +106,8 @@ class App:
         gui.aboutToQuit.connect(self.on_app_exit)
 
         self.gui_ready = True
-        self.communication.start()
+        # Prepare and run communication
+        self.setup_communication("wifi")
 
         timer = QtCore.QTimer()
 

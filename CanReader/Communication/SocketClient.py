@@ -1,9 +1,10 @@
 import socket
-from PyQt5.QtCore import QObject, pyqtSignal
+import time
+from PyQt5.QtCore import QThread, pyqtSignal
 from PyQt5.QtWidgets import QWidget
 
 
-class SocketClient(QObject):
+class SocketClient(QThread):
     """
         This class will ensure communication with remote device.
 
@@ -31,9 +32,13 @@ class SocketClient(QObject):
     """
 
     status_changed = pyqtSignal(str)
+    data_received = pyqtSignal(bytearray)
 
-    def __init__(self, address='192.168.1.100', port = 80):
-        QObject.__init__(self)
+    MSG_SIZE = 12  # bytes
+    TIMEOUT = 3  # sec
+
+    def __init__(self, address='192.168.1.100', port=80):
+        QThread.__init__(self)
 
         self.check_address(address)
         self.check_port(port)
@@ -47,6 +52,22 @@ class SocketClient(QObject):
             return "You are disconnected"
         else:
             return "Socket is connected to IP: {} on port {}".format(self.__address, self.__port)
+
+    def __del__(self):
+        self.exiting = True
+        self.wait()
+
+    def run(self):
+        """
+            This method is called when thread is started with start() method.
+            Main communication loop
+        """
+        while self.status == "Offline":
+            self.connect_to_server()
+
+        while True:
+            self.get_data()
+            time.sleep(0.0005)
 
     def connect_to_server(self):
         """
@@ -65,21 +86,19 @@ class SocketClient(QObject):
 
     def get_data(self):
         """
-        This function will receive data from server and return them as a byte array.
-
-        :return: received data (:py:class:`bytearray`)
+            Receive data from server and send signal containing data a byte array.
         """
 
         while True:
             try:
-                self.__sock.settimeout(3)
-                data = self.__sock.recv(12)
+                self.__sock.settimeout(self.TIMEOUT)
+                data = self.__sock.recv(self.MSG_SIZE)
 
                 if len(data) == 0:
                     break
-                return bytearray(data)
+                self.data_received.emit(bytearray(data))
             except WindowsError:
-                #TODO Printovat do GUI do statusbaru
+                # TODO Printovat do GUI do statusbaru
                 print("Unable to reach network!")
                 self.status = "Offline"
                 self.status_changed.emit(self.status)
@@ -101,15 +120,13 @@ class SocketClient(QObject):
             raise OSError("IP address in not valid.")
 
     @staticmethod
-    def check_port(port):
+    def check_port(port: int):
         """
             Check validity of port type and range.
         """
         try:
             if port <= 0 or port >= 65536:
                 raise ValueError
-            if type(port) != int:
-                raise TypeError
         except ValueError:
             raise ValueError("Port number must be in range 1 - 65535.")
         except TypeError:
@@ -121,9 +138,18 @@ if __name__ == "__main__":
     """
     from datetime import datetime
 
+    def process_data(data):
+        id = int.from_bytes(data[:4], "big")
+        msg = data[4:]
+
+        print("ID: {}".format(id))
+        for i, m in enumerate(msg):
+            print("{}\t{}".format(i, m))
+
     addr = '192.168.1.100'
     port = 80
     com = SocketClient(addr, port)
+    com.data_received.connect(process_data)
     com.connect_to_server()
     print(com)
 
@@ -133,9 +159,3 @@ if __name__ == "__main__":
         print("Current Time = ", current_time , " ")
         data = com.get_data()
 
-        id = int.from_bytes(data[:4], "big")
-        msg = data[4:]
-
-        print("ID: {}".format(id))
-        for i,m in enumerate(msg):
-            print("{}\t{}".format(i, m))
