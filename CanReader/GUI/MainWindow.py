@@ -1,5 +1,5 @@
 from PyQt5 import uic, QtCore, QtGui
-from PyQt5.QtWidgets import QMainWindow, QTabWidget, QPushButton, QLabel, QAction, QListWidget
+from PyQt5.QtWidgets import QMainWindow, QTabWidget, QPushButton, QLabel, QAction, QListWidget, QComboBox, QToolButton
 
 from GUI.UpdateWindow.UpdateWindow import UpdateWindow
 from GUI.OverviewTab.OverviewTab import OverviewTab
@@ -19,6 +19,7 @@ class MainWindow(QMainWindow):
     """
 
     update_config_signal = QtCore.pyqtSignal()
+    connection_request_signal = QtCore.pyqtSignal(str)
     update_can_msg_signal = QtCore.pyqtSignal(str, str)
     update_connection_status_signal = QtCore.pyqtSignal(str)
     update_data_signal = QtCore.pyqtSignal(queue.Queue)
@@ -35,12 +36,22 @@ class MainWindow(QMainWindow):
 
         self.action_save = self.findChild(QAction, "action_save")
 
+        # Communication interface
+        self.button_com_connect = self.findChild(QPushButton, "button_connect")
+        self.button_com_connect.clicked.connect(self.send_connect_request)
+
+        self.button_com_setting = self.findChild(QToolButton, "toolbtn_com_settings")
+        self.button_com_setting.clicked.connect(self.open_com_setting_window)
+
+        self.cbox_com_type = self.findChild(QComboBox, "cbox_com_type")
+
         self.can_msg = self.findChild(QLabel, "label_can_msg")
         self.update_can_msg_signal.connect(self.update_can_msg)
 
         self.status = self.findChild(QLabel, "label_status")
         self.update_connection_status_signal.connect(self.update_connection_status)
 
+        # Can variable interface
         self.button_update = self.findChild(QPushButton, "button_update")
         self.button_update.clicked.connect(self.open_update_window)
 
@@ -123,7 +134,6 @@ class MainWindow(QMainWindow):
                 self.variable_list.addItem(config.name)
                 self.variable_id_list.append(config.id)
 
-
     def push_data_to_tabs(self, queue):
         """
             This method takes data received from formula and sends them to place where will be displayed
@@ -142,7 +152,15 @@ class MainWindow(QMainWindow):
                         #executur.submit(tab.update_data_signal.emit, data_point)
                         tab.update_data_signal.emit(data_point)
 
+    def send_connect_request(self):
+        """
+            Send signal to start communication of specific type
+        """
+        com_type = self.cbox_com_type.currentText()
+        self.connection_request_signal.emit(com_type)
 
+    def open_com_setting_window(self):
+        pass
 
     def update_can_msg(self, can_id, can_msg):
         """

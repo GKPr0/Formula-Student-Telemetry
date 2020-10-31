@@ -44,7 +44,7 @@ class App:
 
 
 
-    def setup_communication(self, type: str):
+    def start_communication(self, type: str):
         """
             Creates and run communication thread depending on communication type.
             Connect received data signal with data processing thread function
@@ -52,7 +52,7 @@ class App:
             :param type: Type of communication Wifi or Serial COM
             :type type: str
         """
-
+        print(type)
         if type.lower() == "wifi":
             self.communication = SocketClient(self.IP, self.PORT)
         elif type.lower() == "serial":
@@ -103,11 +103,10 @@ class App:
 
         self.main_window.update_config_signal.connect(self.update_config)
         self.main_window.action_save.triggered.connect(self.data_logger.set_save_path)
+        self.main_window.connection_request_signal.connect(self.start_communication)
         gui.aboutToQuit.connect(self.on_app_exit)
 
         self.gui_ready = True
-        # Prepare and run communication
-        self.setup_communication("wifi")
 
         timer = QtCore.QTimer()
 
