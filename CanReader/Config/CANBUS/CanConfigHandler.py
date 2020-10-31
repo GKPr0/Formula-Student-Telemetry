@@ -1,15 +1,12 @@
-from configparser import ConfigParser
-from Config.DataConfig import DataConfig
-import re
-import os
-from pathlib import Path
+from Config.ConfigHandler import ConfigHandler
+from Config.CANBUS.CanDataConfig import CanDataConfig
 
 
-class Config:
+class CanConfigHandler(ConfigHandler):
     """
-        This class has access to config file.
-        Can load config and return it as a list of DataConfig objects,
-        or can update config sections from given DataConfig object.
+        This class has access to CAN config file.
+        Can load config and return it as a list of CanDataConfig objects,
+        or can update config sections from given CanDataConfig object.
 
         :param config_file_name: Name of config file.
         :type config_file_name: str
@@ -22,29 +19,8 @@ class Config:
 
     """
 
-    def __init__(self, config_file_name="config_file.ini"):
-        # Check config file name
-        self.check_config_file(config_file_name)
-        self.config_file_name = config_file_name
-        self.config = ConfigParser()
-        self.setup_config()
-
-    def setup_config(self):
-        """
-            Setup path to config file
-        """
-        path = Path(__file__).parent.absolute()
-        self.file_path = str(path) + "/" + self.config_file_name
-        self.config.read(self.file_path)
-
-        self.number_of_data_configs = len(self.config.sections())
-
-    def save_config(self):
-        """
-            Save updated config
-        """
-        with open(self.file_path, "w") as configfile:
-            self.config.write(configfile)
+    def __init__(self, config_file_name="can_config.ini"):
+        ConfigHandler.__init__(self, config_file_name=config_file_name)
 
     def update_section_in_config(self, data_config):
         """
@@ -52,7 +28,7 @@ class Config:
             After updating save changes to file.
 
             :param data_config: Updated setting of variable
-            :type data_config: DataConfig
+            :type data_config: CanDataConfig
 
             :raises TypeError:
                 - Parameter data_config is not a DataConfig type.
@@ -86,12 +62,13 @@ class Config:
             Load every section saved in config file to DataConfig objects.
 
             :return: List of DataConfig object.
-            :rtype: DataConfig
+            :rtype: CanDataConfig
         """
         data_config_list = []
         sections = self.config.sections()
 
         for section in sections:
+            print(section)
             data_config = self.load_selected_from_config_file(int(section))
             data_config_list.append(data_config)
 
@@ -104,7 +81,7 @@ class Config:
         :type config_id: int
 
         :return: data in form of object DataConfig for selected configuration
-        :rtype: DataConfig
+        :rtype: CanDataConfig
 
         :raises TypeError: config_id is not an integer
 
@@ -127,25 +104,8 @@ class Config:
         offset = self.config.getfloat(section, "Offset")
         endian = self.config.get(section, "Endian")
 
-        return DataConfig(config_id, group_id, widget_id, overview_id, name, unit, can_id, start_bit, length, multiplier
-                          , offset, endian)
-
-    @staticmethod
-    def check_config_file(config_file_name):
-        """
-            Check if config file name ends with '.ini' and contains only allowed symbols A-Z, a-z , 0-9 and
-        """
-        try:
-            if not config_file_name.endswith(".ini"):
-                raise TypeError
-            if len(re.findall(r'[^A-Za-z0-9_\-\\]', config_file_name)) > 1:
-                raise TypeError
-            if not os.path.isfile(str(Path(__file__).parent.absolute()) + "/" + config_file_name):
-                raise OSError
-        except TypeError:
-            raise TypeError("Config file can contain only A-Z, a-z , 0-9, _ and must ends with '.ini'")
-        except OSError:
-            raise OSError(config_file_name + " does not exist")
+        return CanDataConfig(config_id, group_id, widget_id, overview_id, name, unit, can_id, start_bit, length, multiplier
+                             , offset, endian)
 
     @staticmethod
     def check_update_parameter_type(data_config):
@@ -153,7 +113,7 @@ class Config:
             Check type of data config
         """
         try:
-            if type(data_config) != DataConfig:
+            if type(data_config) != CanDataConfig:
                 raise TypeError
         except TypeError:
             raise TypeError("As a parameter is expected DataConfig not " + type(data_config))
@@ -166,16 +126,16 @@ class Config:
         try:
             if type(config_id) != int:
                 raise TypeError
-            if config_id < 0 or config_id > Config().number_of_data_configs:
+            if config_id < 0 or config_id > CanConfigHandler().number_of_data_configs:
                 raise ValueError
         except TypeError:
             raise TypeError("Config id must be integer")
         except ValueError:
             raise ValueError(
-                "Config id must be in range of data config in config file {}".format(Config().number_of_data_configs))
+                "Config id must be in range of data config in config file {}".format(CanConfigHandler().number_of_data_configs))
 
 
 if __name__ == "__main__":
-    config = Config("config_file.ini")
+    config = CanConfigHandler("../can_config.ini")
     data_config_list = config.load_from_config_file()
     print(data_config_list)

@@ -1,4 +1,4 @@
-class DataConfig:
+class CanDataConfig:
     """
         This class will contain data configuration.
         Data configuration are ID, Group id , Name, Unit, Can id, Start bit, length, Multiplier, Offset
