@@ -5,11 +5,10 @@ from GUI.UpdateWindow.UpdateWindow import UpdateWindow
 from GUI.OverviewTab.OverviewTab import OverviewTab
 from GUI.GraphTabs.GraphTab import GraphTab
 from GUI.ErrorTab.ErrorTab import ErrorTab
-from Config.Config import Config
+from GUI.CommunicationWindow.SerialSettings import SerialSettingWindow
+from GUI.CommunicationWindow.WifiSettings import WifiSettingWindow
+from Config.CANBUS.CanConfigHandler import CanConfigHandler
 
-from concurrent.futures import ThreadPoolExecutor
-from threading import Lock
-import time
 import queue
 
 class MainWindow(QMainWindow):
@@ -160,7 +159,11 @@ class MainWindow(QMainWindow):
         self.connection_request_signal.emit(com_type)
 
     def open_com_setting_window(self):
-        pass
+        com_type = self.cbox_com_type.currentText()
+        if com_type.lower() == "wifi":
+            self.com_setting_window = WifiSettingWindow(self)
+        elif com_type.lower() == "serial":
+            self.com_setting_window = SerialSettingWindow(self)
 
     def update_can_msg(self, can_id, can_msg):
         """
@@ -192,5 +195,5 @@ class MainWindow(QMainWindow):
         """
             This method load current data configuration
         """
-        config = Config()
+        config = CanConfigHandler()
         self.data_config_list = config.load_from_config_file()

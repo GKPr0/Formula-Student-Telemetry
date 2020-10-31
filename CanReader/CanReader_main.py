@@ -5,15 +5,16 @@ Main handler of project.
 import threading
 import sys
 from PyQt5 import QtWidgets, QtCore
-from Config.Config import Config
+from Config.CANBUS.CanConfigHandler import CanConfigHandler
+from Config.Communication.ComConfigHandler import ComConfigHandler
 from Communication.SocketClient import SocketClient
 from Communication.SerialCom import SerialCom
 from DataProcessing.RawData import RawData
 from DataProcessing.DataProcessing import DataProcessing
 from GUI.MainWindow import MainWindow
 from Logger.DataLogger import DataLogger
-import time
 import queue
+
 
 class App:
     '''
@@ -22,14 +23,6 @@ class App:
         This class handle communication ,data processing and gui in separate threads.
         Main purpose of this class is to convey data from one thread to another one.
     '''
-
-    config_file_name = "config_file.ini"
-
-    IP = "192.168.1.100"
-    PORT = 80
-
-    SERIALPORT = 'COM4'
-    BAUDRATE = 921600
 
     def __init__(self):
         self.data_logger = DataLogger()
@@ -42,21 +35,22 @@ class App:
         self.gui = threading.Thread(target=self.run_gui, name='gui')
         self.gui.start()
 
-
-
-    def start_communication(self, type: str):
+    def start_communication(self, com_type: str):
         """
             Creates and run communication thread depending on communication type.
             Connect received data signal with data processing thread function
 
-            :param type: Type of communication Wifi or Serial COM
-            :type type: str
+            :param com_type: Type of communication Wifi or Serial COM
+            :type com_type: str
         """
-        print(type)
-        if type.lower() == "wifi":
-            self.communication = SocketClient(self.IP, self.PORT)
-        elif type.lower() == "serial":
-            self.communication = SerialCom(self.SERIALPORT, self.BAUDRATE)
+        com_config = ComConfigHandler()
+
+        if com_type.lower() == "wifi":
+            ip, port = com_config.load_wifi_info()
+            self.communication = SocketClient(ip, port)
+        elif com_type.lower() == "serial":
+            port, baud_rate = com_config.load_serial_info()
+            self.communication = SerialCom(port, baud_rate)
         else:
             return
 
@@ -119,7 +113,7 @@ class App:
         """
             This method is called either at booting app or whenever data config is changed.
         """
-        config = Config()
+        config = CanConfigHandler()
         self.data_config_list = config.load_from_config_file()
 
     def update_gui(self):
