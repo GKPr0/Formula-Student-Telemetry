@@ -68,7 +68,6 @@ class CanConfigHandler(ConfigHandler):
         sections = self.config.sections()
 
         for section in sections:
-            print(section)
             data_config = self.load_selected_from_config_file(int(section))
             data_config_list.append(data_config)
 

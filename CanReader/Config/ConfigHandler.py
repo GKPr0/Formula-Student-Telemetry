@@ -50,7 +50,6 @@ class ConfigHandler:
             Check if config file name ends with '.ini' and contains only allowed symbols A-Z, a-z , 0-9 and
         """
         try:
-            print(str(Path(__file__).parent.absolute()) + "/" + config_file_name)
             if not config_file_name.endswith(".ini"):
                 raise TypeError
             if len(re.findall(r'[^A-Za-z0-9_\-\\]', config_file_name)) > 1:

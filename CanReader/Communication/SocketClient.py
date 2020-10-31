@@ -117,7 +117,7 @@ class SocketClient(QThread):
         try:
             socket.inet_aton(address)
         except OSError:
-            raise OSError("IP address in not valid.")
+            raise OSError("IP address is not valid.")
 
     @staticmethod
     def check_port(port: int):
