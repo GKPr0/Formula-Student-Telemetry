@@ -1,14 +1,7 @@
 #include <Arduino.h>
-#include <Arduino.h>
 #include <WiFi.h>
 
-//#include <server.hpp>
 #include <can.hpp>
-
-String canMsg = "Hello computer";
-uint8_t data[12];
-uint32_t id;
-
 
 // WiFi credentials
 const char* ssid     = "Test_ESP_32";
@@ -18,11 +11,18 @@ const char* password = "Fstulracing69";
 IPAddress local_IP(192, 168, 1, 100);
 IPAddress gateway(192, 168, 1, 1);
 IPAddress subnet(255, 255, 0, 0);
-int port = 80;
+unsigned int port = 80;
 
-WiFiServer server(port);
+WiFiServer server(port); 
 
-void printWiFiInfo(){
+// Data Variables
+const size_t can_queue_size = 10;
+const size_t msg_size = 12; 
+uint8_t data[msg_size];
+uint32_t id;
+
+void printWiFiInfo()
+{
   IPAddress IP = WiFi.softAPIP();
   
   Serial.println("Network " + String(ssid) +" is running");
@@ -30,56 +30,57 @@ void printWiFiInfo(){
   Serial.println(IP);
 }
 
-void serverSetup() {
-  Serial.println("Setting AP (Access Point)…");
-  
-  if(!WiFi.softAP(ssid, password)){
-    Serial.println("Starting AP faild");
-    ESP.restart();
-  }
-  delay(50);
+void serverSetup() 
+{
+  // Stop any previous WiFi
+  WiFi.disconnect(); 
+
+  // Setting WiFi mode
+  Serial.println("Setting WiFi mode to Access Point (AP)");
+  WiFi.mode(WIFI_AP);
+
+  // Starting the AP
   if(!WiFi.softAPConfig(local_IP, gateway, subnet)){
     Serial.println("AP failed to configurate");
     ESP.restart();
   }
 
+  delay(50);
+
+  if(!WiFi.softAP(ssid, password, 1, 0, 1)){ // softAP(ssid, password, channel, hidden, num_of_clients)
+    Serial.println("Starting AP faild");
+    ESP.restart();
+  }
+  
+  delay(50);
+
+  // Printing Server info
   printWiFiInfo();
 
+  // Starting server
   server.begin();
+  Serial.println("Server started");
 }
 
 void setup() {
   Serial.begin(115200);
-  /*
-  id = (uint32_t) 603;
 
-  for(int i(0); i < 4; i ++){
-    data[i] = ((uint8_t*)&id)[3-i];
-  }
-
-  data[4] = (uint8_t) 215;
-  data[5] = (uint8_t) 196;
-  data[6] = (uint8_t) 0;
-  data[7] = (uint8_t) 0;
-  data[8] = (uint8_t) 128;
-  data[9] = (uint8_t) 13;
-  data[10] = (uint8_t) 32;
-  data[11] = (uint8_t) 64;
-  */
+  //generateTestData(603, data);
 
   serverSetup();
-  canSetup();
+  canSetup(can_queue_size);
 }
 
 void loop() {
   
   WiFiClient client = server.available();
+  client.setNoDelay(true); // allow fast communication
 
   if (client) {
     
     Serial.println("New connection");
     while (client.connected()) {  
-      //Byte version
+      
       canDataPack dataPack = canReceive();
 
       if(dataPack.canID != 0){
@@ -87,10 +88,6 @@ void loop() {
 
         client.write(data, 12); 
       }
-      
-
-     //client.write(data, 12);
-
       delay(1); 
     }
 

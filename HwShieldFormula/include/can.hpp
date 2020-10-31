@@ -6,20 +6,18 @@
 #include <CAN_config.h>
 
 struct canDataPack{
-    uint32_t canID;
-    uint8_t canData [8];
+    uint32_t canID = 0;
+    uint8_t canData [8] = {[0 ... 7] = 0};  // Works only with gcc compiler!
 };
+
+void canSetup(const size_t &can_queue_size);
+
+canDataPack canReceive();
+
+void convertDataPackToByteArray(uint8_t* data, canDataPack & dataPack);
 
 void printBinary(byte b);
 void printHex(byte b);
 
-void canSetup();
-canDataPack canReceive();
-
-String convertDataPackToString(canDataPack dataPack);
-void convertDataPackToByteArray(uint8_t* data, canDataPack & dataPack);
-
-String canDataToHexString(uint8_t rawData[]);
-String canIdToString(uint32_t rawId);
-
+void generateTestData(uint32_t id ,uint8_t* data);
 #endif
