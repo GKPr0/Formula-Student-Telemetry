@@ -1,8 +1,8 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow,  QPushButton, QLineEdit, QRadioButton
 
-from Config.Config import Config
-from Config.DataConfig import DataConfig
+from Config.CANBUS.CanConfigHandler import CanConfigHandler
+from Config.CANBUS.CanDataConfig import CanDataConfig
 from GUI.UpdateWindow.WarningWindow import WarningWindow
 
 
@@ -33,7 +33,7 @@ class UpdateWindow(QMainWindow):
         self.check_config_id(config_id)
 
         # Get current data
-        self.config = Config()
+        self.config = CanConfigHandler()
         self.config_id = config_id
         self.data_config = self.config.load_selected_from_config_file(self.config_id)
 
@@ -109,8 +109,8 @@ class UpdateWindow(QMainWindow):
 
         if warning_window.check_user_inputs():
 
-            new_data_config = DataConfig(int(id), int(group_id), int(widget_id), int(overview_id), str(name), str(unit), str(can_id), int(start_bit),
-                                         int(length), float(multiplier), float(offset), str(endian))
+            new_data_config = CanDataConfig(int(id), int(group_id), int(widget_id), int(overview_id), str(name), str(unit), str(can_id), int(start_bit),
+                                            int(length), float(multiplier), float(offset), str(endian))
 
             self.config.update_section_in_config(new_data_config)
 
@@ -138,9 +138,9 @@ class UpdateWindow(QMainWindow):
         try:
             if type(config_id) != int:
                 raise TypeError
-            if config_id < 0 or config_id > Config().number_of_data_configs:
+            if config_id < 0 or config_id > CanConfigHandler().number_of_data_configs:
                 raise ValueError
         except TypeError:
             raise TypeError("Config id must be integer")
         except ValueError:
-            raise ValueError("Config id must be in range of data config in config file {}".format(Config().number_of_data_configs))
+            raise ValueError("Config id must be in range of data config in config file {}".format(CanConfigHandler().number_of_data_configs))
