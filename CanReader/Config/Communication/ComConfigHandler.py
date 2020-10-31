@@ -27,7 +27,8 @@ class ComConfigHandler(ConfigHandler):
 
     def update_serial_info(self, port, baud_rate):
         self.config.set("serial", "port", str(port))
-        self.config.set("serial", "baud rate", int(baud_rate))
+        self.config.set("serial", "baud rate", str(baud_rate))
+        self.save_config()
 
     def load_wifi_info(self):
         ip = self.config.get("wifi", "ip")
@@ -36,5 +37,6 @@ class ComConfigHandler(ConfigHandler):
         return ip, port
 
     def update_wifi_info(self, ip, port):
-        self.config.set("wifi", "ip", str(port))
-        self.config.set("wifi", "port", int(port))
+        self.config.set("wifi", "ip", str(ip))
+        self.config.set("wifi", "port", str(port))
+        self.save_config()
