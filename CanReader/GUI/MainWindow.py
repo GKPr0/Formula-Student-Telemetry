@@ -82,7 +82,6 @@ class MainWindow(QMainWindow):
         self.tab_widget.addTab(self.tab_list["error_tab"], "Error")
 
         self.tab_widget.currentChanged.connect(self.show_variable_list_used_in_current_tab)
-        self.tab_widget.setStyleSheet("border: 0px; border-top: 1px solid white")
         self.show_variable_list_used_in_current_tab()
 
         #fill tabs with variable configs and generate proper UI
@@ -136,19 +135,16 @@ class MainWindow(QMainWindow):
     def push_data_to_tabs(self, queue):
         """
             This method takes data received from formula and sends them to place where will be displayed
-            :param data_list: list of DataPoints containing decoded and processed data from formula
-            :type data_list: DataPoint
+            :param queue: list of DataPoints containing decoded and processed data from formula
+            :type queue: DataPoint
         """
         while not queue.empty():
             data_list = queue.get()
-            #with ThreadPoolExecutor(max_workers=32) as executur:
             for tab in self.tab_list.values():
                 for data_point in data_list:
                     if tab.group_id == 0 and data_point.overview_id != 0:
-                        #executur.submit(tab.update_data_signal.emit, data_point)
                         tab.update_data_signal.emit(data_point)
                     elif tab.group_id == data_point.group_id:
-                        #executur.submit(tab.update_data_signal.emit, data_point)
                         tab.update_data_signal.emit(data_point)
 
     def send_connect_request(self):
@@ -168,6 +164,7 @@ class MainWindow(QMainWindow):
     def update_can_msg(self, can_id, can_msg):
         """
             This method update can message label in gui
+            :param can_id: last received can id
             :param can_msg: last received can message
         """
 

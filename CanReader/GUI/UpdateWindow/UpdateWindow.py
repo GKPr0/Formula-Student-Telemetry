@@ -1,5 +1,7 @@
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow,  QPushButton, QLineEdit, QRadioButton
+from PyQt5.QtGui import QFont, QFontMetrics
+
 
 from Config.CANBUS.CanConfigHandler import CanConfigHandler
 from Config.CANBUS.CanDataConfig import CanDataConfig
@@ -37,9 +39,11 @@ class UpdateWindow(QMainWindow):
         self.config_id = config_id
         self.data_config = self.config.load_selected_from_config_file(self.config_id)
 
-        self.setWindowTitle("Update your Variable")
+        self.setup_dynamic_title()
+
         self.update_button = self.findChild(QPushButton, "save_button")
         self.update_button.clicked.connect(self.update_config)
+
         # Load radio buttons
         self.little_endian = self.findChild(QRadioButton, "little_endian")
         self.big_endian = self.findChild(QRadioButton, "big_endian")
@@ -54,6 +58,8 @@ class UpdateWindow(QMainWindow):
         self.multiplier_input = self.findChild(QLineEdit, "multiplier_input")
         self.offset_input = self.findChild(QLineEdit, "offset_input")
         self.unit_input = self.findChild(QLineEdit, "unit_input")
+
+        self.name_input.textChanged.connect(self.setup_dynamic_name_box_width)
 
         # Load current data to textBoxes
         self.show_data()
@@ -128,6 +134,24 @@ class UpdateWindow(QMainWindow):
             self.little_endian.setCheckable(True)
             return True
 
+    def setup_dynamic_title(self):
+        name = str(self.data_config.name)
+
+        if name != "":
+            self.setWindowTitle("Update {} properties".format(name))
+        else:
+            self.setWindowTitle("Update CAN BUS variable")
+
+    def setup_dynamic_name_box_width(self):
+        text = self.name_input.text()
+        size = self.name_input.size()
+
+        font = self.name_input.font()
+        fm = QFontMetrics(font)
+        pixel_width = fm.width(text)
+
+        if pixel_width > size.width():
+            self.name_input.setFixedSize((pixel_width + 20), size.height())
 
     @staticmethod
     def check_config_id(config_id):

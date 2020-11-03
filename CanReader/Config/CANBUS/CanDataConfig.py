@@ -33,7 +33,8 @@ class CanDataConfig:
             - ID or can_id are not in range 0 - 999
             - Group_id or widget_id are not in range 1-10
     """
-    def __init__(self, id, group_id, widget_id, overview_id, name, unit, can_id, start_bit, length, multiplier, offset, endian):
+    def __init__(self, id, group_id, widget_id, overview_id, name, unit, can_id,
+                 start_bit, length, multiplier, offset, endian):
         # Check validity of parameters
         self.check_id(id)
         self.check_group_id(group_id)

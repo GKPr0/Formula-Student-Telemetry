@@ -103,8 +103,8 @@ class CanConfigHandler(ConfigHandler):
         offset = self.config.getfloat(section, "Offset")
         endian = self.config.get(section, "Endian")
 
-        return CanDataConfig(config_id, group_id, widget_id, overview_id, name, unit, can_id, start_bit, length, multiplier
-                             , offset, endian)
+        return CanDataConfig(config_id, group_id, widget_id, overview_id, name, unit,
+                             can_id, start_bit, length, multiplier, offset, endian)
 
     @staticmethod
     def check_update_parameter_type(data_config):
@@ -131,7 +131,8 @@ class CanConfigHandler(ConfigHandler):
             raise TypeError("Config id must be integer")
         except ValueError:
             raise ValueError(
-                "Config id must be in range of data config in config file {}".format(CanConfigHandler().number_of_data_configs))
+                "Config id must be in range of data config in config file {}"
+                .format(CanConfigHandler().number_of_data_configs))
 
 
 if __name__ == "__main__":

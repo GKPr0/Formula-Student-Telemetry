@@ -27,7 +27,8 @@ class DataLogger:
         """
         datetime_obj = datetime.now()
         date = str(datetime_obj.year) + "/" + str(datetime_obj.month) + "/" + str(datetime_obj.day)
-        time = str(datetime_obj.hour) + ":" + str(datetime_obj.hour) + ":" + str(datetime_obj.second) + "." + str(datetime_obj.microsecond)[:3]
+        time = str(datetime_obj.hour) + ":" + str(datetime_obj.hour)
+        time += ":" + str(datetime_obj.second) + "." + str(datetime_obj.microsecond)[:3]
         time_stamp = date + " " + time
         data = "{}\t\tID:{}\tData:{}\n".format(str(time_stamp), can_id, can_data)
         self.raw_data.append(data)
