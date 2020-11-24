@@ -5,12 +5,12 @@ Main handler of project.
 import threading
 import sys
 from PyQt5 import QtWidgets, QtCore
+from PyQt5.QtCore import QThreadPool
 from Config.CANBUS.CanConfigHandler import CanConfigHandler
 from Config.Communication.ComConfigHandler import ComConfigHandler
 from Communication.SocketClient import SocketClient
 from Communication.SerialCom import SerialCom
-from DataProcessing.RawData import RawData
-from DataProcessing.DataProcessing import DataProcessing
+from DataProcessing.DataProcessingManager import DataProcessingManager
 from GUI.MainWindow import MainWindow
 from Logger.DataLogger import DataLogger
 import queue
@@ -28,7 +28,11 @@ class App:
         self.data_logger = DataLogger()
         self.update_config()
 
-        self.data_queue = queue.Queue(maxsize=25)
+        self.processed_data_queue = queue.Queue(maxsize=50)
+        self.raw_data_queue = queue.Queue(maxsize=50)
+
+        self.processing_pool = QThreadPool()
+        self.processing_pool.setMaxThreadCount(4)
 
         # Prepare and run GUI in thread
         self.gui_ready = False
@@ -56,36 +60,20 @@ class App:
 
         self.communication.status_changed.connect(self.main_window.update_connection_status_signal.emit)
 
-        self.communication.data_received.connect(self.start_data_processing_thread)
+        self.communication.data_received.connect(self.run_data_processing)
 
         self.communication.start()
 
-    def start_data_processing_thread(self, data_from_formula):
-        print(data_from_formula)
-        if len(data_from_formula) == 12:
-            data_processing_thread = threading.Thread(target=self.run_data_processing, name='data_processing',
-                                                      args=(data_from_formula,))
-            data_processing_thread.start()
-
     def run_data_processing(self, data_from_formula):
         """
-            Called in temporary thread invoked by communication thread.
-            Result is decoded and processed data packet prepared to be display in gui.
+            Run Data Managers in threadpool.
+            Data Managers will send signal containing DataPoint to data processing queue
         """
+        if len(data_from_formula) == 12:
+            process_manager = DataProcessingManager(data_from_formula, self.data_config_list)
+            process_manager.data_processed.connect(self.receive_processed_data)
 
-        raw_data = RawData(data_from_formula)
-        can_id, can_data = raw_data.split_data()
-
-        data_logging_thread = threading.Thread(target=self.push_to_data_logger, name='data_logging',
-                                               args=(can_id, can_data))
-        data_logging_thread.start()
-
-        data_decoder = DataProcessing(can_id, can_data, self.data_config_list)
-        data_to_display = data_decoder.data_decode()
-
-        self.data_queue.put(data_to_display)
-
-        data_logging_thread.join()
+            self.processing_pool.start(process_manager)
 
     def run_gui(self):
         """
@@ -116,14 +104,15 @@ class App:
         config = CanConfigHandler()
         self.data_config_list = config.load_from_config_file()
 
-    def update_gui(self):
-        self.main_window.update_data_signal.emit(self.data_queue)
+    def receive_processed_data(self, data_point, can_id, can_data ):
+        self.processed_data_queue.put(data_point)
 
-    def push_to_data_logger(self, can_id, can_data):
-        # Update Can msg shown in gui
         self.main_window.update_can_msg_signal.emit(can_id, can_data)
 
         self.data_logger.get_raw_can(can_id, can_data)
+
+    def update_gui(self):
+        self.main_window.update_data_signal.emit(self.processed_data_queue)
 
     def on_app_exit(self):
         try:
