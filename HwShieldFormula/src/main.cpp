@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <WiFi.h>
+#include <esp_wifi.h>
 
 #include <can.hpp>
 
@@ -8,10 +9,13 @@ const char* ssid     = "Test_ESP_32";
 const char* password = "Fstulracing69";
 
 // Wifi setting
-IPAddress local_IP(192, 168, 1, 100);
-IPAddress gateway(192, 168, 1, 1);
-IPAddress subnet(255, 255, 0, 0);
-unsigned int port = 80;
+const IPAddress local_IP(192, 168, 4, 1);
+const IPAddress gateway(192, 168, 4, 1);
+const IPAddress subnet(255, 255, 0, 0);
+const unsigned int port = 23;
+
+const uint8_t wifi_protocol = 7; //  802.11 available b=1, g=2, n=4 ,lr=8 can be combined as follow 1,3,7,8,15
+const int8_t wifi_tx_power = 82;  // Maximum WiFi transmitting power, unit is 0.25dBm, range is [40, 82] corresponding to 10dBm - 20.5dBm here.
 
 WiFiServer server(port); 
 
@@ -30,6 +34,21 @@ void printWiFiInfo()
   Serial.println(IP);
 }
 
+void espWiFiInfo()
+{
+  int8_t power = 0;
+  esp_wifi_get_max_tx_power(&power);
+  Serial.print("Max tx power set to: ");
+  Serial.print((float)(power/4));
+  Serial.println("dBm");
+
+  uint8_t protocol;
+  esp_wifi_get_protocol(WIFI_IF_AP, &protocol);
+  Serial.print("Protocol set to:");
+  Serial.println(protocol);
+
+}
+
 void serverSetup() 
 {
   // Stop any previous WiFi
@@ -39,16 +58,34 @@ void serverSetup()
   Serial.println("Setting WiFi mode to Access Point (AP)");
   WiFi.mode(WIFI_AP);
 
-  // Starting the AP
-  if(!WiFi.softAPConfig(local_IP, gateway, subnet)){
+  // Set communication protocol
+  if(esp_wifi_set_protocol(WIFI_IF_AP, wifi_protocol) != ESP_OK)
+  {
+    Serial.println("Setting WiFi protocol failed");
+    ESP.restart();
+  }
+
+  // Set tx max power
+  if(esp_wifi_set_max_tx_power(wifi_tx_power) != ESP_OK)
+  {
+    Serial.println("Setting max tx power failed");
+    ESP.restart();
+  }
+
+  espWiFiInfo();
+
+  // Configurating the AP
+  if(!WiFi.softAPConfig(local_IP, gateway, subnet))
+  {
     Serial.println("AP failed to configurate");
     ESP.restart();
   }
 
   delay(50);
 
-  if(!WiFi.softAP(ssid, password, 1, 0, 1)){ // softAP(ssid, password, channel, hidden, num_of_clients)
-    Serial.println("Starting AP faild");
+  if(!WiFi.softAP(ssid, password)) // softAP(ssid, password, channel, hidden, num_of_clients)
+  {
+    Serial.println("Starting AP failed");
     ESP.restart();
   }
   
@@ -65,29 +102,30 @@ void serverSetup()
 void setup() {
   Serial.begin(115200);
 
-  //generateTestData(603, data);
+  generateTestData(603, data);
 
   serverSetup();
-  canSetup(can_queue_size);
+  //canSetup(can_queue_size);
 }
 
 void loop() {
   
   WiFiClient client = server.available();
-  client.setNoDelay(true); // allow fast communication
 
   if (client) {
     
     Serial.println("New connection");
     while (client.connected()) {  
       
-      canDataPack dataPack = canReceive();
+      /*canDataPack dataPack = canReceive();
 
       if(dataPack.canID != 0){
         convertDataPackToByteArray(data, dataPack);
 
-        client.write(data, 12); 
-      }
+        client.write(data, msg_size); 
+      }*/
+
+      client.write(data, msg_size);
       delay(1); 
     }
 

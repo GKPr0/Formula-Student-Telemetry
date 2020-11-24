@@ -7,7 +7,7 @@
 
 struct canDataPack{
     uint32_t canID = 0;
-    uint8_t canData [8] = {[0 ... 7] = 0};  // Works only with gcc compiler!
+    uint8_t canData [8] = { };
 };
 
 void canSetup(const size_t &can_queue_size);
