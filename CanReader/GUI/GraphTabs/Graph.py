@@ -23,7 +23,6 @@ class TimeAxisItem(pg.AxisItem):
     def tickStrings(self, values, scale, spacing):
         return [int2dt(value).strftime("%H:%M:%S") for value in values]
 
-
 class Graph(PlotWidget):
 
     update_signal = QtCore.pyqtSignal(float)
@@ -38,6 +37,8 @@ class Graph(PlotWidget):
         self.update_signal.connect(self.update_data)
         self.setup_graph()
 
+        self.inspect_mode = False
+
         self.view_back = 5 * TS_MULT_us
         self.vies_front = 1 * TS_MULT_us
 
@@ -47,6 +48,33 @@ class Graph(PlotWidget):
 
         self.pen = pg.mkPen(color=(255, 255, 255))
         self.curve = self.plot(pen=self.pen)
+
+    def mousePressEvent(self, ev):
+        if ev.button() == QtCore.Qt.LeftButton:
+            self.inspect_mode = True
+
+        PlotWidget.mousePressEvent(self, ev)
+
+    def mouseReleaseEvent(self, ev):
+        if ev.button() == QtCore.Qt.MidButton:
+            self.auto_focus()
+        elif ev.button() == QtCore.Qt.LeftButton:
+            if self.is_view_box_on_actual_data():
+                self.inspect_mode = False
+
+        PlotWidget.mouseReleaseEvent(self, ev)
+
+    def keyPressEvent(self, ev):
+        if ev.text() in ['c', 'f']:
+            self.auto_focus()
+        PlotWidget.keyPressEvent(self, ev)
+
+    def is_view_box_on_actual_data(self):
+        return self.view_back > (now_timestamp() - self.viewRect().x())
+
+    def auto_focus(self):
+        self.enableAutoRange()
+        self.inspect_mode = False
 
     def setup_graph(self):
         self.setBackground((79, 78, 78))
@@ -67,7 +95,8 @@ class Graph(PlotWidget):
         self.data_y[self.ptr] = value
 
         self.curve.setData(x=self.data_x[:self.ptr], y=self.data_y[:self.ptr])
-        self.setXRange(time_now - self.view_back, time_now + self.vies_front)
+        if not self.inspect_mode:
+            self.setXRange(time_now - self.view_back, time_now + self.vies_front)
         self.ptr += 1
 
     def extend_data_storage(self):
@@ -84,8 +113,11 @@ if __name__ == "__main__":
     from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout
     from PyQt5.QtCore import QTimer
 
+    value = 1
+
     def send_data():
-        value = np.random.normal()
+        global value
+        value += np.random.normal()
         graph.update_signal.emit(value)
 
     app = QApplication([])
