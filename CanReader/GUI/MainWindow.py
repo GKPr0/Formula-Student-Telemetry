@@ -9,7 +9,7 @@ from GUI.CommunicationWindow.SerialSettings import SerialSettingWindow
 from GUI.CommunicationWindow.WifiSettings import WifiSettingWindow
 from Config.CANBUS.CanConfigHandler import CanConfigHandler
 
-import queue
+from queue import Queue
 
 class MainWindow(QMainWindow):
     """
@@ -21,7 +21,7 @@ class MainWindow(QMainWindow):
     connection_request_signal = QtCore.pyqtSignal(str)
     update_can_msg_signal = QtCore.pyqtSignal(str, str)
     update_connection_status_signal = QtCore.pyqtSignal(str)
-    update_data_signal = QtCore.pyqtSignal(queue.Queue)
+    update_data_signal = QtCore.pyqtSignal(Queue)
 
     def __init__(self):
         QMainWindow.__init__(self)
@@ -59,7 +59,7 @@ class MainWindow(QMainWindow):
         self.variable_id_list = []
 
         #Create tabs
-        self.tab_list = {
+        self.tab_dict = {
             "overview_tab": OverviewTab(),
             "intake_tab": GraphTab(1),
             "engine_tab": GraphTab(2),
@@ -69,17 +69,18 @@ class MainWindow(QMainWindow):
             "acc_gyro_tab": GraphTab(6),
             "error_tab": ErrorTab(7)
          }
+        self.tab_list = list(self.tab_dict.values())
 
         #Load tab widget add fill it with tabs
         self.tab_widget = self.findChild(QTabWidget, "tabWidget")
-        self.tab_widget.addTab(self.tab_list["overview_tab"], "General")
-        self.tab_widget.addTab(self.tab_list["intake_tab"], "Intake")
-        self.tab_widget.addTab(self.tab_list["engine_tab"], "Engine")
-        self.tab_widget.addTab(self.tab_list["exhaust_tab"], "Exhaust")
-        self.tab_widget.addTab(self.tab_list["fluid_tab"], "Fluid")
-        self.tab_widget.addTab(self.tab_list["suspension_tab"], "Suspension")
-        self.tab_widget.addTab(self.tab_list["acc_gyro_tab"], "Acc/Gyro")
-        self.tab_widget.addTab(self.tab_list["error_tab"], "Error")
+        self.tab_widget.addTab(self.tab_dict["overview_tab"], "General")
+        self.tab_widget.addTab(self.tab_dict["intake_tab"], "Intake")
+        self.tab_widget.addTab(self.tab_dict["engine_tab"], "Engine")
+        self.tab_widget.addTab(self.tab_dict["exhaust_tab"], "Exhaust")
+        self.tab_widget.addTab(self.tab_dict["fluid_tab"], "Fluid")
+        self.tab_widget.addTab(self.tab_dict["suspension_tab"], "Suspension")
+        self.tab_widget.addTab(self.tab_dict["acc_gyro_tab"], "Acc/Gyro")
+        self.tab_widget.addTab(self.tab_dict["error_tab"], "Error")
 
         self.tab_widget.currentChanged.connect(self.show_variable_list_used_in_current_tab)
         self.show_variable_list_used_in_current_tab()
@@ -135,17 +136,24 @@ class MainWindow(QMainWindow):
     def push_data_to_tabs(self, queue):
         """
             This method takes data received from formula and sends them to place where will be displayed
-            :param queue: list of DataPoints containing decoded and processed data from formula
-            :type queue: DataPoint
+            :param queue: Queue of list of DataPoints containing decoded and processed data from formula
+            :type queue: list(DataPoint)
         """
-        while not queue.empty():
+        if not queue.empty():
             data_list = queue.get()
-            for tab in self.tab_list.values():
-                for data_point in data_list:
-                    if tab.group_id == 0 and data_point.overview_id != 0:
-                        tab.update_data_signal.emit(data_point)
-                    elif tab.group_id == data_point.group_id:
-                        tab.update_data_signal.emit(data_point)
+
+            for data_point in data_list:
+                try:
+                    if data_point.overview_id != 0:
+                        self.tab_list[0].update_data_signal.emit(data_point)
+
+                    index = data_point.group_id
+                    if index > len(self.tab_list):
+                        raise ValueError
+
+                    self.tab_list[index].update_data_signal.emit(data_point)
+                except ValueError:
+                    print("{} cannot be in group >= {}".format(data_point.name, len(self.tab_list)))
 
     def send_connect_request(self):
         """
