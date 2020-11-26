@@ -13,7 +13,7 @@ from Communication.SerialCom import SerialCom
 from DataProcessing.DataProcessingManager import DataProcessingManager
 from GUI.MainWindow import MainWindow
 from Logger.DataLogger import DataLogger
-import queue
+from queue import Queue
 
 
 class App:
@@ -28,8 +28,7 @@ class App:
         self.data_logger = DataLogger()
         self.update_config()
 
-        self.processed_data_queue = queue.Queue(maxsize=50)
-        self.raw_data_queue = queue.Queue(maxsize=50)
+        self.processed_data_queue = Queue(maxsize=10)
 
         self.processing_pool = QThreadPool()
         self.processing_pool.setMaxThreadCount(4)
@@ -71,7 +70,7 @@ class App:
         """
         if len(data_from_formula) == 12:
             process_manager = DataProcessingManager(data_from_formula, self.data_config_list)
-            process_manager.data_processed.connect(self.receive_processed_data)
+            process_manager.signal.data_processed.connect(self.receive_processed_data)
 
             self.processing_pool.start(process_manager)
 
@@ -92,7 +91,7 @@ class App:
 
         timer = QtCore.QTimer()
 
-        timer.start(33)
+        timer.start(1)
         timer.timeout.connect(self.update_gui)
 
         sys.exit(gui.exec_())
@@ -105,7 +104,11 @@ class App:
         self.data_config_list = config.load_from_config_file()
 
     def receive_processed_data(self, data_point, can_id, can_data ):
+        if self.processed_data_queue.full():
+            self.processed_data_queue.get()
+
         self.processed_data_queue.put(data_point)
+        #print(self.processed_data_queue.qsize())
 
         self.main_window.update_can_msg_signal.emit(can_id, can_data)
 

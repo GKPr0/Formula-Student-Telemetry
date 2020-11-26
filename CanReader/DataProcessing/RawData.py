@@ -30,7 +30,7 @@ class RawData:
         """
 
         id = self.__raw_data[:self.ID_BYTE_LENGTH].hex().lstrip("0")
-        print(id)
+
         data = ["{:08b}".format(self.__raw_data[i]) for i in range(self.ID_BYTE_LENGTH, self.DATA_BYTE_LENGTH + self.ID_BYTE_LENGTH)]
         data = ''.join(map(str, data))
 
