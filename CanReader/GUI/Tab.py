@@ -1,23 +1,18 @@
-from PyQt5 import uic, QtCore
-from PyQt5.QtCore import QThread
-from PyQt5.QtWidgets import QWidget, QVBoxLayout
-from GUI.GraphTabs.Graph import Graph
-import threading
+from PyQt5 import QtCore
+from PyQt5.QtWidgets import QWidget
 
-class Tab(QWidget, QThread):
+
+class Tab(QWidget):
 
     update_data_signal = QtCore.pyqtSignal(object)
 
     def __init__(self, group_id = 0):
         QWidget.__init__(self)
-        QThread.__init__(self)
 
         self.group_id = group_id
         self.config_variable_list = []
         self.widget_list = []
         self.update_data_signal.connect(self.update_data)
-
-        self.start()
 
     def tab_info(self):
         for var in self.config_variable_list:
