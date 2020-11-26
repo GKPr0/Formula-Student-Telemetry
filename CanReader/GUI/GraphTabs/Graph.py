@@ -26,6 +26,7 @@ class TimeAxisItem(pg.AxisItem):
 class Graph(PlotWidget):
 
     update_signal = QtCore.pyqtSignal(float)
+    state_signal = QtCore.pyqtSignal(bool)
 
     def __init__(self, name, unit, id):
         PlotWidget.__init__(self, axisItems={'bottom': TimeAxisItem(orientation='bottom')})
@@ -35,11 +36,14 @@ class Graph(PlotWidget):
         self.id = id
 
         self.update_signal.connect(self.update_data)
+        self.state_signal.connect(self.change_state)
+
         self.setup_graph()
 
         self.inspect_mode = False
+        self.active = False
 
-        self.view_back = 5 * TS_MULT_us
+        self.view_back = 10 * TS_MULT_us
         self.vies_front = 1 * TS_MULT_us
 
         self.data_x = np.empty(1000)
@@ -48,6 +52,9 @@ class Graph(PlotWidget):
 
         self.pen = pg.mkPen(color=(255, 255, 255))
         self.curve = self.plot(pen=self.pen)
+
+    def change_state(self, state):
+        self.active = state
 
     def mousePressEvent(self, ev):
         if ev.button() == QtCore.Qt.LeftButton:
@@ -65,6 +72,7 @@ class Graph(PlotWidget):
         PlotWidget.mouseReleaseEvent(self, ev)
 
     def keyPressEvent(self, ev):
+        print(self.data_x.shape)
         if ev.text() in ['c', 'f']:
             self.auto_focus()
         PlotWidget.keyPressEvent(self, ev)
@@ -84,8 +92,6 @@ class Graph(PlotWidget):
         self.setLabel('bottom', text='Time', units='', unitPrefix='', color='#bdbebf', size='15pt')
         self.showGrid(x=True, y=True)
 
-        #self.setMenuEnabled(False)
-
     def update_data(self, value):
         if self.ptr >= self.data_x.shape[0]:
             self.extend_data_storage()
@@ -94,9 +100,10 @@ class Graph(PlotWidget):
         self.data_x[self.ptr] = time_now
         self.data_y[self.ptr] = value
 
-        self.curve.setData(x=self.data_x[:self.ptr], y=self.data_y[:self.ptr])
-        if not self.inspect_mode:
-            self.setXRange(time_now - self.view_back, time_now + self.vies_front)
+        if self.active:
+            self.curve.setData(x=self.data_x[:self.ptr], y=self.data_y[:self.ptr])
+            if not self.inspect_mode:
+                self.setXRange(time_now - self.view_back, time_now + self.vies_front)
         self.ptr += 1
 
     def extend_data_storage(self):

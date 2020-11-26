@@ -83,6 +83,7 @@ class MainWindow(QMainWindow):
         self.tab_widget.addTab(self.tab_dict["error_tab"], "Error")
 
         self.tab_widget.currentChanged.connect(self.show_variable_list_used_in_current_tab)
+        self.tab_widget.currentChanged.connect(self.activate_current_tab)
         self.show_variable_list_used_in_current_tab()
 
         #fill tabs with variable configs and generate proper UI
@@ -115,6 +116,15 @@ class MainWindow(QMainWindow):
         for tab_index in range(1, self.tab_widget.count()):
             tab = self.tab_widget.widget(tab_index)
             tab.sort_widget_list_by_id()
+
+    def activate_current_tab(self):
+        current_widget = self.tab_widget.currentWidget()
+        for tab in self.tab_list:
+            if type(tab) == GraphTab:
+                if tab == current_widget:
+                    tab.change_state(True)
+                else:
+                    tab.change_state(False)
 
     def show_variable_list_used_in_current_tab(self):
         """
