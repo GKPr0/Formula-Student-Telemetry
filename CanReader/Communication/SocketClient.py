@@ -1,10 +1,8 @@
 import socket
-import time
-from PyQt5.QtCore import QThread, pyqtSignal
-from PyQt5.QtWidgets import QWidget
+from Communication.ComBase import ComBase
 
 
-class SocketClient(QThread):
+class SocketClient(ComBase):
     """
         This class will ensure communication with remote device.
 
@@ -31,21 +29,14 @@ class SocketClient(QThread):
 
     """
 
-    status_changed = pyqtSignal(str)
-    data_received = pyqtSignal(bytearray)
-
-    MSG_SIZE = 12  # bytes
-    TIMEOUT = 3  # sec
-
     def __init__(self, address='192.168.1.100', port=80):
-        QThread.__init__(self)
+        ComBase.__init__(self)
 
         self.check_address(address)
         self.check_port(port)
 
         self.__address = address
         self.__port = port
-        self.status = "Offline"
 
     def __repr__(self):
         if self.status == "Offline":
@@ -53,29 +44,18 @@ class SocketClient(QThread):
         else:
             return "Socket is connected to IP: {} on port {}".format(self.__address, self.__port)
 
-    def __del__(self):
-        self.exiting = True
-        self.wait()
+    def close(self):
+        self.__sock.close()
+        ComBase.close(self)
 
-    def run(self):
-        """
-            This method is called when thread is started with start() method.
-            Main communication loop
-        """
-        while self.status == "Offline":
-            self.connect_to_server()
-
-        while True:
-            self.get_data()
-            time.sleep(0.0005)
-
-    def connect_to_server(self):
+    def connect_to_device(self):
         """
         Establish communication with server(ESP32).
         """
         try:
             self.__sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.__sock.connect((self.__address, self.__port))
+            self.__sock.settimeout(3)
             self.status = "Online"
         except WindowsError:
             print("A connection attempt failed because the connected party did not properly respond after a period of"
@@ -91,21 +71,24 @@ class SocketClient(QThread):
 
         while True:
             try:
-                self.__sock.settimeout(self.TIMEOUT)
+                if not self.run:
+                    break
+
                 data = self.__sock.recv(self.MSG_SIZE)
 
                 if len(data) == 0:
                     break
+
                 self.data_received.emit(bytearray(data))
             except WindowsError:
                 # TODO Printovat do GUI do statusbaru
                 print("Unable to reach network!")
                 self.status = "Offline"
                 self.status_changed.emit(self.status)
-                self.connect_to_server()
+                self.connect_to_device()
             except AttributeError:
                 print("SocketClient was not set properly")
-                self.connect_to_server()
+                self.connect_to_device()
 
         self.__sock.close()
 

@@ -19,6 +19,7 @@ class MainWindow(QMainWindow):
 
     update_config_signal = QtCore.pyqtSignal()
     connection_request_signal = QtCore.pyqtSignal(str)
+    disconnect_request_signal = QtCore.pyqtSignal()
     update_can_msg_signal = QtCore.pyqtSignal(str, str)
     update_connection_status_signal = QtCore.pyqtSignal(str)
     update_data_signal = QtCore.pyqtSignal(Queue)
@@ -36,19 +37,19 @@ class MainWindow(QMainWindow):
         self.action_save = self.findChild(QAction, "action_save")
 
         # Communication interface
-        self.button_com_connect = self.findChild(QPushButton, "button_connect")
-        self.button_com_connect.clicked.connect(self.send_connect_request)
+        self.button_com = self.findChild(QPushButton, "button_connect")
+        self.button_com.clicked.connect(self.send_com_request)
 
         self.button_com_setting = self.findChild(QToolButton, "toolbtn_com_settings")
         self.button_com_setting.clicked.connect(self.open_com_setting_window)
+
+        self.com_status = self.findChild(QLabel, "label_status")
+        self.update_connection_status_signal.connect(self.update_connection_status)
 
         self.cbox_com_type = self.findChild(QComboBox, "cbox_com_type")
 
         self.can_msg = self.findChild(QLabel, "label_can_msg")
         self.update_can_msg_signal.connect(self.update_can_msg)
-
-        self.status = self.findChild(QLabel, "label_status")
-        self.update_connection_status_signal.connect(self.update_connection_status)
 
         # Can variable interface
         self.button_update = self.findChild(QPushButton, "button_update")
@@ -165,12 +166,15 @@ class MainWindow(QMainWindow):
                 except ValueError:
                     print("{} cannot be in group >= {}".format(data_point.name, len(self.tab_list)))
 
-    def send_connect_request(self):
+    def send_com_request(self):
         """
             Send signal to start communication of specific type
         """
-        com_type = self.cbox_com_type.currentText()
-        self.connection_request_signal.emit(com_type)
+        if self.com_status.text() == "Offline":
+            com_type = self.cbox_com_type.currentText()
+            self.connection_request_signal.emit(com_type)
+        else:
+            self.disconnect_request_signal.emit()
 
     def open_com_setting_window(self):
         com_type = self.cbox_com_type.currentText()
@@ -191,11 +195,14 @@ class MainWindow(QMainWindow):
     def update_connection_status(self, status):
         """
             This method update connection status between app and formula
-            :param status: Status can be "Offline" , "Online" , "Connecting"
+            :param status: Status can be "Offline" , "Online"
         """
-        if status != self.status.text():
-            self.status.setText(status)
-
+        if status != self.com_status.text():
+            self.com_status.setText(status)
+            if status == "Offline":
+                self.button_com.setText("Connect")
+            else:
+                self.button_com.setText("Disconnect")
 
     def open_update_window(self):
         """

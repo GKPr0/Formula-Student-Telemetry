@@ -10,6 +10,7 @@ from Config.CANBUS.CanConfigHandler import CanConfigHandler
 from Config.Communication.ComConfigHandler import ComConfigHandler
 from Communication.SocketClient import SocketClient
 from Communication.SerialCom import SerialCom
+from Communication.ComBase import ComBase
 from DataProcessing.DataProcessingManager import DataProcessingManager
 from GUI.MainWindow import MainWindow
 from Logger.DataLogger import DataLogger
@@ -38,6 +39,8 @@ class App:
         self.gui = threading.Thread(target=self.run_gui, name='gui')
         self.gui.start()
 
+        self.communication = None
+
     def start_communication(self, com_type: str):
         """
             Creates and run communication thread depending on communication type.
@@ -47,6 +50,17 @@ class App:
             :type com_type: str
         """
         com_config = ComConfigHandler()
+
+        if isinstance(self.communication, (SerialCom, SocketClient)):
+            print(ComBase.INSTANCE_COM_LIST)
+            # @TODO Somehow resolve auto delete of already existing Com threads
+            for instance in ComBase.INSTANCE_COM_LIST:
+                try:
+                    instance.quit()
+                except RuntimeError:
+                    print("Communication object of type {} has been already deleted.".format(type(self.communication)))
+                finally:
+                    ComBase.INSTANCE_COM_LIST.remove(instance)
 
         if com_type.lower() == "wifi":
             ip, port = com_config.load_wifi_info()
@@ -61,7 +75,12 @@ class App:
 
         self.communication.data_received.connect(self.run_data_processing)
 
+        self.communication.finished.connect(self.communication.deleteLater)
+
         self.communication.start()
+
+    def delete_communication(self):
+        self.communication.stop_signal.emit()
 
     def run_data_processing(self, data_from_formula):
         """
@@ -85,6 +104,7 @@ class App:
         self.main_window.update_config_signal.connect(self.update_config)
         self.main_window.action_save.triggered.connect(self.data_logger.set_save_path)
         self.main_window.connection_request_signal.connect(self.start_communication)
+        self.main_window.disconnect_request_signal.connect(self.delete_communication)
         gui.aboutToQuit.connect(self.on_app_exit)
 
         self.gui_ready = True

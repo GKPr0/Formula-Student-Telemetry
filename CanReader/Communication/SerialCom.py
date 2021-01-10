@@ -1,13 +1,13 @@
 # !/usr/bin/python3
 
 from serial import Serial, SerialException
-from PyQt5.QtCore import QThread, pyqtSignal
+from Communication.ComBase import ComBase
 import time
 import winreg
 import itertools
 
 
-class SerialCom(QThread):
+class SerialCom(ComBase):
     """
     Ensures serial communication with receiver(ESP32).
     Baud rate is specified by connected device.
@@ -28,21 +28,14 @@ class SerialCom(QThread):
             - Baud rate is not in range 300 - 921600.
     """
 
-    status_changed = pyqtSignal(str)
-    data_received = pyqtSignal(bytearray)
-
-    MSG_SIZE = 12  # bytes
-    TIMEOUT = 3  # sec
-
     def __init__(self, port, bauds=921600):
-        QThread.__init__(self)
+        ComBase.__init__(self)
 
         self.check_com_port(port)
         self.check_baud_rate(bauds)
 
         self.__port = port
         self.__baud_rate = bauds
-        self.status = "Offline"
 
     def __repr__(self):
         if self.status == "Offline":
@@ -50,21 +43,9 @@ class SerialCom(QThread):
         else:
             return "Device is connected on COM port: {} with baud rate {}".format(self.__port, self.__baud_rate)
 
-    def __del__(self):
-        self.exiting = True
-        self.wait()
-
-    def run(self):
-        """
-            This method is called when thread is started with start() method.
-            Main communication loop
-        """
-        while self.status == "Offline":
-            self.connect_to_device()
-
-        while True:
-            self.get_data()
-            time.sleep(0.0005)
+    def close(self):
+        self.__serial.close()
+        ComBase.close(self)
 
     def connect_to_device(self):
         """
@@ -72,6 +53,7 @@ class SerialCom(QThread):
         """
         try:
             self.__serial = Serial(port=self.__port, baudrate=self.__baud_rate)
+            self.__serial.timeout = 1
             self.status = "Online"
         except SerialException:
             self.status = "Offline"
@@ -85,6 +67,9 @@ class SerialCom(QThread):
         """
 
         try:
+            if not self.run:
+                return
+
             data = self.__serial.read(self.MSG_SIZE)
 
             self.data_received.emit(bytearray(data))
