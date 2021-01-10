@@ -25,7 +25,6 @@ canDataPack canReceive()
 {
   CAN_frame_t rx_frame;
   canDataPack dataPack;
- 
   // Receive next CAN frame from queue
   if(xQueueReceive(CAN_cfg.rx_queue, &rx_frame, 3*portTICK_PERIOD_MS)==pdTRUE)
   {
@@ -40,7 +39,7 @@ canDataPack canReceive()
         {
           //Serial.print((h)rx_frame.data.u8[i]);
           //printBinary(rx_frame.data.u8[i]);
-          //printHex(rx_frame.data.u8[i]);
+          printHex(rx_frame.data.u8[i]);
           dataPack.canData[i] = rx_frame.data.u8[i];
         }
         Serial.print("\n");

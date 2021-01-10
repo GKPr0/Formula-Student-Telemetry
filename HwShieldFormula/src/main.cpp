@@ -10,8 +10,8 @@ const char* password = "Fstulracing69";
 
 // Wifi setting
 const IPAddress local_IP(192, 168, 4, 1);
-const IPAddress gateway(192, 168, 4, 1);
-const IPAddress subnet(255, 255, 0, 0);
+const IPAddress gateway(192, 168, 4, 100);
+const IPAddress subnet(255, 255, 255, 0);
 const unsigned int port = 23;
 
 const uint8_t wifi_protocol = 7; //  802.11 available b=1, g=2, n=4 ,lr=8 can be combined as follow 1,3,7,8,15
@@ -59,11 +59,12 @@ void serverSetup()
   WiFi.mode(WIFI_AP);
 
   // Set communication protocol
-  if(esp_wifi_set_protocol(WIFI_IF_AP, wifi_protocol) != ESP_OK)
+  // Způsobuje problémy
+  /*if(esp_wifi_set_protocol(WIFI_IF_AP, wifi_protocol) != ESP_OK)
   {
     Serial.println("Setting WiFi protocol failed");
     ESP.restart();
-  }
+  }*/
 
   // Set tx max power
   if(esp_wifi_set_max_tx_power(wifi_tx_power) != ESP_OK)
@@ -102,10 +103,10 @@ void serverSetup()
 void setup() {
   Serial.begin(115200);
 
-  generateTestData(603, data);
+  //generateTestData(1538, data);
 
   serverSetup();
-  //canSetup(can_queue_size);
+  canSetup(can_queue_size);
 }
 
 void loop() {
@@ -113,20 +114,20 @@ void loop() {
   WiFiClient client = server.available();
 
   if (client) {
-    
-    Serial.println("New connection");
     while (client.connected()) {  
-      
-      /*canDataPack dataPack = canReceive();
+      Serial.println("Connected");
+      canDataPack dataPack = canReceive();
 
       if(dataPack.canID != 0){
-        convertDataPackToByteArray(data, dataPack);
+        
+        convertDataPackToByteArray(data, dataPack);        
+        Serial.println("Converted");
+        client.write(data, msg_size);
+        Serial.println("Send"); 
+      }
 
-        client.write(data, msg_size); 
-      }*/
-
-      client.write(data, msg_size);
-      delay(1); 
+      //client.write(data, msg_size);
+      delay(10); 
     }
 
     client.stop();
