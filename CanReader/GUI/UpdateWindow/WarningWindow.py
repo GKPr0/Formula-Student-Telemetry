@@ -79,11 +79,12 @@ class WarningWindow:
         except TypeError:
             self.show_warning_window("Can ID Error", "Can ID must be a hex string")
             logging.info("User tried to input {}. Can ID must be a hex string".format(self.can_id))
+            return False
         except ArithmeticError:
             self.show_warning_window("Can ID Error", "Can ID must be in range 0 - 999")
             logging.info("User tried to input {}. Can ID must be in range 0 - 999".format(self.can_id))
-        finally:
             return False
+
 
     def check_start_bit(self):
         """
@@ -96,10 +97,10 @@ class WarningWindow:
         except ValueError:
             self.show_warning_window("Start bit Error", "Start bit must be an integer")
             logging.info("User tried to input {}. Start bit must be an integer".format(self.start_bit))
+            return False
         except ArithmeticError:
             self.show_warning_window("Start bit Error", "Start bit must be in range 0 - 63")
             logging.info("User tried to input {}. Start bit must be in range 0 - 63".format(self.start_bit))
-        finally:
             return False
 
     def check_length(self):
@@ -113,10 +114,10 @@ class WarningWindow:
         except ValueError:
             self.show_warning_window("Length Error", "Length must be an integer")
             logging.info("User tried to input {}. Length must be an integer".format(self.length))
+            return False
         except ArithmeticError:
             self.show_warning_window("Length Error", "Length must be in range 1 - 63")
             logging.info("User tried to input {}. Length must be in range 1 - 63".format(self.length))
-        finally:
             return False
 
     def check_multiplier(self):
@@ -130,10 +131,10 @@ class WarningWindow:
         except ValueError:
             self.show_warning_window("Multiplier Error", "Multiplier must be an integer or float")
             logging.info("User tried to input {}. Multiplier must be an integer or float".format(self.multiplier))
+            return False
         except ArithmeticError:
             self.show_warning_window("Multiplier Error", "Multiplier cannot be 0")
             logging.info("User tried to input {}. Multiplier cannot be 0".format(self.multiplier))
-        finally:
             return False
 
     def check_offset(self):
@@ -161,8 +162,8 @@ class WarningWindow:
         except TypeError:
             self.show_warning_window("Endian Error", "Endian must be string")
             logging.info("User tried to input {}. Endian must be string".format(self.endian))
+            return False
         except ValueError:
             self.show_warning_window("Endian Error", "Endian is expected as 'L' or 'B'")
             logging.info("User tried to input {}. Endian is expected as 'L' or 'B'".format(self.endian))
-        finally:
             return False
