@@ -5,6 +5,7 @@ from Communication.ComBase import ComBase
 import time
 import winreg
 import itertools
+import logging
 
 
 class SerialCom(ComBase):
@@ -57,7 +58,7 @@ class SerialCom(ComBase):
             self.status = "Online"
         except SerialException:
             self.status = "Offline"
-            raise SerialException("Could not open port {}. Port is probably already open!".format(self.__port))
+            logging.exception("Could not open port {}. Port is probably already open!".format(self.__port))
         finally:
             self.status_changed.emit(self.status)
 
@@ -74,7 +75,7 @@ class SerialCom(ComBase):
 
             self.data_received.emit(bytearray(data))
         except:
-            print("Error occurred when receiving data")
+            logging.exception("Error occurred when receiving data")
             self.status = "Offline"
             self.status_changed.emit(self.status)
             time.sleep(self.TIMEOUT)
@@ -93,13 +94,12 @@ class SerialCom(ComBase):
             :returns:
                 A list of the serial ports available on the system
         """
-        if not sys.platform.startswith('win'):
-            raise EnvironmentError('Unsupported platform')
-
         path = 'HARDWARE\\DEVICEMAP\\SERIALCOMM'
         ports = []
-
         try:
+            if not sys.platform.startswith('win'):
+                raise EnvironmentError('Unsupported platform')
+
             key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, path)
 
             for i in itertools.count():
@@ -107,9 +107,10 @@ class SerialCom(ComBase):
                     ports.append(winreg.EnumValue(key, i)[1])
                 except EnvironmentError:
                     break
-
         except WindowsError:
-            raise WindowsError("Could not access register on path {}".format(path))
+            logging.exception("Could not access register on path {}".format(path))
+        except EnvironmentError:
+            logging.exception('Unsupported platform')
         finally:
             return ports
 
@@ -119,9 +120,9 @@ class SerialCom(ComBase):
             if bauds < 300 or bauds > 921600:
                 raise ValueError
         except ValueError:
-            raise ValueError("Baud rate must be in range 300 - 921600!")
+            logging.exception("Baud rate must be in range 300 - 921600!")
         except TypeError:
-            raise TypeError("Baud rate must be an integer!")
+            logging.exception("Baud rate must be an integer!")
 
     @staticmethod
     def check_com_port(port: str):
@@ -129,9 +130,9 @@ class SerialCom(ComBase):
             if port not in SerialCom.available_com_ports():
                 raise OSError
         except OSError:
-            raise OSError("Cannot find port {}!".format(port))
+            logging.exception("Cannot find port {}!".format(port))
         except TypeError:
-            raise TypeError("COM port must be a string!")
+            logging.exception("COM port must be a string!")
 
 
 if __name__ == "__main__":

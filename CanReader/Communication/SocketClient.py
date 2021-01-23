@@ -1,4 +1,5 @@
 import socket
+import logging
 from Communication.ComBase import ComBase
 
 
@@ -58,8 +59,9 @@ class SocketClient(ComBase):
             self.__sock.settimeout(3)
             self.status = "Online"
         except WindowsError:
-            print("A connection attempt failed because the connected party did not properly respond after a period of"
-                  " time, or established connection failed because connected host has failed to respond")
+            logging.warning("A connection attempt failed because the connected party did not properly respond after "
+                            "a period of time, or established connection failed because "
+                            "connected host has failed to respond")
             self.status = "Offline"
         finally:
             self.status_changed.emit(self.status)
@@ -82,12 +84,12 @@ class SocketClient(ComBase):
                 self.data_received.emit(bytearray(data))
             except WindowsError:
                 # TODO Printovat do GUI do statusbaru
-                print("Unable to reach network!")
+                logging.warning("Unable to reach network!")
                 self.status = "Offline"
                 self.status_changed.emit(self.status)
                 self.connect_to_device()
             except AttributeError:
-                print("SocketClient was not set properly")
+                logging.exception("SocketClient was not set properly")
                 self.connect_to_device()
 
         self.__sock.close()
@@ -100,7 +102,7 @@ class SocketClient(ComBase):
         try:
             socket.inet_aton(address)
         except OSError:
-            raise OSError("IP address is not valid.")
+            logging.exception("IP address is not valid.")
 
     @staticmethod
     def check_port(port: int):
@@ -111,9 +113,9 @@ class SocketClient(ComBase):
             if port <= 0 or port >= 65536:
                 raise ValueError
         except ValueError:
-            raise ValueError("Port number must be in range 1 - 65535.")
+            logging.exception("Port number must be in range 1 - 65535.")
         except TypeError:
-            raise TypeError("Port must be integer.")
+            logging.exception("Port must be integer.")
 
 if __name__ == "__main__":
     """

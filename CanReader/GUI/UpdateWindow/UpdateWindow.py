@@ -1,3 +1,4 @@
+import logging
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow,  QPushButton, QLineEdit, QRadioButton
 from PyQt5.QtGui import QFont, QFontMetrics
@@ -156,8 +157,8 @@ class UpdateWindow(QMainWindow):
     @staticmethod
     def check_config_id(config_id):
         """
-            This method check if input parametr config ID is in right format.
-            Config ID has to be integer in range of [0, number of data configs]
+            Check if input parameter config ID is in the right format.
+            Config ID has to be integer in range 0-number of data configs
         """
         try:
             if type(config_id) != int:
@@ -165,6 +166,7 @@ class UpdateWindow(QMainWindow):
             if config_id < 0 or config_id > CanConfigHandler().number_of_data_configs:
                 raise ValueError
         except TypeError:
-            raise TypeError("Config id must be integer")
+            logging.exception("Config id must be integer")
         except ValueError:
-            raise ValueError("Config id must be in range of data config in config file {}".format(CanConfigHandler().number_of_data_configs))
+            logging.exception("Config id must be in range of data config in config file {}"
+                              .format(CanConfigHandler().number_of_data_configs))

@@ -1,3 +1,4 @@
+import logging
 from DataProcessing.DataPoint import DataPoint
 
 
@@ -93,9 +94,9 @@ class DataProcessing:
             if type(can_id) != str:
                 raise TypeError
         except ValueError:
-            raise ValueError("ID must be number in range of 0 - 999.")
+            logging.exception("ID must be number in range of 0 - 999.")
         except TypeError:
-            raise TypeError("ID must be string.")
+            logging.exception("ID must be string.")
 
     @staticmethod
     def check_data(data):
@@ -106,4 +107,4 @@ class DataProcessing:
             if type(data) != str:
                 raise TypeError
         except TypeError:
-            raise TypeError("Data must be binary string")
+            logging.exception("Data must be binary string")

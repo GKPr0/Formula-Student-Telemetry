@@ -1,3 +1,5 @@
+import logging
+
 class CanDataConfig:
     """
         This class will contain data configuration.
@@ -77,9 +79,9 @@ class CanDataConfig:
             if type(id) != int:
                 raise TypeError
         except ValueError:
-            raise ValueError("ID must be number in range of 0 - 999.")
+            logging.exception("ID must be number in range of 0 - 999.")
         except TypeError:
-            raise TypeError("ID must be integer.")
+            logging.exception("ID must be integer.")
 
     @staticmethod
     def check_group_id(group_id):
@@ -92,9 +94,9 @@ class CanDataConfig:
             if type(group_id) != int:
                 raise TypeError
         except ValueError:
-            raise ValueError("Group id must be number in range of 0 - 999.")
+            logging.exception("Group id must be number in range of 0 - 999.")
         except TypeError:
-            raise TypeError("Group id must be integer.")
+            logging.exception("Group id must be integer.")
 
     @staticmethod
     def check_widget_id(widget_id):
@@ -107,9 +109,9 @@ class CanDataConfig:
             if type(widget_id) != int:
                 raise TypeError
         except ValueError:
-            raise ValueError("Can id must be number in range of 1 - 10.")
+            logging.exception("Can id must be number in range of 1 - 10.")
         except TypeError:
-            raise TypeError("Can id must be integer.")
+            logging.exception("Can id must be integer.")
 
     @staticmethod
     def check_can_id(can_id):
@@ -120,9 +122,9 @@ class CanDataConfig:
             if type(can_id) != str:
                 raise TypeError
         except ValueError:
-            raise ValueError("ID must be number in range of 0 - 999.")
+            logging.exception("ID must be number in range of 0 - 999.")
         except TypeError:
-            raise TypeError("ID must be hex string.")
+            logging.exception("ID must be hex string.")
 
     @staticmethod
     def check_name(name):
@@ -133,7 +135,7 @@ class CanDataConfig:
             if type(name) != str:
                 raise TypeError
         except TypeError:
-            raise TypeError("Name must be string.")
+            logging.exception("Name must be string.")
 
     @staticmethod
     def check_unit(unit):
@@ -144,7 +146,7 @@ class CanDataConfig:
             if type(unit) != str:
                 raise TypeError
         except TypeError:
-            raise TypeError("Unit must be string.")
+            logging.exception("Unit must be string.")
 
     @staticmethod
     def check_start_bit(start_bit):
@@ -157,9 +159,9 @@ class CanDataConfig:
             if start_bit < 0 or start_bit > 63:
                 raise ValueError
         except TypeError:
-            raise TypeError("Start bit must be integer")
+            logging.exception("Start bit must be integer")
         except ValueError:
-            raise ValueError("Start bit must be number in range of 0 - 63")
+            logging.exception("Start bit must be number in range of 0 - 63")
 
     @staticmethod
     def check_length(length):
@@ -172,9 +174,9 @@ class CanDataConfig:
             if length < 1 or length > 63:
                 raise ValueError
         except TypeError:
-            raise TypeError("Length must be integer")
+            logging.exception("Length must be integer")
         except ValueError:
-            raise ValueError("Length must be in range of 1 - 63")
+            logging.exception("Length must be in range of 1 - 63")
 
     @staticmethod
     def check_multiplier(multiplier):
@@ -187,9 +189,9 @@ class CanDataConfig:
             if multiplier == 0:
                 raise ValueError
         except TypeError:
-            raise TypeError("Multiplier must be integer or float.")
+            logging.exception("Multiplier must be integer or float.")
         except ValueError:
-            raise ValueError("Multiplier cannot be negative number.")
+            logging.exception("Multiplier cannot be negative number.")
 
     @staticmethod
     def check_offset(offset):
@@ -213,6 +215,6 @@ class CanDataConfig:
             if endian not in ["L", "B"]:
                 raise ValueError
         except TypeError:
-            raise TypeError("Endian must be string")
+            logging.exception("Endian must be string")
         except ValueError:
-            raise ValueError("Endian is expected as 'L' or 'B'")
+            logging.exception("Endian is expected as 'L' or 'B'")

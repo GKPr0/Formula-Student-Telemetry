@@ -1,3 +1,5 @@
+import logging
+
 
 class RawData:
     """
@@ -46,4 +48,4 @@ class RawData:
                 raise TypeError
 
         except TypeError:
-            raise TypeError("Raw data are expected as bytearray")
+            logging.exception("Raw data are expected as bytearray")

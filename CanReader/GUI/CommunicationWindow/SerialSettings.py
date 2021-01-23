@@ -1,3 +1,4 @@
+import logging
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QComboBox, QLineEdit
 
@@ -66,5 +67,7 @@ class SerialSettingWindow(QMainWindow):
             return True
         except ValueError:
             WarningWindow.show_warning_window("Baud rate Error", "Baud rate must be an integer")
+            logging.info("User tried to input {}. Baud rate must be an integer".format(baud_rate))
         except ArithmeticError:
             WarningWindow.show_warning_window("Baud rate Error", "Baud rate must be in range 300 - 921600")
+            logging.info("User tried to input {}. Baud rate must be in range 300 - 921600".format(baud_rate))

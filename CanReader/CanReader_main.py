@@ -14,6 +14,8 @@ from Communication.ComBase import ComBase
 from DataProcessing.DataProcessingManager import DataProcessingManager
 from GUI.MainWindow import MainWindow
 from Logger.DataLogger import DataLogger
+from Logger import Logger
+import logging
 from queue import Queue
 
 
@@ -58,7 +60,7 @@ class App:
                 try:
                     instance.quit()
                 except RuntimeError:
-                    print("Communication object of type {} has been already deleted.".format(type(self.communication)))
+                    logging.exception("Communication object of type {} has been already deleted.".format(type(self.communication)))
                 finally:
                     ComBase.INSTANCE_COM_LIST.remove(instance)
 
@@ -139,14 +141,19 @@ class App:
 
     def on_app_exit(self):
         try:
-            print("Saving data ...")
+            logging.debug("Saving data ...")
             self.data_logger.save_raw_can()
-            print("Data successfully saved")
+            logging.info("App successfully saved")
         except OSError:
-            raise OSError("Could not save data")
+            logging.exception("Could not save data")
         finally:
             sys.exit()
 
 
 if __name__ == "__main__":
-    app = App()
+    Logger.setup_logger()
+    try:
+        app = App()
+    except Exception:
+        logging.exception("Exception in Main():")
+        exit(1)

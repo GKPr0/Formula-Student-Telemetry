@@ -10,6 +10,7 @@ from GUI.CommunicationWindow.WifiSettings import WifiSettingWindow
 from Config.CANBUS.CanConfigHandler import CanConfigHandler
 
 from queue import Queue
+import logging
 
 class MainWindow(QMainWindow):
     """
@@ -164,7 +165,7 @@ class MainWindow(QMainWindow):
 
                     self.tab_list[index].update_data_signal.emit(data_point)
                 except ValueError:
-                    print("{} cannot be in group >= {}".format(data_point.name, len(self.tab_list)))
+                    logging.warning("{} cannot be in group >= {}".format(data_point.name, len(self.tab_list)))
 
     def send_com_request(self):
         """

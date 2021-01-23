@@ -1,5 +1,6 @@
 from PyQt5.QtCore import QThread, pyqtSignal
 import time
+import logging
 
 
 class ComBase(QThread):
@@ -22,7 +23,7 @@ class ComBase(QThread):
         self.stop_signal.connect(self.stop_com)
 
     def __del__(self):
-        print("Com deleted")
+        logging.debug("Com deleted")
 
     def stop_com(self):
         self.run = False
@@ -31,7 +32,7 @@ class ComBase(QThread):
         self.status = "Offline"
         self.status_changed.emit(self.status)
         self.quit()
-        print("Com closing")
+        logging.debug("Com closing")
 
     def connect_to_device(self):
         raise NotImplementedError()

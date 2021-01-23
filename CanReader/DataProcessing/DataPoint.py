@@ -1,3 +1,6 @@
+import logging
+
+
 class DataPoint:
     """
         This Class will contain variable information like name, value, id, group id
@@ -43,9 +46,9 @@ class DataPoint:
             if type(id) != int:
                 raise TypeError
         except ValueError:
-            raise ValueError("ID must be number in range of 1 - 10.")
+            logging.exception("ID must be number in range of 1 - 10.")
         except TypeError:
-            raise TypeError("ID must be integer.")
+            logging.exception("ID must be integer.")
 
     @staticmethod
     def check_group_id(id):
@@ -58,9 +61,9 @@ class DataPoint:
             if type(id) != int:
                 raise TypeError
         except ValueError:
-            raise ValueError("Group id must be number in range of 1 - 10.")
+            logging.exception("Group id must be number in range of 1 - 10.")
         except TypeError:
-            raise TypeError("Group id must be integer.")
+            logging.exception("Group id must be integer.")
 
     @staticmethod
     def check_name(name):
@@ -71,7 +74,7 @@ class DataPoint:
             if type(name) != str:
                 raise TypeError
         except TypeError:
-            raise TypeError("Name must be string.")
+            logging.exception("Name must be string.")
 
     @staticmethod
     def check_value(value):
@@ -82,4 +85,4 @@ class DataPoint:
             if type(value) not in [int, float]:
                 raise TypeError
         except TypeError:
-            raise TypeError("Value must be int or float")
+            logging.exception("Value must be int or float")

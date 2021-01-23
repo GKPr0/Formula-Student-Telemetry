@@ -1,0 +1,52 @@
+{
+    "logging": {
+        "version": 1,
+        "disable_existing_loggers": true,
+        "formatters": {
+            "brief": {
+                "class": "logging.Formatter",
+                "style": "{",
+                "datefmt": "%I:%M:%S",
+                "format": "{levelname:8s}; {name:<15s}; {message:s}"
+            },
+            "single-line": {
+                "class": "logging.Formatter",
+                "style": "{",
+                "datefmt": "%I:%M:%S",
+                "format": "{levelname:s} \t {asctime:s} :: Logger: {name:s} :: Module: {module:s} :: Line: {lineno:d} :: Msg: {message:s}"
+            },
+            "multi-thread": {
+                "class": "logging.Formatter",
+                "style": "{",
+                "datefmt": "%I:%M:%S",
+                "format": "{levelname:s} \t {asctime:s} :: Logger: {name:s} :: Thread: {threadName:s} :: Module: {module:s} :: Line: {lineno:d} :: Msg: {message:s}"
+            },
+            "verbose": {
+                "class": "logging.Formatter",
+                "style": "{",
+                "format": "{levelname:s} \t {asctime:s} :: Process: {process:d} :: Thread: {threadName:s} :: Logger: {name:s}\n\t Path: {pathname:s}\n\t Line: {lineno:d}\n\t Msg: {message:s}"
+            }
+        },
+        "handlers": {
+            "console":{
+                "level": "DEBUG",
+                "class": "logging.StreamHandler",
+                "formatter": "single-line",
+                "stream" : "ext://sys.stdout"
+            },
+            "file_handler": {
+                "level": "INFO",
+                "class": "logging.handlers.WatchedFileHandler",
+                "formatter": "verbose",
+                "filename": "Logger/Log.log",
+                "mode": "a",
+                "encoding": "utf-8"
+            }
+        },
+        "loggers": {},
+          "root": {
+              "handlers":["console", "file_handler"],
+              "level": "DEBUG"
+      }
+    }
+}
