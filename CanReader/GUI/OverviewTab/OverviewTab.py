@@ -1,13 +1,14 @@
-from PyQt5 import uic, QtCore
-from PyQt5.QtQuickWidgets import QQuickWidget
-from PyQt5.QtWidgets import QWidget, QPushButton, QLabel, QAction, QVBoxLayout
-from PyQt5.QtCore import QObject, QTimer, QUrl, pyqtSignal, pyqtProperty
 import os
-from GUI.OverviewTab.QmlObjectManager import QmlObjectManager
-from GUI.Tab import Tab
+
+from PyQt5 import QtCore
+from PyQt5.QtCore import QUrl
+from PyQt5.QtQuickWidgets import QQuickWidget
+
+from CanReader.GUI.OverviewTab.QmlObjectManager import QmlObjectManager
+from CanReader.GUI.Tab import Tab
+
 
 class OverviewTab(QQuickWidget, Tab):
-
     update_data_signal = QtCore.pyqtSignal(object)
 
     def __init__(self):

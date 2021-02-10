@@ -1,9 +1,11 @@
-import socket
 import logging
+import socket
+
 from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QLineEdit
-from Config.Communication.ComConfigHandler import ComConfigHandler
-from GUI.UpdateWindow.WarningWindow import WarningWindow
+
+from CanReader.Config.Communication.ComConfigHandler import ComConfigHandler
+from CanReader.GUI.UpdateWindow.WarningWindow import WarningWindow
 
 
 class WifiSettingWindow(QMainWindow):
@@ -55,6 +57,7 @@ class WifiSettingWindow(QMainWindow):
         except OSError:
             WarningWindow.show_warning_window("IP Address Error", "IP address is not in valid format.")
             logging.info("User tried to input {}. IP address is not in valid format.".format(ip))
+            return False
 
     @staticmethod
     def check_port(port):
@@ -65,6 +68,8 @@ class WifiSettingWindow(QMainWindow):
         except ArithmeticError:
             WarningWindow.show_warning_window("Port Error", "Port number must be in range 1 - 65535.")
             logging.info("User tried to input {}. Port number must be in range 1 - 65535.".format(port))
+            return False
         except ValueError:
             WarningWindow.show_warning_window("Port Error", "Port must be an integer")
             logging.info("User tried to input {}. Port must be an integer".format(port))
+            return False

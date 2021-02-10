@@ -1,5 +1,5 @@
-import logging
-from DataProcessing.DataPoint import DataPoint
+from CanReader.DataProcessing.DataPoint import DataPoint
+from CanReader.Exceptions.CanCheck import *
 
 
 class DataProcessing:
@@ -17,15 +17,15 @@ class DataProcessing:
         :type config_list: DataConfig
 
         :raises TypeError:
-            - ID is not a int.
+            - can_id is not a hex string.
             - Data are not a binary str.
         :raises ValueError:
-            - ID is not in range 0 - 999.
+            - can_id is not in hex of length 3.
     """
     def __init__(self, can_id, can_data, config_list):
         # Validate ID and Data
-        self.check_id(can_id)
-        self.check_data(can_data)
+        check_can_id(can_id)
+        check_binary_can_data(can_data)
 
         self.__config_list = config_list
         self.__can_id = can_id
@@ -84,27 +84,3 @@ class DataProcessing:
         else:
             data = int(bin_data[start_bit:end_bit], 2)
         return float((data * multiplier) + offset)
-
-    @staticmethod
-    def check_id(can_id):
-        """
-            Check if id is valid. Expected hex string in range [0, 999]
-        """
-        try:
-            if type(can_id) != str:
-                raise TypeError
-        except ValueError:
-            logging.exception("ID must be number in range of 0 - 999.")
-        except TypeError:
-            logging.exception("ID must be string.")
-
-    @staticmethod
-    def check_data(data):
-        """
-            Check if data are valid. Expected binary string'
-        """
-        try:
-            if type(data) != str:
-                raise TypeError
-        except TypeError:
-            logging.exception("Data must be binary string")

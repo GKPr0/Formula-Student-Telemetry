@@ -1,7 +1,7 @@
-from configparser import ConfigParser
-import re
 import logging
 import os
+import re
+from configparser import ConfigParser
 from pathlib import Path
 
 
@@ -52,12 +52,16 @@ class ConfigHandler:
         """
         try:
             if not config_file_name.endswith(".ini"):
-                raise TypeError
+                raise ValueError
             if len(re.findall(r'[^A-Za-z0-9_\-\\]', config_file_name)) > 1:
-                raise TypeError
+                raise ValueError
             if not os.path.isfile(str(Path(__file__).parent.absolute()) + "/" + config_file_name):
-                raise OSError
-        except TypeError:
-            logging.exception("Config file can contain only A-Z, a-z , 0-9, _ and must ends with '.ini'")
-        except OSError:
-            logging.exception(config_file_name + " does not exist")
+                raise FileNotFoundError
+        except ValueError:
+            error_msg = "Config file can contain only A-Z, a-z , 0-9, _ and must ends with '.ini'"
+            logging.exception(error_msg)
+            raise ValueError(error_msg)
+        except FileNotFoundError:
+            error_msg = config_file_name + " does not exist"
+            logging.exception(error_msg)
+            raise FileNotFoundError(error_msg)

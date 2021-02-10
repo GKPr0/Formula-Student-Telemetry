@@ -1,10 +1,10 @@
-from PyQt5 import uic, QtCore
-from PyQt5.QtWidgets import QWidget, QGridLayout
-from GUI.GraphTabs.Graph import Graph
-from GUI.Tab import Tab
-from GUI.ErrorTab.ErrorWidget import ErrorWidget
-
 import math
+
+from PyQt5.QtWidgets import QGridLayout
+
+from CanReader.GUI.ErrorTab.ErrorWidget import ErrorWidget
+from CanReader.GUI.Tab import Tab
+
 
 class ErrorTab(Tab):
 

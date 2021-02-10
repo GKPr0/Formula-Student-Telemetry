@@ -1,8 +1,9 @@
-import numpy as np
 import datetime
+
+import numpy as np
+import pyqtgraph as pg
 from PyQt5 import QtCore
 from pyqtgraph import PlotWidget
-import pyqtgraph as pg
 
 UNIX_EPOCH = datetime.datetime(1970, 1, 1, 0, 0)  # offset-naive datetime
 TS_MULT_us = 1e6
@@ -131,7 +132,7 @@ if __name__ == "__main__":
     window = QWidget()
     layout = QVBoxLayout()
 
-    graph = Graph("Test", "Km/hod", 1)
+    graph = Graph("Tests", "Km/hod", 1)
 
     layout.addWidget(graph)
     window.setLayout(layout)

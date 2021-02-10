@@ -1,11 +1,12 @@
 from PyQt5.QtCore import QRunnable, pyqtSignal, QObject
-from DataProcessing.RawData import RawData
-from DataProcessing.DataProcessing import DataProcessing
-from DataProcessing.DataPoint import DataPoint
-from Logger.DataLogger import DataLogger
+
+from CanReader.DataProcessing.DataProcessing import DataProcessing
+from CanReader.DataProcessing.RawData import RawData
+
 
 class DataSignal(QObject):
     data_processed = pyqtSignal(list, str, str)
+
 
 class DataProcessingManager(QRunnable):
 

@@ -1,5 +1,6 @@
-from PyQt5.QtWidgets import QFileDialog
 from datetime import datetime
+
+from PyQt5.QtWidgets import QFileDialog
 
 
 class DataLogger:

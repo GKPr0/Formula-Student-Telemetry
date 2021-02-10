@@ -1,4 +1,5 @@
 import logging
+
 from PyQt5.QtWidgets import QMessageBox
 
 
@@ -7,7 +8,7 @@ class WarningWindow:
         This Class is used to check user parameters given in UpdateWindow
 
         :param can_id:
-        :type can_id: int
+        :type can_id: str
         :param start_bit:
         :type start_bit: int
         :param length:
@@ -71,20 +72,16 @@ class WarningWindow:
             Check validity of can id
         """
         try:
-            if int(self.can_id) < 0 or int(self.can_id) > 999:
-                raise ArithmeticError
+            int(self.can_id, 16)
             if type(self.can_id) != str:
                 raise TypeError
+            if len(self.can_id) > 3:
+                raise ValueError
             return True
-        except TypeError:
-            self.show_warning_window("Can ID Error", "Can ID must be a hex string")
+        except (TypeError, ValueError):
+            self.show_warning_window("Can ID Error", "Can ID must be a hex string of 3 hex values")
             logging.info("User tried to input {}. Can ID must be a hex string".format(self.can_id))
             return False
-        except ArithmeticError:
-            self.show_warning_window("Can ID Error", "Can ID must be in range 0 - 999")
-            logging.info("User tried to input {}. Can ID must be in range 0 - 999".format(self.can_id))
-            return False
-
 
     def check_start_bit(self):
         """

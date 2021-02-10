@@ -1,16 +1,17 @@
+import logging
+from queue import Queue
+
 from PyQt5 import uic, QtCore, QtGui
 from PyQt5.QtWidgets import QMainWindow, QTabWidget, QPushButton, QLabel, QAction, QListWidget, QComboBox, QToolButton
 
-from GUI.UpdateWindow.UpdateWindow import UpdateWindow
-from GUI.OverviewTab.OverviewTab import OverviewTab
-from GUI.GraphTabs.GraphTab import GraphTab
-from GUI.ErrorTab.ErrorTab import ErrorTab
-from GUI.CommunicationWindow.SerialSettings import SerialSettingWindow
-from GUI.CommunicationWindow.WifiSettings import WifiSettingWindow
-from Config.CANBUS.CanConfigHandler import CanConfigHandler
+from CanReader.Config.CanBus.CanConfigHandler import CanConfigHandler
+from CanReader.GUI.CommunicationWindow.SerialSettings import SerialSettingWindow
+from CanReader.GUI.CommunicationWindow.WifiSettings import WifiSettingWindow
+from CanReader.GUI.ErrorTab.ErrorTab import ErrorTab
+from CanReader.GUI.GraphTabs.GraphTab import GraphTab
+from CanReader.GUI.OverviewTab.OverviewTab import OverviewTab
+from CanReader.GUI.UpdateWindow.UpdateWindow import UpdateWindow
 
-from queue import Queue
-import logging
 
 class MainWindow(QMainWindow):
     """
@@ -37,7 +38,7 @@ class MainWindow(QMainWindow):
 
         self.action_save = self.findChild(QAction, "action_save")
 
-        # Communication interface
+        # testCommunication interface
         self.button_com = self.findChild(QPushButton, "button_connect")
         self.button_com.clicked.connect(self.send_com_request)
 
@@ -165,7 +166,8 @@ class MainWindow(QMainWindow):
 
                     self.tab_list[index].update_data_signal.emit(data_point)
                 except ValueError:
-                    logging.warning("{} cannot be in group >= {}".format(data_point.name, len(self.tab_list)))
+                    logging.warning("{} cannot be in group >= {}".format(data_point.name, len(self.tab_list)),
+                                    exc_info=True)
 
     def send_com_request(self):
         """
@@ -196,7 +198,7 @@ class MainWindow(QMainWindow):
     def update_connection_status(self, status):
         """
             This method update connection status between app and formula
-            :param status: Status can be "Offline" , "Online"
+            :param status: Status can be "Offline" ,"Reconnecting", "Online"
         """
         if status != self.com_status.text():
             self.com_status.setText(status)

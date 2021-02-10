@@ -1,8 +1,8 @@
-from Config.ConfigHandler import ConfigHandler
+from CanReader.Config.ConfigHandler import ConfigHandler
 
 class SerialConfigHandler(ConfigHandler):
     """
-        This class has access to Communication config file.
+        This class has access to testCommunication config file.
         Can load config and return it as a list of CanDataConfig objects,
         or can update config sections from given CanDataConfig object.
 

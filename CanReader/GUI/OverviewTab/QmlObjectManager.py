@@ -4,7 +4,7 @@ from PyQt5.QtCore import QObject, pyqtSignal, pyqtProperty
 class QmlObjectManager(QObject):
     value_changed_signal = pyqtSignal()
 
-    def __init__(self,  overview_id, type= "str", parent = None):
+    def __init__(self, overview_id, type="str", parent=None):
         QObject.__init__(self, parent)
         self._value = "0"
         self.type = type
@@ -24,4 +24,3 @@ class QmlObjectManager(QObject):
             return
         self._value = value
         self.value_changed_signal.emit()
-

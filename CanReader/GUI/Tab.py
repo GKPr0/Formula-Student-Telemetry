@@ -3,10 +3,9 @@ from PyQt5.QtWidgets import QWidget
 
 
 class Tab(QWidget):
-
     update_data_signal = QtCore.pyqtSignal(object)
 
-    def __init__(self, group_id = 0):
+    def __init__(self, group_id=0):
         QWidget.__init__(self)
 
         self.group_id = group_id
@@ -27,4 +26,3 @@ class Tab(QWidget):
 
     def sort_widget_list_by_id(self):
         self.widget_list.sort(key=lambda x: x.id, reverse=False)
-

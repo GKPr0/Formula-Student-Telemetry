@@ -21,7 +21,7 @@
 
 
 #
-# Template #1: General project. Test it using existing `platformio.ini`.
+# Template #1: General project. Tests it using existing `platformio.ini`.
 #
 
 # language: python

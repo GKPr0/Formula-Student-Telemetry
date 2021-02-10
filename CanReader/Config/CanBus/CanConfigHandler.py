@@ -1,6 +1,7 @@
 import logging
-from Config.ConfigHandler import ConfigHandler
-from Config.CANBUS.CanDataConfig import CanDataConfig
+
+from CanReader.Config.CanBus.CanDataConfig import CanDataConfig
+from CanReader.Config.ConfigHandler import ConfigHandler
 
 
 class CanConfigHandler(ConfigHandler):
@@ -116,7 +117,9 @@ class CanConfigHandler(ConfigHandler):
             if type(data_config) != CanDataConfig:
                 raise TypeError
         except TypeError:
-            logging.exception("As a parameter is expected DataConfig not " + type(data_config))
+            error_msg = "As a parameter is expected DataConfig not " + type(data_config)
+            logging.exception(error_msg)
+            raise TypeError(error_msg)
 
     @staticmethod
     def check_config_id(config_id):
@@ -129,11 +132,14 @@ class CanConfigHandler(ConfigHandler):
             if config_id < 0 or config_id > CanConfigHandler().number_of_data_configs:
                 raise ValueError
         except TypeError:
-            logging.exception("Config id must be integer")
+            error_msg = "Config id must be integer"
+            logging.exception(error_msg)
+            raise TypeError(error_msg)
         except ValueError:
-            logging.exception(
-                "Config id must be in range of data config in config file {}"
-                .format(CanConfigHandler().number_of_data_configs))
+            error_msg = "Config id must be in range of data config in config file {}" \
+                .format(CanConfigHandler().number_of_data_configs)
+            logging.exception(error_msg)
+            raise ValueError(error_msg)
 
 
 if __name__ == "__main__":

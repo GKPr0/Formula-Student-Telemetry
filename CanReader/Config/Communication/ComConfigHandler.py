@@ -1,4 +1,4 @@
-from Config.ConfigHandler import ConfigHandler
+from CanReader.Config.ConfigHandler import ConfigHandler
 
 
 class ComConfigHandler(ConfigHandler):

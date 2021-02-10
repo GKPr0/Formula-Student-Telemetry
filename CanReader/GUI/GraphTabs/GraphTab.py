@@ -1,7 +1,8 @@
-from PyQt5 import uic, QtCore
-from PyQt5.QtWidgets import QWidget, QVBoxLayout
-from GUI.GraphTabs.Graph import Graph
-from GUI.Tab import Tab
+from PyQt5.QtWidgets import QVBoxLayout
+
+from CanReader.GUI.GraphTabs.Graph import Graph
+from CanReader.GUI.Tab import Tab
+
 
 class GraphTab(Tab):
 

@@ -1,12 +1,12 @@
 import logging
+
 from PyQt5 import uic
-from PyQt5.QtWidgets import QMainWindow,  QPushButton, QLineEdit, QRadioButton
-from PyQt5.QtGui import QFont, QFontMetrics
+from PyQt5.QtGui import QFontMetrics
+from PyQt5.QtWidgets import QMainWindow, QPushButton, QLineEdit, QRadioButton
 
-
-from Config.CANBUS.CanConfigHandler import CanConfigHandler
-from Config.CANBUS.CanDataConfig import CanDataConfig
-from GUI.UpdateWindow.WarningWindow import WarningWindow
+from CanReader.Config.CanBus.CanConfigHandler import CanConfigHandler
+from CanReader.Config.CanBus.CanDataConfig import CanDataConfig
+from CanReader.GUI.UpdateWindow.WarningWindow import WarningWindow
 
 
 class UpdateWindow(QMainWindow):
@@ -166,7 +166,11 @@ class UpdateWindow(QMainWindow):
             if config_id < 0 or config_id > CanConfigHandler().number_of_data_configs:
                 raise ValueError
         except TypeError:
-            logging.exception("Config id must be integer")
+            error_msg = "Config id must be integer"
+            logging.exception(error_msg)
+            raise TypeError(error_msg)
         except ValueError:
-            logging.exception("Config id must be in range of data config in config file {}"
-                              .format(CanConfigHandler().number_of_data_configs))
+            error_msg = "Config id must be in range of data config in config file {}" \
+                .format(CanConfigHandler().number_of_data_configs)
+            logging.exception(error_msg)
+            raise ValueError(error_msg)

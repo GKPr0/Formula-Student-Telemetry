@@ -1,4 +1,4 @@
-import logging
+from CanReader.Exceptions.CanCheck import *
 
 
 class RawData:
@@ -15,7 +15,7 @@ class RawData:
     DATA_BYTE_LENGTH = 8
 
     def __init__(self, raw_data):
-        self.check_raw_data(raw_data)
+        check_raw_data(raw_data)
         self.__raw_data = raw_data
 
     def __repr__(self):
@@ -38,14 +38,3 @@ class RawData:
 
         return id, data
 
-    @staticmethod
-    def check_raw_data(raw_data):
-        """
-            Check validity of raw_data type, str is expected.
-        """
-        try:
-            if type(raw_data) != bytearray:
-                raise TypeError
-
-        except TypeError:
-            logging.exception("Raw data are expected as bytearray")
