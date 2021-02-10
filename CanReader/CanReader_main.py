@@ -2,21 +2,23 @@
 Main handler of project.
 
 """
-import threading
+import logging
 import sys
+import threading
+from queue import Queue
+
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtCore import QThreadPool
-from Config.CANBUS.CanConfigHandler import CanConfigHandler
-from Config.Communication.ComConfigHandler import ComConfigHandler
-from Communication.SocketClient import SocketClient
-from Communication.SerialCom import SerialCom
-from Communication.ComBase import ComBase
-from DataProcessing.DataProcessingManager import DataProcessingManager
-from GUI.MainWindow import MainWindow
-from Logger.DataLogger import DataLogger
-from Logger import Logger
-import logging
-from queue import Queue
+
+from CanReader.Communication.ComBase import ComBase
+from CanReader.Communication.SerialCom import SerialCom
+from CanReader.Communication.SocketClient import SocketClient
+from CanReader.Config.CanBus.CanConfigHandler import CanConfigHandler
+from CanReader.Config.Communication.ComConfigHandler import ComConfigHandler
+from CanReader.DataProcessing.DataProcessingManager import DataProcessingManager
+from CanReader.GUI.MainWindow import MainWindow
+from CanReader.Logger import Logger
+from CanReader.Logger.DataLogger import DataLogger
 
 
 class App:
@@ -51,38 +53,33 @@ class App:
             :param com_type: Type of communication Wifi or Serial COM
             :type com_type: str
         """
-        com_config = ComConfigHandler()
+        if not isinstance(self.communication, (SerialCom, SocketClient)):
+            com_config = ComConfigHandler()
 
+            if com_type.lower() == "wifi":
+                ip, port = com_config.load_wifi_info()
+                self.communication = SocketClient(ip, port)
+            elif com_type.lower() == "serial":
+                port, baud_rate = com_config.load_serial_info()
+                self.communication = SerialCom(port, baud_rate)
+            else:
+                return
+
+            self.communication.status_changed.connect(self.main_window.update_connection_status_signal.emit)
+
+            self.communication.data_received.connect(self.run_data_processing)
+
+            self.communication.finished.connect(self.communication.deleteLater)
+            self.communication.finished.connect(self.delete_communication)
+
+            self.communication.start()
+
+    def stop_communication(self):
         if isinstance(self.communication, (SerialCom, SocketClient)):
-            print(ComBase.INSTANCE_COM_LIST)
-            # @TODO Somehow resolve auto delete of already existing Com threads
-            for instance in ComBase.INSTANCE_COM_LIST:
-                try:
-                    instance.quit()
-                except RuntimeError:
-                    logging.exception("Communication object of type {} has been already deleted.".format(type(self.communication)))
-                finally:
-                    ComBase.INSTANCE_COM_LIST.remove(instance)
-
-        if com_type.lower() == "wifi":
-            ip, port = com_config.load_wifi_info()
-            self.communication = SocketClient(ip, port)
-        elif com_type.lower() == "serial":
-            port, baud_rate = com_config.load_serial_info()
-            self.communication = SerialCom(port, baud_rate)
-        else:
-            return
-
-        self.communication.status_changed.connect(self.main_window.update_connection_status_signal.emit)
-
-        self.communication.data_received.connect(self.run_data_processing)
-
-        self.communication.finished.connect(self.communication.deleteLater)
-
-        self.communication.start()
+            self.communication.stop_signal.emit()
 
     def delete_communication(self):
-        self.communication.stop_signal.emit()
+        self.communication = None
 
     def run_data_processing(self, data_from_formula):
         """
@@ -90,6 +87,7 @@ class App:
             Data Managers will send signal containing DataPoint to data processing queue
         """
         if len(data_from_formula) == 12:
+            logging.debug(data_from_formula)
             process_manager = DataProcessingManager(data_from_formula, self.data_config_list)
             process_manager.signal.data_processed.connect(self.receive_processed_data)
 
@@ -106,7 +104,7 @@ class App:
         self.main_window.update_config_signal.connect(self.update_config)
         self.main_window.action_save.triggered.connect(self.data_logger.set_save_path)
         self.main_window.connection_request_signal.connect(self.start_communication)
-        self.main_window.disconnect_request_signal.connect(self.delete_communication)
+        self.main_window.disconnect_request_signal.connect(self.stop_communication)
         gui.aboutToQuit.connect(self.on_app_exit)
 
         self.gui_ready = True

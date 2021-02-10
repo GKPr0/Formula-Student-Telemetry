@@ -1,6 +1,7 @@
-import socket
 import logging
-from Communication.ComBase import ComBase
+import socket
+
+from CanReader.Communication.ComBase import ComBase
 
 
 class SocketClient(ComBase):
@@ -54,15 +55,23 @@ class SocketClient(ComBase):
         Establish communication with server(ESP32).
         """
         try:
+            if self.first_connection:
+                self.status = "Connecting"
+            else:
+                self.status = "Reconnecting"
+            self.status_changed.emit(self.status)
+
             self.__sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.__sock.connect((self.__address, self.__port))
-            self.__sock.settimeout(3)
+            self.__sock.settimeout(self.TIMEOUT)
+            self.first_connection = False
             self.status = "Online"
         except WindowsError:
             logging.warning("A connection attempt failed because the connected party did not properly respond after "
                             "a period of time, or established connection failed because "
-                            "connected host has failed to respond")
-            self.status = "Offline"
+                            "connected host has failed to respond", exc_info=True)
+            self.running = False
+            self.status = "Failed"
         finally:
             self.status_changed.emit(self.status)
 
@@ -73,7 +82,7 @@ class SocketClient(ComBase):
 
         while True:
             try:
-                if not self.run:
+                if not self.running:
                     break
 
                 data = self.__sock.recv(self.MSG_SIZE)
@@ -84,12 +93,10 @@ class SocketClient(ComBase):
                 self.data_received.emit(bytearray(data))
             except WindowsError:
                 # TODO Printovat do GUI do statusbaru
-                logging.warning("Unable to reach network!")
-                self.status = "Offline"
-                self.status_changed.emit(self.status)
+                logging.info("Unable to reach network!")
                 self.connect_to_device()
-            except AttributeError:
-                logging.exception("SocketClient was not set properly")
+            except AttributeError as e:
+                logging.warning("SocketClient was not set properly", exc_info=True)
                 self.connect_to_device()
 
         self.__sock.close()
@@ -102,20 +109,28 @@ class SocketClient(ComBase):
         try:
             socket.inet_aton(address)
         except OSError:
-            logging.exception("IP address is not valid.")
+            error_msg = "IP address is not valid."
+            logging.exception(error_msg)
+            raise OSError(error_msg)
 
     @staticmethod
-    def check_port(port: int):
+    def check_port(port):
         """
             Check validity of port type and range.
         """
         try:
+            if type(port) != int:
+                raise TypeError
             if port <= 0 or port >= 65536:
                 raise ValueError
         except ValueError:
-            logging.exception("Port number must be in range 1 - 65535.")
+            error_msg = "Port number must be in range 1 - 65535."
+            logging.exception(error_msg)
+            raise ValueError(error_msg)
         except TypeError:
-            logging.exception("Port must be integer.")
+            error_msg = "Port must be integer."
+            logging.exception(error_msg)
+            raise TypeError(error_msg)
 
 if __name__ == "__main__":
     """

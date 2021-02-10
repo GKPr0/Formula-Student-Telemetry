@@ -1,10 +1,10 @@
-from PyQt5.QtCore import QThread, pyqtSignal
-import time
 import logging
+import time
+
+from PyQt5.QtCore import QThread, pyqtSignal
 
 
 class ComBase(QThread):
-
     status_changed = pyqtSignal(str)
     data_received = pyqtSignal(bytearray)
     stop_signal = pyqtSignal()
@@ -12,13 +12,11 @@ class ComBase(QThread):
     MSG_SIZE = 12  # bytes
     TIMEOUT = 1  # sec
 
-    INSTANCE_COM_LIST = []
-
     def __init__(self):
         QThread.__init__(self)
-        ComBase.INSTANCE_COM_LIST.append(self)
         self.status = "Offline"
-        self.run = True
+        self.running = True
+        self.first_connection = True
 
         self.stop_signal.connect(self.stop_com)
 
@@ -26,7 +24,8 @@ class ComBase(QThread):
         logging.debug("Com deleted")
 
     def stop_com(self):
-        self.run = False
+        self.running = False
+        self.close()
 
     def close(self):
         self.status = "Offline"
@@ -48,7 +47,7 @@ class ComBase(QThread):
         while self.status == "Offline":
             self.connect_to_device()
 
-        while self.run:
+        while self.running:
             self.get_data()
             time.sleep(0.0005)
 

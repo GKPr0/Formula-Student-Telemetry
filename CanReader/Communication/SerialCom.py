@@ -1,11 +1,11 @@
-# !/usr/bin/python3
-
-from serial import Serial, SerialException
-from Communication.ComBase import ComBase
-import time
-import winreg
 import itertools
 import logging
+import time
+import winreg
+
+from serial import Serial, SerialException
+
+from CanReader.Communication.ComBase import ComBase
 
 
 class SerialCom(ComBase):
@@ -50,15 +50,24 @@ class SerialCom(ComBase):
 
     def connect_to_device(self):
         """
-            Establish communication with receiver(ESP32).
+            Establish serial communication with receiver(ESP32) via USB COM.
         """
         try:
+            if self.first_connection:
+                self.status = "Connecting"
+            else:
+                self.status = "Reconnecting"
+            self.status_changed.emit(self.status)
+
             self.__serial = Serial(port=self.__port, baudrate=self.__baud_rate)
-            self.__serial.timeout = 1
+            self.__serial.timeout = self.TIMEOUT
+            self.first_connection = False
             self.status = "Online"
         except SerialException:
-            self.status = "Offline"
-            logging.exception("Could not open port {}. Port is probably already open!".format(self.__port))
+            logging.warning("Could not open port {}. Port is probably already open!".format(self.__port),
+                            exc_info=True)
+            self.running = False
+            self.status = "Failed"
         finally:
             self.status_changed.emit(self.status)
 
@@ -68,16 +77,14 @@ class SerialCom(ComBase):
         """
 
         try:
-            if not self.run:
+            if not self.running:
                 return
 
             data = self.__serial.read(self.MSG_SIZE)
 
             self.data_received.emit(bytearray(data))
         except:
-            logging.exception("Error occurred when receiving data")
-            self.status = "Offline"
-            self.status_changed.emit(self.status)
+            logging.warning("Error occurred when receiving data", exc_info=True)
             time.sleep(self.TIMEOUT)
             self.connect_to_device()
 
@@ -98,7 +105,7 @@ class SerialCom(ComBase):
         ports = []
         try:
             if not sys.platform.startswith('win'):
-                raise EnvironmentError('Unsupported platform')
+                raise EnvironmentError
 
             key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, path)
 
@@ -108,9 +115,13 @@ class SerialCom(ComBase):
                 except EnvironmentError:
                     break
         except WindowsError:
-            logging.exception("Could not access register on path {}".format(path))
+            error_msg = "Could not access register on path {}".format(path)
+            logging.exception(error_msg)
+            raise WindowsError(error_msg)
         except EnvironmentError:
-            logging.exception('Unsupported platform')
+            error_msg = 'Unsupported platform'
+            logging.exception(error_msg)
+            raise EnvironmentError(error_msg)
         finally:
             return ports
 
@@ -120,9 +131,13 @@ class SerialCom(ComBase):
             if bauds < 300 or bauds > 921600:
                 raise ValueError
         except ValueError:
-            logging.exception("Baud rate must be in range 300 - 921600!")
+            error_msg = "Baud rate must be in range 300 - 921600!"
+            logging.exception(error_msg)
+            raise ValueError(error_msg)
         except TypeError:
-            logging.exception("Baud rate must be an integer!")
+            error_msg = "Baud rate must be an integer!"
+            logging.exception(error_msg)
+            raise TypeError(error_msg)
 
     @staticmethod
     def check_com_port(port: str):
@@ -130,9 +145,13 @@ class SerialCom(ComBase):
             if port not in SerialCom.available_com_ports():
                 raise OSError
         except OSError:
-            logging.exception("Cannot find port {}!".format(port))
+            error_msg = "Cannot find port {}!".format(port)
+            logging.exception(error_msg)
+            raise OSError(error_msg)
         except TypeError:
-            logging.exception("COM port must be a string!")
+            error_msg = "COM port must be a string!"
+            logging.exception(error_msg)
+            raise TypeError(error_msg)
 
 
 if __name__ == "__main__":
@@ -145,17 +164,14 @@ if __name__ == "__main__":
         i += len(ser.read(ser.inWaiting())) # 1.35 sec on 1Mbit
     print(time.time() - startTime)
     """
+
+
     def print_data(data: bytearray):
         print(data)
+
 
     serCom = SerialCom('COM4', 921600)
     serCom.data_received.connect(print_data)
     serCom.connect_to_device()
     while 1:
         serCom.get_data()
-
-
-
-
-
-
