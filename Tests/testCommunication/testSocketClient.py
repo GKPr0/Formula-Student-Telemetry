@@ -1,5 +1,7 @@
 import unittest
+
 from CanReader.Communication.SocketClient import SocketClient
+
 
 class TestSocketClient(unittest.TestCase):
     """
@@ -19,12 +21,9 @@ class TestSocketClient(unittest.TestCase):
         self.assertRaises(ValueError, SocketClient.check_port, -564)
         self.assertRaises(ValueError, SocketClient.check_port, 648292)
 
-
     def test_port_type(self):
         # Make sure port number is integer
         self.assertRaises(TypeError, SocketClient.check_port, "String")
         self.assertRaises(TypeError, SocketClient.check_port, 'a')
         self.assertRaises(TypeError, SocketClient.check_port, 54.5)
         self.assertRaises(TypeError, SocketClient.check_port, True)
-
-
