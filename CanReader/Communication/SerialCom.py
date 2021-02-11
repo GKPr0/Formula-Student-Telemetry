@@ -35,7 +35,7 @@ class SerialCom(ComBase):
         self.check_com_port(port)
         self.check_baud_rate(bauds)
 
-        self.__port = port
+        self.__port = port.upper()
         self.__baud_rate = bauds
 
     def __repr__(self):
@@ -126,8 +126,10 @@ class SerialCom(ComBase):
             return ports
 
     @staticmethod
-    def check_baud_rate(bauds: int):
+    def check_baud_rate(bauds):
         try:
+            if type(bauds) != int:
+                raise TypeError
             if bauds < 300 or bauds > 921600:
                 raise ValueError
         except ValueError:
@@ -140,9 +142,11 @@ class SerialCom(ComBase):
             raise TypeError(error_msg)
 
     @staticmethod
-    def check_com_port(port: str):
+    def check_com_port(port):
         try:
-            if port not in SerialCom.available_com_ports():
+            if type(port) != str:
+                raise TypeError
+            if port.upper() not in SerialCom.available_com_ports():
                 raise OSError
         except OSError:
             error_msg = "Cannot find port {}!".format(port)

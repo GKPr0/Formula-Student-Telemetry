@@ -3,10 +3,7 @@ import unittest
 from CanReader.Exceptions.CanCheck import *
 
 
-class TestDataConfig(unittest.TestCase):
-    """
-        Unit test definition for class called 
-    """
+class TestCanCheck(unittest.TestCase):
 
     def test_id_type(self):
         # Make sure id is a valid type -> integer

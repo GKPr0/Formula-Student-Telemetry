@@ -33,7 +33,7 @@ class CanConfigHandler(ConfigHandler):
             :type data_config: CanDataConfig
 
             :raises TypeError:
-                - Parameter data_config is not a DataConfig type.
+                - Parameter data_config is not a CanDataConfig type.
 
         """
         self.check_update_parameter_type(data_config)
