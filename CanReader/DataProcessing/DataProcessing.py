@@ -10,7 +10,7 @@ class DataProcessing:
         These objects will contain information like name, value, id and group id
 
         :param can_id: id of CAN message
-        :type can_id: int
+        :type can_id: str
         :param can_data: data containing CAN message
         :type can_data: str
         :param config_list: config is list of DataConfig object. DataConfig is described in Config section.
@@ -69,15 +69,17 @@ class DataProcessing:
             :param bin_data: Can data in binary form with fixed 64 bit length
             :type bin_data: str
             :param data_config: Configuration
-            :type data_config: DataConfig
+            :param data_config: Configuration
+            :type data_config: CanDataConfig
             :return: Decoded and processed value corresponding to configuration
         """
+        length = data_config.length
         start_bit = data_config.start_bit
-        end_bit = start_bit + data_config.length
+        end_bit = start_bit + length
         multiplier = data_config.multiplier
         offset = data_config.offset
 
-        if data_config.endian == "L":
+        if data_config.endian == "L" and length > 7:
             tmp = bin_data[start_bit:end_bit]
             data = [tmp[i*8:(i+1)*8] for i in range(int(len(tmp) / 8)-1, -1, -1)]
             data = int(''.join(map(str, data)), 2)

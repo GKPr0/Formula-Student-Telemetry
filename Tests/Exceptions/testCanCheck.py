@@ -50,12 +50,12 @@ class TestCanCheck(unittest.TestCase):
         self.assertRaises(TypeError, check_widget_id, None)
 
     def test_can_id_value(self):
-        # Make sure can id is in Hex string number of max length 3
-        self.assertRaises(ValueError, check_can_id, "gga")
-        self.assertRaises(ValueError, check_can_id, "1000")
+        # Make sure can id is in Hex string number of max length 8
+        self.assertRaises(ValueError, check_can_id, "b000b000a")
+        self.assertRaises(ValueError, check_can_id, "")
 
         check_can_id("603")
-        check_can_id("a05")
+        check_can_id("a0500f0f")
         check_can_id("0")
         check_can_id("60")
 
@@ -184,7 +184,7 @@ class TestCanCheck(unittest.TestCase):
         check_value(-1.5)
         check_value(0)
 
-    def test_raw_data(self):
+    def test_raw_data_type(self):
         # Make sure raw data are byte array
         self.assertRaises(TypeError, check_raw_data, "mka")
         self.assertRaises(TypeError, check_raw_data, 'a')
@@ -196,4 +196,9 @@ class TestCanCheck(unittest.TestCase):
         self.assertRaises(TypeError, check_raw_data, None)
         self.assertRaises(TypeError, check_raw_data, "0b0010000101")
 
-        check_raw_data(bytearray([0, 50, 20]))
+    def test_raw_data_length(self):
+        # Make sure raw data are 12 bytes long
+        self.assertRaises(ValueError, check_raw_data, bytearray([0, 50, 20]))
+        self.assertRaises(ValueError, check_raw_data, bytearray([0, 50, 20, 0, 50, 20, 0, 50, 20,0, 50, 20, 0, 50, 20]))
+
+        check_raw_data(bytearray([255, 0, 6, 3, 0, 00, 0, 0, 0, 0, 0, 0]))

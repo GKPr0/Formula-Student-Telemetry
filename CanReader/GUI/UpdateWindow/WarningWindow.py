@@ -75,7 +75,7 @@ class WarningWindow:
             int(self.can_id, 16)
             if type(self.can_id) != str:
                 raise TypeError
-            if len(self.can_id) > 3:
+            if len(self.can_id) > 8:
                 raise ValueError
             return True
         except (TypeError, ValueError):

@@ -60,14 +60,14 @@ def check_can_id(can_id):
         if type(can_id) != str:
             raise TypeError
         int(can_id, 16)
-        if len(can_id) > 3:
+        if len(can_id) > 8:
             raise ValueError
     except TypeError:
         error_msg = "Can ID must be a hex string"
         logging.exception(error_msg)
         raise TypeError(error_msg)
     except ValueError:
-        error_msg = "CAN ID must be hex of max length 3"
+        error_msg = "CAN ID must be hex of max length 8"
         logging.exception(error_msg)
         raise ValueError(error_msg)
 
@@ -207,11 +207,16 @@ def check_raw_data(raw_data):
     try:
         if type(raw_data) != bytearray:
             raise TypeError
-
+        if len(raw_data) != 12:
+            raise ValueError
     except TypeError:
         error_msg = "Raw data are expected as bytearray"
         logging.exception(error_msg)
         raise TypeError(error_msg)
+    except ValueError:
+        error_msg = "Raw data are expected to be 12 bytes long"
+        logging.exception(error_msg)
+        raise ValueError(error_msg)
 
 def check_binary_can_data(binary_data):
     """

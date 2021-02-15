@@ -10,6 +10,8 @@ class RawData:
 
         :raises TypeError:
             - Rawdata are not a bytearray.
+        :raise ValueError:
+            - Rawdata do not have 12 bytes
     """
     ID_BYTE_LENGTH = 4
     DATA_BYTE_LENGTH = 8
