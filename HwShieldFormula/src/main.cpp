@@ -1,11 +1,12 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include <esp_wifi.h>
-
 #include <can.hpp>
 
+#define TEST
+
 // WiFi credentials
-const char* ssid     = "Test_ESP_32";
+const char* ssid     = "Krakonos69";
 const char* password = "Fstulracing69";
 
 // Wifi setting
@@ -22,7 +23,8 @@ WiFiServer server(port);
 // Data Variables
 const size_t can_queue_size = 10;
 const size_t msg_size = 12; 
-uint8_t data[msg_size];
+const size_t packet_size = 100;
+uint8_t data[msg_size * packet_size];
 uint32_t id;
 
 void printWiFiInfo()
@@ -32,10 +34,7 @@ void printWiFiInfo()
   Serial.println("Network " + String(ssid) +" is running");
   Serial.print("AP IP address: ");
   Serial.println(IP);
-}
 
-void espWiFiInfo()
-{
   int8_t power = 0;
   esp_wifi_get_max_tx_power(&power);
   Serial.print("Max tx power set to: ");
@@ -46,16 +45,14 @@ void espWiFiInfo()
   esp_wifi_get_protocol(WIFI_IF_AP, &protocol);
   Serial.print("Protocol set to:");
   Serial.println(protocol);
-
 }
+
 
 void serverSetup() 
 {
   // Stop any previous WiFi
   WiFi.disconnect(); 
 
-  // Setting WiFi mode
-  Serial.println("Setting WiFi mode to Access Point (AP)");
   WiFi.mode(WIFI_AP);
 
   // Set communication protocol
@@ -72,8 +69,6 @@ void serverSetup()
     Serial.println("Setting max tx power failed");
     ESP.restart();
   }
-
-  espWiFiInfo();
 
   // Configurating the AP
   if(!WiFi.softAPConfig(local_IP, gateway, subnet))
@@ -92,21 +87,16 @@ void serverSetup()
   
   delay(50);
 
-  // Printing Server info
   printWiFiInfo();
 
-  // Starting server
   server.begin();
-  Serial.println("Server started");
 }
 
 void setup() {
   Serial.begin(115200);
 
-  //generateTestData(1538, data);
-
-  serverSetup();
   canSetup(can_queue_size);
+  serverSetup();
 }
 
 void loop() {
@@ -116,22 +106,24 @@ void loop() {
   if (client) {
     while (client.connected()) {  
       Serial.println("Connected");
-      canDataPack dataPack = canReceive();
+      #ifndef TEST
+        canDataPack dataPack = canReceive();
 
-      if(dataPack.canID != 0){
-        
-        convertDataPackToByteArray(data, dataPack);        
-        Serial.println("Converted");
+        if(dataPack.canID != 0){
+          
+          convertDataPackToByteArray(data, dataPack);        
+          Serial.println("Converted");
+          client.write(data, msg_size);
+          Serial.println("Send"); 
+        }
+      #else
+        generateTestData(1582, data);
         client.write(data, msg_size);
-        Serial.println("Send"); 
-      }
+      #endif
 
-      //client.write(data, msg_size);
       delay(10); 
     }
-
-    client.stop();
-    
+    client.stop();  
   }
 }
 

@@ -37,8 +37,6 @@ canDataPack canReceive()
         dataPack.canID = rx_frame.MsgID;
         for(int i = 0; i < 8; i++)
         {
-          //Serial.print((h)rx_frame.data.u8[i]);
-          //printBinary(rx_frame.data.u8[i]);
           printHex(rx_frame.data.u8[i]);
           dataPack.canData[i] = rx_frame.data.u8[i];
         }
@@ -70,7 +68,7 @@ void printBinary(byte b)
 {
   for (int i = 7; i >= 0; i-- )
   {
-    Serial.print((b >> i) & 0X01);//shift and select first bit
+    Serial.print((b >> i) & 0X01);
   }
   Serial.print(" ");
 }
@@ -87,7 +85,8 @@ void printHex(byte b)
 void generateTestData(uint32_t id, uint8_t *data)
 {
   for(int i(0); i < 4; i ++){
-    data[i] = ((uint8_t*)&id)[3-i];
+    *data = ((uint8_t*)&id)[3-i];
+    data++;
   }
 
   data[4] = (uint8_t) 215;
