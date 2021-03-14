@@ -13,11 +13,11 @@ void serverSetup()
 
   // Set communication protocol
   // Způsobuje problémy
-  /*if(esp_wifi_set_protocol(WIFI_IF_AP, wifi_protocol) != ESP_OK)
+  if(esp_wifi_set_protocol(WIFI_IF_AP, wifi_protocol) != ESP_OK)
   {
     Serial.println("Setting WiFi protocol failed");
     ESP.restart();
-  }*/
+  }
 
   delay(50);
 

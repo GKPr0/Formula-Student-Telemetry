@@ -10,8 +10,8 @@ TaskHandle_t canTask;
 TaskHandle_t serverTask;
 
 // Queue init
-const size_t msg_queue_size = 100; 
-const size_t msg_send_count = 85;
+const size_t msg_queue_size = 1000; 
+const size_t msg_send_count = 700;
 QueueHandle_t messageQueue =  xQueueCreate(msg_queue_size, sizeof(CanMessage));
 
 void test(void *param){
@@ -62,7 +62,7 @@ void setup() {
   xTaskCreatePinnedToCore(
     serverHandler,   /* Function to implement the task */
     "ServerHandler", /* Name of the task */
-    10000,           /* Stack size in words */
+    20000,           /* Stack size in words */
     NULL,            /* Task input parameter */
     0,               /* Priority of the task */
     &serverTask,     /* Task handle. */
