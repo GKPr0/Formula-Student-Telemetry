@@ -1,17 +1,17 @@
-#include <can.hpp>
+#include "can.h"
 
 // the variable name CAN_cfg is fixed, do not change 
 CAN_device_t CAN_cfg;
 
-void canSetup(const size_t &can_queue_size)
+void canSetup()
 {  
   // Set CAN pins and baudrate
-  CAN_cfg.speed = CAN_SPEED_1000KBPS;
-  CAN_cfg.tx_pin_id = GPIO_NUM_5;
-  CAN_cfg.rx_pin_id = GPIO_NUM_4;
+  CAN_cfg.speed = can_speed;
+  CAN_cfg.tx_pin_id = can_tx_pin;
+  CAN_cfg.rx_pin_id = can_rx_pin;
   
   // Create a queue for CAN receiving 
-  CAN_cfg.rx_queue = xQueueCreate(can_queue_size,sizeof(CAN_frame_t));
+  CAN_cfg.rx_queue = xQueueCreate(can_queue_size, sizeof(CAN_frame_t));
   
   // Initialize CAN Module
   if(ESP32Can.CANInit() != 0){
@@ -21,47 +21,45 @@ void canSetup(const size_t &can_queue_size)
   Serial.println("CAN setup complete");
 }
 
-canDataPack canReceive() 
+void canHandler(void *parameter) 
 {
-  CAN_frame_t rx_frame;
-  canDataPack dataPack;
-  // Receive next CAN frame from queue
-  if(xQueueReceive(CAN_cfg.rx_queue, &rx_frame, 3*portTICK_PERIOD_MS)==pdTRUE)
-  {
-    // take data only if Standart Frame and not RTR
-    if(rx_frame.FIR.B.FF==CAN_frame_std)
-    {
-      if(rx_frame.FIR.B.RTR != CAN_RTR)
+  for(;;){
+    CAN_frame_t rx_frame;
+    CanMessage canMsg;
+    // Receive next CAN frame from queue
+    if(xQueueReceive(CAN_cfg.rx_queue, &rx_frame, 10*portTICK_PERIOD_MS) == pdPASS)
+    { 
+      // take data only if Standart Frame and not RTR
+      if(rx_frame.FIR.B.FF==CAN_frame_std && rx_frame.FIR.B.RTR != CAN_RTR)
       {
-        printf(" from 0x%08x, DLC %d\n",rx_frame.MsgID,  rx_frame.FIR.B.DLC);
-        dataPack.canID = rx_frame.MsgID;
-        for(int i = 0; i < 8; i++)
+        canMsg = convertCanFrameToCanMessage(rx_frame);
+        //printCanMsg(canMsg);
+        if(xQueueSend( messageQueue, (void *) &canMsg, 100*portTICK_PERIOD_MS) != pdPASS)
         {
-          printHex(rx_frame.data.u8[i]);
-          dataPack.canData[i] = rx_frame.data.u8[i];
+          Serial.println("Failed to send Can message to queue");
         }
-        Serial.print("\n");
       }
     }
   }
-  return dataPack;
 }
 
-void convertDataPackToByteArray(uint8_t* data, canDataPack & dataPack)
+CanMessage convertCanFrameToCanMessage(CAN_frame_t &dataPack)
 {
+  CanMessage canMsg;
+
   // ID bytes
   for(int i(3); i >= 0; i--)
   {
-    *data = ((uint8_t*)&dataPack.canID)[i];
-    data++;
+    canMsg.msg[3 - i] = ((uint8_t*)&dataPack.MsgID)[i];
   }
 
   // data bytes
   for(int i(0); i < 8; i ++)
   {
-    *data = dataPack.canData[i];
-    data++;
+    canMsg.msg[4 + i] = dataPack.data.u8[i];
   }
+
+  return canMsg;
 }
 
 void printBinary(byte b) 
@@ -80,6 +78,18 @@ void printHex(byte b)
    Serial.print(b, HEX);
    Serial.print(" ");
 
+}
+
+void printCanMsg(CanMessage &msg)
+{
+  for(int i = 0; i < msg_size; i++){
+    if(i == 0)
+      Serial.print("ID: ");
+    else if(i == 4)
+      Serial.print("Data: ");
+    printHex(msg.msg[i]);
+  }
+  Serial.print("\n");
 }
 
 void generateTestData(uint32_t id, uint8_t *data)
