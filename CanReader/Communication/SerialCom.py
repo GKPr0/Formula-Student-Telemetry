@@ -10,23 +10,26 @@ from CanReader.Communication.ComBase import ComBase
 
 class SerialCom(ComBase):
     """
-    Ensures serial communication with receiver(ESP32).
-    Baud rate is specified by connected device.
-    Max baud rate is given by UART-USB convertor (CP2102 -> 926100 bauds)
+        :Inherit: :class:`ComBase`
 
-        :param port: COM port on which is connected device
+        :Description:
+            Handle communication with device via serial port (COM).
+
+        :param port: COM port on which to communicate.
         :type port: str
-        :param bauds: Baud speed of serial communication
-        :type bauds: int
 
+        :param bauds: Baud speed of serial communication
+        :type bauds: int, optional
 
         :raises OSError:
-            - COM port odes not exist.
+            COM port does not exist.
+
         :raises TypeError:
-            - COM port is not a str.
-            - Baud rate is not a int.
+            -- COM port is not a str.\n
+            -- Baud rate is not a int.
+
         :raises ValueError:
-            - Baud rate is not in range 300 - 921600.
+            Baud rate is not in range 300 - 921600.
     """
 
     def __init__(self, port, bauds=921600):
@@ -45,12 +48,21 @@ class SerialCom(ComBase):
             return "Device is connected on COM port: {} with baud rate {}".format(self.__port, self.__baud_rate)
 
     def close(self):
+        """
+            :Description:
+                Close communication and self destroy.
+        """
         self.__serial.close()
         ComBase.close(self)
 
     def connect_to_device(self):
         """
-            Establish serial communication with receiver(ESP32) via USB COM.
+            :Description:
+                Establish serial communication with via USB COM.\n
+                Send information about connection status.
+
+            :raises SerialException:
+                Port cannot be opened. Usually because port is already opened.
         """
         try:
             if self.first_connection:
@@ -73,7 +85,11 @@ class SerialCom(ComBase):
 
     def get_data(self):
         """
-            Receive data from device and send signal containing data a byte array.
+            :Description:
+                Receive data from device and send signal containing data as a byte array.
+
+            :raises:
+                If any error occurs try to solve problem by reconnecting to device.
         """
 
         try:
@@ -92,7 +108,8 @@ class SerialCom(ComBase):
     def available_com_ports() -> list:
         import sys
         """
-            Lists serial port names
+            :Description:
+                Lists serial port names
         
             :raises EnvironmentError:
                 On unsupported or unknown platforms
@@ -127,6 +144,19 @@ class SerialCom(ComBase):
 
     @staticmethod
     def check_baud_rate(bauds):
+        """
+            :Description:
+                Check if baud is an int in range of 300 - 921600.
+
+            :param bauds: Baud rate.
+            :type bauds: int
+
+            :raises ValueError:
+                Baud rate is not in range 300 - 921600.
+
+            :raises TypeError:
+                Baud rate is not an integer.
+        """
         try:
             if type(bauds) != int:
                 raise TypeError
@@ -143,6 +173,19 @@ class SerialCom(ComBase):
 
     @staticmethod
     def check_com_port(port):
+        """
+            :Description:
+                Check if port is a str and can be found on the system.
+
+            :param port: Com port name.
+            :type port: str
+
+            :raises TypeError:
+                Port is not a str.
+
+            :raises OSError:
+                Port cannot be find on the system.
+        """
         try:
             if type(port) != str:
                 raise TypeError

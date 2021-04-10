@@ -9,6 +9,14 @@ from CanReader.GUI.Tab import Tab
 
 
 class OverviewTab(QQuickWidget, Tab):
+    """
+        :Inherit: :class:`Tab`, :Inherit: :class:`QQuickWidget`
+
+        :Description:
+            Overview tab is acting as dashboard in real car.\n
+            Design and behavior of overview tab is defined in *.qml file.\n
+            Task of this class is to load qml file and connect all variables to it.
+    """
     update_data_signal = QtCore.pyqtSignal(object)
 
     def __init__(self):
@@ -49,9 +57,23 @@ class OverviewTab(QQuickWidget, Tab):
         self.setResizeMode(QQuickWidget.SizeRootObjectToView)
 
     def add_config_variable(self, variable):
+        """
+            :Description:
+                Add configuration to config list for new variable.
+
+            :param variable: New variable config.
+            :type variable: CanDataConfig
+        """
         self.config_variable_list.append(variable)
 
     def update_data(self, data_point):
+        """
+            :Description:
+                Replace overview variable value.
+
+            :param data_point: Data point containing new data.
+            :type data_point: DataPoint
+        """
         for obj in self.object_dict.values():
             if obj.overview_id == data_point.overview_id:
                 obj.value = data_point.value

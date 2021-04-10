@@ -11,20 +11,27 @@ from CanReader.GUI.UpdateWindow.WarningWindow import WarningWindow
 
 class UpdateWindow(QMainWindow):
     """
-        This class takes care about updating of configuration file.
-        User can changed can id, start bit, length, multiplier and offset.
+        :Inherit: :class:`QMainWindow`
 
-        Works with data in format DataConfig
+        :Description:
+            Graphical interface to update variable configuration.\n
+            User can changed can id, start bit, length, multiplier and offset.
+            UI was created in Qt Designer and loaded from "UpdateWindow.ui"
 
-        :param main_window: This is load because of accessibility of signal, that will be emitted
+        :param main_window: Main app window object is load because of accessibility of signal.
         :type main_window: MainWindow
-        :param config_id: unique id of clicked variable. Used to load DataConfig on this id
+
+        :param config_id: Id of variable which configs user want to adjust.
         :type config_id: int
 
-        :raises TypeError: config_id is not an integer
+        :raises TypeError:
+            Config_id is not an integer
 
-        :raises ValueError: config_id is greater then maximal id in config file
+        :raises ValueError:
+            Config_id is greater then maximal id in config file
 
+        .. note::
+            Change signal/slot logic. Takes main app object as parameter to send its signal isn´t best approach.
     """
 
     def __init__(self, main_window, config_id):
@@ -33,7 +40,7 @@ class UpdateWindow(QMainWindow):
         self.main_window = main_window
 
         # Check config_id
-        self.check_config_id(config_id)
+        CanConfigHandler.check_config_id(config_id)
 
         # Get current data
         self.config = CanConfigHandler()
@@ -69,7 +76,8 @@ class UpdateWindow(QMainWindow):
 
     def show_data(self):
         """
-            This method takes current data from selected variable and display them
+            :Description:
+                Loads config for selected variable and displays it.
         """
         self.name_input.setText(str(self.data_config.name))
         self.id_input.setText(str(self.data_config.can_id))
@@ -88,10 +96,11 @@ class UpdateWindow(QMainWindow):
 
     def update_config(self):
         """
-            This method will take new data given by user and use them to update configuration file
-            New DataConfig object will be temporary created because it will automatically check
-            validity of input parameters.
-            Once config is updated signal for config update is emitted and received by main object App
+            :Description:
+                Takes new data given by user and use them to update configuration file.\n
+                New DataConfig object will be temporary created because it will automatically check
+                validity of input parameters.\n
+                Once config is updated, config update signal is emitted.
         """
         id = self.config_id
         group_id = self.data_config.group_id
@@ -126,6 +135,16 @@ class UpdateWindow(QMainWindow):
             self.close()
 
     def is_little_endian_possible(self):
+        """
+            :Description:
+                Set checkability of little endian.\n
+                Little endian cannot be set if data length is divisible by 8 WITH remainder
+                and if data length is less or eq 8.\n
+
+            :return: True if little endian can be set.
+            :rtype: bool
+
+        """
         if int(self.length_input.text()) % 8 != 0 or int(self.length_input.text()) <= 8:
             if self.little_endian.isChecked():
                 self.big_endian.setChecked(True)
@@ -136,6 +155,10 @@ class UpdateWindow(QMainWindow):
             return True
 
     def setup_dynamic_title(self):
+        """
+            :Description:
+                Set window title based on data config name.
+        """
         name = str(self.data_config.name)
 
         if name != "":
@@ -144,6 +167,10 @@ class UpdateWindow(QMainWindow):
             self.setWindowTitle("Update CAN BUS variable")
 
     def setup_dynamic_name_box_width(self):
+        """
+            :Description:
+                Adjust name box size if name is too long.
+        """
         text = self.name_input.text()
         size = self.name_input.size()
 
@@ -153,24 +180,3 @@ class UpdateWindow(QMainWindow):
 
         if pixel_width > size.width():
             self.name_input.setFixedSize((pixel_width + 20), size.height())
-
-    @staticmethod
-    def check_config_id(config_id):
-        """
-            Check if input parameter config ID is in the right format.
-            Config ID has to be integer in range 0-number of data configs
-        """
-        try:
-            if type(config_id) != int:
-                raise TypeError
-            if config_id < 0 or config_id > CanConfigHandler().number_of_data_configs:
-                raise ValueError
-        except TypeError:
-            error_msg = "Config id must be integer"
-            logging.exception(error_msg)
-            raise TypeError(error_msg)
-        except ValueError:
-            error_msg = "Config id must be in range of data config in config file {}" \
-                .format(CanConfigHandler().number_of_data_configs)
-            logging.exception(error_msg)
-            raise ValueError(error_msg)

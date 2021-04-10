@@ -3,7 +3,14 @@ import logging
 
 def check_id(id):
     """
-        Check validity of ID.
+        :Description:
+            Id is expected to by of type int.
+
+        :param id: General Id.
+        :type id: int
+
+        :raises TypeError:
+            Id is not an integer.
     """
     try:
         if type(id) != int:
@@ -16,13 +23,23 @@ def check_id(id):
 
 def check_group_id(group_id):
     """
-        Check validity of group id
+        :Description:
+            Group id is expected to by of type int.
+
+        :param group_id: Group ID in UI.
+        :type group_id: int
+
+        :raises TypeError:
+            Group id is not an integer.
+
+        :raises ValueError:
+            Group id is not in range 0 - 20.
     """
     try:
-        if group_id < 0 or group_id > 999:
-            raise ValueError
         if type(group_id) != int:
             raise TypeError
+        if group_id < 0 or group_id > 20:
+            raise ValueError
     except ValueError:
         error_msg = "Group id must be number in range of 0 - 999."
         logging.exception(error_msg)
@@ -35,13 +52,23 @@ def check_group_id(group_id):
 
 def check_widget_id(widget_id):
     """
-        Check validity of widget id
+        :Description:
+            Widget id is expected to by of type int.
+
+        :param widget_id: Widget id in display group of UI.
+        :type widget_id: int
+
+        :raises TypeError:
+            Widget id is not an integer.
+
+        :raises ValueError:
+            Widget id is not in range 1 - 50.
     """
     try:
-        if widget_id < 0 or widget_id > 50:
-            raise ValueError
         if type(widget_id) != int:
             raise TypeError
+        if widget_id < 0 or widget_id > 50:
+            raise ValueError
     except ValueError:
         error_msg = "Widget id must be number in range of 1 - 50."
         logging.exception(error_msg)
@@ -54,7 +81,17 @@ def check_widget_id(widget_id):
 
 def check_can_id(can_id):
     """
-        Check if can id is valid. Expected HEX string of len 3
+        :Description:
+            Can id is expected to be HEX string of max len 8.
+
+        :param can_id: Can id in hex format.
+        :type can_id: str
+
+        :raises TypeError:
+            Can_id is not a hex string.
+
+        :raises ValueError:
+            Can_id is hex string longer then 8.
     """
     try:
         if type(can_id) != str:
@@ -74,7 +111,14 @@ def check_can_id(can_id):
 
 def check_name(name):
     """
-        Check validity of name
+        :Description:
+            Name is expected to by of type str.
+
+        :param name: Name of data variable.
+        :type name: str
+
+        :raises TypeError:
+            Name is not a str.
     """
     try:
         if type(name) != str:
@@ -87,7 +131,14 @@ def check_name(name):
 
 def check_unit(unit):
     """
-        Check validity of unit
+        :Description:
+            Unit is expected to by of type str.
+
+        :param unit: Data unit(°C, Pa, ...).
+        :type unit: str
+
+        :raises TypeError:
+            Unit is not a str.
     """
     try:
         if type(unit) != str:
@@ -100,7 +151,17 @@ def check_unit(unit):
 
 def check_start_bit(start_bit):
     """
-        Check validity of star bit
+        :Description:
+            Start bit is expected to be of type int in range of 0 - 63.
+
+        :param start_bit: Data start bit in can msg.
+        :type start_bit: int
+
+        :raises TypeError:
+            Start bit is not an integer.
+
+        :raises ValueError:
+            Start bit is not in range 0 - 63.
     """
     try:
         if type(start_bit) != int:
@@ -119,7 +180,17 @@ def check_start_bit(start_bit):
 
 def check_length(length):
     """
-        Check validity of length
+        :Description:
+            Length is expected to by of type int in range of 1 - 63.
+
+        :param length: Data length in can msg.
+        :type length: int
+
+        :raises TypeError:
+            Length bit is not an integer.
+
+        :raises ValueError:
+            Length is not in range 1 - 63.
     """
     try:
         if type(length) != int:
@@ -138,7 +209,18 @@ def check_length(length):
 
 def check_multiplier(multiplier):
     """
-        Check validity of multiplier
+        :Description:
+            Multiplier is expected to by of type float or int.\n
+            Cannot be equal to 0.
+
+        :param multiplier: Data multiplier in can msg.
+        :type multiplier: int, float
+
+        :raises TypeError:
+            Multiplier is not an integer or float.
+
+        :raises ValueError:
+            Multiplier is equal to 0.
     """
     try:
         if type(multiplier) not in [int, float]:
@@ -157,7 +239,14 @@ def check_multiplier(multiplier):
 
 def check_offset(offset):
     """
-        Check validity of offset
+        :Description:
+            Offset is expected to by of type float or int.
+
+        :param offset: Data offset in can msg.
+        :type offset: int, float
+
+        :raises TypeError:
+            Offset is not an integer or float.
     """
     try:
         if type(offset) not in [int, float]:
@@ -170,7 +259,17 @@ def check_offset(offset):
 
 def check_endian(endian):
     """
-        Endian expected as "L" or "B" of type str
+        :Description:
+            Endian is expected as "L" or "B" of type str.
+
+        :param endian: Little or Big endian.
+        :type endian: str
+
+        :raises TypeError:
+            Endian is not a str.
+
+        :raises ValueError:
+            Endian is not a "L" or "B".
     """
     try:
         if type(endian) != str:
@@ -189,7 +288,14 @@ def check_endian(endian):
 
 def check_value(value):
     """
-        Check validity of value. Expected to be float or int
+        :Description:
+            Value is expected to be of type float or int.
+
+        :param value: Real data value.
+        :type value: int, float
+
+        :raises TypeError:
+            Value is not an integer or float.
     """
     try:
         if type(value) not in [int, float]:
@@ -202,7 +308,17 @@ def check_value(value):
 
 def check_raw_data(raw_data):
     """
-        Check validity of raw_data type. Expected byte array
+        :Description:
+            Raw data are expected to be of type byte array of length 12.
+
+        :param raw_data: Raw data (received from external device).
+        :type raw_data: bytearray
+
+        :raises TypeError:
+            Raw data are not a byte array.
+
+        :raises ValueError:
+            Raw data are not 12 bytes long.
     """
     try:
         if type(raw_data) != bytearray:
@@ -220,7 +336,17 @@ def check_raw_data(raw_data):
 
 def check_binary_can_data(binary_data):
     """
-        Check validity of can data in binary. Expected string of 64 bits
+        :Description:
+            Can data are expected as binary string of length 64 bits.
+
+        :param binary_data: Binary data.
+        :type binary_data: str
+
+        :raises TypeError:
+            Binary data are not a str.
+
+        :raises ValueError:
+            Binary data do not have size of 64 bits.
     """
     try:
         if type(binary_data) != str:

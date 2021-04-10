@@ -4,23 +4,24 @@ from CanReader.Exceptions.CanCheck import *
 
 class DataProcessing:
     """
-        This class will receive ID, binary data and list of configs.
-        \n
-        As result will be list of objects called DataPoint, containing decoded and processed data.
-        These objects will contain information like name, value, id and group id
+        :Description:
+            This class takes ID, binary data and list of configs as input.\n
+            Main task is to decode and processed binary data based on given config list.\n
+            Resulting object will contain information like name, value, id and group id.
 
-        :param can_id: id of CAN message
+        :param can_id: Id of CAN message
         :type can_id: str
-        :param can_data: data containing CAN message
+        :param can_data: CAN message in binary format
         :type can_data: str
-        :param config_list: config is list of DataConfig object. DataConfig is described in Config section.
-        :type config_list: DataConfig
+        :param config_list: List of data configurations
+        :type config_list: list[CanDataConfig]
 
         :raises TypeError:
-            - can_id is not a hex string.
-            - Data are not a binary str.
+            -- Can_id is not a hex string.\n
+            -- Data is not a binary str.\n
         :raises ValueError:
-            - can_id is not in hex of length 3.
+            -- Can_id is hex string longer then 8.\n
+            -- Can_data does not have length of 8 bytes (64 bits).\n
     """
     def __init__(self, can_id, can_data, config_list):
         # Validate ID and Data
@@ -38,12 +39,15 @@ class DataProcessing:
 
     def data_decode(self):
         """
-            Check if given can id is in configuration
-            If so it will call method data_process(), for data processing.
-            For every configuration where can id == given can id, create new DataPoint
+            :Description:
+                Checks if there are data configurations for given can id.\n
+                If so call processed data for each configuration
+                where conf can id == given can id.\n
+                As result return list of DataPoints,
+                containing useful information as widget id, group id, name, value, etc.
 
-            :return: List of DataPoints, that contains ( widget id ,group id , name and value)
-            :rtype: DataPoint
+            :return: List of DataPoints
+            :rtype: list[DataPoint]
         """
         for data_config in self.__config_list:
             if data_config.can_id == self.__can_id:
@@ -61,17 +65,21 @@ class DataProcessing:
     @staticmethod
     def data_process(bin_data, data_config):
         """
-            Take binary data and suitable data configuration.
-            Suitability of configuration is established by corespondent can id-> Done by method caller
-            Part of data (config choose which part) is converted from bin to dec.
-            Decimal number is multiplied by configuration multiplier and magnified by configuration offset
+            :Description:
+                Takes binary data and suitable data configuration as input.\n
+                Based on given configuration processed data -> convert data from binary to real value.\n
+                Conversion is done as follows:
+                    1. Convert bin data to int in right format (Little or Big endian)
+                    2. Multiply data by configuration multiplier
+                    3. Add configuration offset
 
-            :param bin_data: Can data in binary form with fixed 64 bit length
+            :param bin_data: Can data in binary format.
             :type bin_data: str
-            :param data_config: Configuration
-            :param data_config: Configuration
+            :param data_config: Suitable configuration
             :type data_config: CanDataConfig
-            :return: Decoded and processed value corresponding to configuration
+
+            :return: Real value processed by given configuration
+            :rtype: float
         """
         length = data_config.length
         start_bit = data_config.start_bit

@@ -199,6 +199,6 @@ class TestCanCheck(unittest.TestCase):
     def test_raw_data_length(self):
         # Make sure raw data are 12 bytes long
         self.assertRaises(ValueError, check_raw_data, bytearray([0, 50, 20]))
-        self.assertRaises(ValueError, check_raw_data, bytearray([0, 50, 20, 0, 50, 20, 0, 50, 20,0, 50, 20, 0, 50, 20]))
+        self.assertRaises(ValueError, check_raw_data, bytearray([0, 50, 20, 0, 50, 20, 0, 50, 20, 0, 50, 20, 0, 50, 20]))
 
         check_raw_data(bytearray([255, 0, 6, 3, 0, 00, 0, 0, 0, 0, 0, 0]))

@@ -5,18 +5,23 @@ from PyQt5.QtWidgets import QMessageBox
 
 class WarningWindow:
     """
-        This Class is used to check user parameters given in UpdateWindow
+        :Description:
+            Used to check user's inputs and pop up warning window if needed.
 
-        :param can_id:
+        :param can_id: Can id in hex format.
         :type can_id: str
-        :param start_bit:
+
+        :param start_bit: Data start bit in can msg.
         :type start_bit: int
-        :param length:
+
+        :param length: Data length in can msg.
         :type length: int
-        :param multiplier:
-        :type multiplier: float / int
-        :param offset:
-        :type offset: float / int
+
+        :param multiplier: Data multiplier in can msg.
+        :type multiplier: float, int
+
+        :param offset: Data offset in can msg.
+        :type offset: float, int
     """
 
     def __init__(self, can_id, start_bit, length, multiplier, offset, endian):
@@ -30,11 +35,11 @@ class WarningWindow:
 
     def check_user_inputs(self):
         """
-        This method runs series of check method.
-        These methods check if input parameters given this class are valid.
+            :Description:
+                Runs series of checks on class input parameters.
 
-        :return: True if all checked parameters are valid.
-        :rtype: bool
+            :return: True if all checked parameters are valid.
+            :rtype: bool
         """
         if not self.check_can_id():
             return False
@@ -53,11 +58,13 @@ class WarningWindow:
     @staticmethod
     def show_warning_window(title, msg):
         """
-            This method will display message box with given title and message
+            :Description:
+                Display warning message box with given title and message
 
-            :param title: Title of message box
+            :param title: Title of message box.
             :param title: str
-            :param msg: Message that will be displayed
+
+            :param msg: Message that will be displayed.
             :type msg: str
         """
         warningwindow = QMessageBox()
@@ -69,7 +76,15 @@ class WarningWindow:
 
     def check_can_id(self):
         """
-            Check validity of can id
+            :Description:
+                Can id is expected to be convertible to HEX string of max len 8.\n
+                If error is raised Warning Window will pop up.
+
+                :raises TypeError:
+                    Can_id is not a string.
+
+                :raises ValueError:
+                    Can_id is hex string longer then 8.
         """
         try:
             int(self.can_id, 16)
@@ -79,13 +94,21 @@ class WarningWindow:
                 raise ValueError
             return True
         except (TypeError, ValueError):
-            self.show_warning_window("Can ID Error", "Can ID must be a hex string of 3 hex values")
+            self.show_warning_window("Can ID Error", "Can ID must be a hex string of max 8 hex values")
             logging.info("User tried to input {}. Can ID must be a hex string".format(self.can_id))
             return False
 
     def check_start_bit(self):
         """
-            Check validity of star bit
+            :Description:
+                Start bit is expected to be convertible to int in range of 0 - 63.\n
+                If error is raised Warning Window will pop up.
+
+            :raises ValueError:
+                Start bit is not an integer.
+
+            :raises ArithmeticError:
+                Start bit is not in range 0 - 63.
         """
         try:
             if int(self.start_bit) < 0 or int(self.start_bit) > 63:
@@ -102,7 +125,15 @@ class WarningWindow:
 
     def check_length(self):
         """
-            Check validity of length
+            :Description:
+                Length is expected to by convertible to int in range of 1 - 63.\n
+                If error is raised Warning Window will pop up.
+
+            :raises ValueError:
+                Length bit is not an integer.
+
+            :raises ArithmeticError:
+                Length is not in range 1 - 63.
         """
         try:
             if int(self.length) < 1 or int(self.length) > 63:
@@ -119,7 +150,16 @@ class WarningWindow:
 
     def check_multiplier(self):
         """
-            Check validity of multiplier
+            :Description:
+                Multiplier is expected to by convertible to float.\n
+                Cannot be equal to 0.\n
+                If error is raised Warning Window will pop up.
+
+            :raises ValueError:
+                Multiplier is not an integer or float.
+
+            :raises ArithmeticError:
+                Multiplier is equal to 0.
         """
         try:
             if float(self.multiplier) == 0:
@@ -136,7 +176,12 @@ class WarningWindow:
 
     def check_offset(self):
         """
-            Check validity of offset
+            :Description:
+                Offset is expected to by convertible to float.\n
+                If error is raised Warning Window will pop up.
+
+            :raises TypeError:
+                Offset is not an integer or float.
         """
         try:
             float(self.offset)
@@ -148,7 +193,15 @@ class WarningWindow:
 
     def check_endian(self):
         """
-            Endian expected as "L" or "B" of type str
+            :Description:
+                Endian is expected to be convertible to str and have value of "L" or "B".\n
+                If error is raised Warning Window will pop up.
+
+            :raises TypeError:
+                Endian is not a str.
+
+            :raises ValueError:
+                Endian is not a "L" or "B".
         """
         try:
             if type(self.endian) != str:

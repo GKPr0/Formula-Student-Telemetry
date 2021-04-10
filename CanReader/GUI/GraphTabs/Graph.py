@@ -10,14 +10,42 @@ TS_MULT_us = 1e6
 
 
 def now_timestamp(ts_mult=TS_MULT_us, epoch=UNIX_EPOCH):
+    """
+        :Description:
+            Used to get current unix timestamp.
+
+        :param ts_mult: Timestamp multiplication.
+        :type ts_mult: float
+
+        :param epoch: Unix epoch usually 1.1.1970.
+        :type epoch: datetime
+    """
     return int((datetime.datetime.utcnow() - epoch).total_seconds()*ts_mult)
 
 
 def int2dt(ts, ts_mult=TS_MULT_us):
+    """
+        :Description:
+            Used to convert unix timestamp to  UTC datetime.
+
+        :param ts: Unix timestamp ie. number of seconds since 1.1.1970.
+        :type ts: int
+
+        :param ts_mult: Timestamp multiplication.
+        :type ts_mult: float
+    """
     return datetime.datetime.utcfromtimestamp(float(ts)/ts_mult)
 
 
 class TimeAxisItem(pg.AxisItem):
+    """
+        :Inherit: :class:`pyqtgraph.AxisItem`
+
+        :Description:
+            Used for creating own AxisItem ie. own format of axis.\n
+            Own axis shows time in format H:M:S
+            For more detail see base class :class:`pyqtgraph.AxisItem`
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -25,6 +53,22 @@ class TimeAxisItem(pg.AxisItem):
         return [int2dt(value).strftime("%H:%M:%S") for value in values]
 
 class Graph(PlotWidget):
+    """
+        :Inherit: :class:`pyqtgraph.PlotWidget`
+
+        :Description:
+            Used to create Graph widget.\n
+            Controls everything in graph (signals, store values, etc.)
+
+        :param name: Title of the graph.
+        :type name: str
+
+        :param unit: Unit which will value on y axis represent.
+        :type unit: str
+
+        :param id: Id of widget in group. Used to identify destination of new value.
+        :type id: int
+    """
 
     update_signal = QtCore.pyqtSignal(float)
     state_signal = QtCore.pyqtSignal(bool)
@@ -55,15 +99,42 @@ class Graph(PlotWidget):
         self.curve = self.plot(pen=self.pen)
 
     def change_state(self, state):
+        """
+            :Description:
+                Used to change state of the graph.\n
+                Based on state of graph refreshes its view or not.
+
+            :param state: New state of the graph.
+            :type state: bool
+        """
         self.active = state
 
     def mousePressEvent(self, ev):
+        """
+            :Description:
+                Wrapper on base mousePressEvent.\n
+                If left button is pressed activate inspect mode.\n
+                In inspect mode user can move, zoom etc. in graph.\n
+                Also, graph won't be autofocusing to newest data.
+
+            :param ev: Mouse press event.
+            :type ev: GraphicsView.mousePressEvent
+        """
         if ev.button() == QtCore.Qt.LeftButton:
             self.inspect_mode = True
 
         PlotWidget.mousePressEvent(self, ev)
 
     def mouseReleaseEvent(self, ev):
+        """
+            :Description:
+                Wrapper on base mouseReleaseEvent.\n
+                If middle button is released graph will turn on autofocus on newest data and end inspect mode.\n
+                If left button is released and view box is on newest data turn on inspect mode will end.
+
+            :param ev: Mouse releae event.
+            :type ev: GraphicsView.mouseReleaseEvent
+        """
         if ev.button() == QtCore.Qt.MidButton:
             self.auto_focus()
         elif ev.button() == QtCore.Qt.LeftButton:
@@ -73,19 +144,40 @@ class Graph(PlotWidget):
         PlotWidget.mouseReleaseEvent(self, ev)
 
     def keyPressEvent(self, ev):
-        print(self.data_x.shape)
+        """
+            :Description:
+                Wrapper on base keyPressEvent.\n
+                If 'c' or 'f' is pressed graph will go to autofocus mode.
+
+            :param ev: Key press event.
+            :type ev: GraphicsView.keyPressEvent
+        """
+
         if ev.text() in ['c', 'f']:
             self.auto_focus()
         PlotWidget.keyPressEvent(self, ev)
 
     def is_view_box_on_actual_data(self):
+        """
+            :return: True if actual view is on newest data.
+            :rtype: bool
+        """
         return self.view_back > (now_timestamp() - self.viewRect().x())
 
     def auto_focus(self):
+        """
+            :Description:
+                Enables auto range mode, which automatically adjust range of Y axis based on shown values.\n
+                Turn off inspect mode.
+        """
         self.enableAutoRange()
         self.inspect_mode = False
 
     def setup_graph(self):
+        """
+            :Description:
+                Setup graph background, title, axis. etc.
+        """
         self.setBackground((79, 78, 78))
         self.setClipToView(True)
         self.setTitle(self._name, color='#bdbebf', size='10pt', bold=True)
@@ -94,6 +186,16 @@ class Graph(PlotWidget):
         self.showGrid(x=True, y=True)
 
     def update_data(self, value):
+        """
+            :Description:
+                Update graph data with new value.\n
+                Extend data storage if full.\n
+                Redraw graph curve if graph is active.\n
+                Adjust X axis range to value array if not in inspect mode.
+
+            :param value: New value to be shown.
+            :type value: int, float
+        """
         if self.ptr >= self.data_x.shape[0]:
             self.extend_data_storage()
 
@@ -108,6 +210,16 @@ class Graph(PlotWidget):
         self.ptr += 1
 
     def extend_data_storage(self):
+        """
+            :Description:
+                Extend data storage arrays by double.\n
+                Used when the new value does not fit to the array.
+
+            .. note::
+                Would be good to implement new system of allocating space.\n
+                Allocating double of actual space might be a problem at certain level.
+        """
+        # TODO new allocating system
         tmp_x = self.data_x
         self.data_x = np.empty(self.data_x.shape[0] * 2)
         self.data_x[:tmp_x.shape[0]] = tmp_x

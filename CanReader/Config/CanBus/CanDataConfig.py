@@ -3,38 +3,69 @@ from CanReader.Exceptions.CanCheck import *
 
 class CanDataConfig:
     """
-        This class will contain data configuration.
-        Data configuration are ID, Group id , Name, Unit, Can id, Start bit, length, Multiplier, Offset
+        :Description:
+            This class contains data configuration.
 
-        :param id: unique id
+        :param id: Unique id.
         :type id: int
-        :param group_id: id of display group in UI
+
+        :param group_id: Id of display group in UI.
         :type group_id: int
-        :param group_id: id of widget in tab
+
+        :param group_id: Id of widget in display group.
         :type group_id: int
-        :param name: name of variable
+
+        :param overview_id: Id of widget in overview tab.
+        :type overview_id: int
+
+        :param name: Name of variable.
         :type name: str
-        :param unit: unit type of value (°C, Km/h, ...)
+
+        :param unit: Unit type of value (°C, Km/h, ...)
         :type unit: str
-        :param can_id: id of can message, on which is supposed to look for incoming data
-        :param can_id: string
-        :param start_bit: bit on which start data for selected variable
+
+        :param can_id: Id of can message.
+        :type can_id: str
+
+        :param start_bit: Bit on which data starts.
         :type start_bit: int
-        :param length: number of bits to read from start bit
+
+        :param length: Number of bits to read starting from start bit.
         :type length: int
-        :param multiplier: multiplier for data bounded with start bit and length
+
+        :param multiplier: Multiplier for data bounded with start bit and length.
         :type multiplier: float, int
-        :param offset: offset of value gained from bounded data with start bit and length
+
+        :param offset: Offset of value gained from bounded data with start bit and length.
         :type offset: float, int
 
+        :param endian: Type of endian (Little, Big).
+        :type endian: str
+
         :raises TypeError:
-            - ID, group_id, widget_id or can_id are not an integer.
-            - Name is not a str.
-            - Value is not a float or an int
+            -- Id is not an integer.\n
+            -- Group id is not an integer.\n
+            -- Widget id is not an integer.\n
+            -- Overview id is not an integer.\n
+            -- Name is not a str.\n
+            -- Unit is not a str.\n
+            -- Can_id is not a hex string.\n
+            -- Start bit is not an integer.\n
+            -- Length bit is not an integer.\n
+            -- Multiplier is not an integer or float.\n
+            -- Offset is not an integer or float.\n
+            -- Endian is not a str.\n
 
         :raises ValueError:
-            - ID or can_id are not in range 0 - 999
-            - Group_id or widget_id are not in range 1-10
+            -- Group id is not in range 0 - 20.\n
+            -- Widget id is not in range 1 - 50.\n
+            -- Overview id is not in range 1 - 50.\n
+            -- Can_id is hex string longer then 8.\n
+            -- Start bit is not in range 0 - 63.\n
+            -- Length is not in range 1 - 63.\n
+            -- Multiplier is equal to 0.\n
+            -- Endian is not a "L" or "B".\n
+
     """
 
     def __init__(self, id, group_id, widget_id, overview_id, name, unit, can_id,

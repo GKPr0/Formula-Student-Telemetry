@@ -7,18 +7,17 @@ from pathlib import Path
 
 class ConfigHandler:
     """
-        Parent class for specific *.ini configs.
-        Use only inheritance classes!
+        :Description:
+            Base class for handling *.ini configs.
 
         :param config_file_name: Name of config file.
-        :type config_file_name: str
+        :type config_file_name: str, optional
 
-        :raises TypeError:
-            - Config file name does not end with '.ini'.
-            - Config file name contains disallowed symbols.
-        :raises OSError:
-            - Config file with given name does not exist.
-
+        :raises ValueError:
+            -- Config file name does not end with '.ini'.\n
+            -- Config file name contains disallowed symbols.\n
+        :raises FileNotFoundError:
+            Config file with given name does not exist.
     """
 
     def __init__(self, config_file_name):
@@ -30,7 +29,8 @@ class ConfigHandler:
 
     def setup_config(self):
         """
-            Setup path to config file
+            :Description:
+                Load config and save number of config sections.
         """
         path = Path(__file__).parent.absolute()
         self.file_path = str(path) + "/" + self.config_file_name
@@ -40,7 +40,8 @@ class ConfigHandler:
 
     def save_config(self):
         """
-            Save updated config
+            :Description:
+                Save updated config.
         """
         with open(self.file_path, "w") as configfile:
             self.config.write(configfile)
@@ -48,7 +49,18 @@ class ConfigHandler:
     @staticmethod
     def check_config_file(config_file_name):
         """
-            Check if config file name ends with '.ini' and contains only allowed symbols A-Z, a-z , 0-9 and
+            :Description:
+                Check if config file exists and name ends with '.ini' and contains only allowed symbols A-Z, a-z ,0-9.
+
+            :param config_file_name: Name of config file.
+            :type config_file_name: str
+
+            :raises ValueError:
+                -- Config file name does not end with '.ini'.\n
+                -- Config file name contains disallowed symbols.
+
+            :raises FileNotFoundError:
+                Config file with given name does not exist.
         """
         try:
             if not config_file_name.endswith(".ini"):

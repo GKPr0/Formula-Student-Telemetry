@@ -3,15 +3,17 @@ from CanReader.Exceptions.CanCheck import *
 
 class RawData:
     """
-        This class wil receive raw data and split them into ID and data part.
+        :Description:
+            This class takes raw received data from remote device.\n
+            Used to split raw data into ID and data part.
 
-        :param raw_data: Raw data contains received data from remote device in its raw format
+        :param raw_data: Received data from remote device in its raw format.
         :type raw_data: bytearray
 
         :raises TypeError:
-            - Rawdata are not a bytearray.
-        :raise ValueError:
-            - Rawdata do not have 12 bytes
+            Raw data are not a bytearray.
+        :raises ValueError:
+            Raw data do not have 12 bytes.
     """
     ID_BYTE_LENGTH = 4
     DATA_BYTE_LENGTH = 8
@@ -25,12 +27,13 @@ class RawData:
 
     def split_data(self):
         """
-        Will pull ID and data part from raw_data.
-        Data will be returned in binary code with fixed length 64 bit.
+            :Description:
+                Split ID and data part from raw_data.\n
+                Data will be returned in binary code with fixed length 64 bit.
 
-        :returns:
-            - ID (:py:class:`int`)
-            - Data (:py:class:`str`) -> (in python bin is str with leading '0b')
+            :returns:
+                - ID (:py:class:`int`)
+                - Data (:py:class:`str`) -> (in python bin is str with leading '0b')
         """
 
         id = self.__raw_data[:self.ID_BYTE_LENGTH].hex().lstrip("0")
@@ -39,4 +42,3 @@ class RawData:
         data = ''.join(map(str, data))
 
         return id, data
-

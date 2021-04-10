@@ -6,29 +6,22 @@ from CanReader.Communication.ComBase import ComBase
 
 class SocketClient(ComBase):
     """
-        This class will ensure communication with remote device.
+        :Inherit: :class:`ComBase`
+
+        :Description:
+            Handle direct communication with car via Wi-Fi.
 
         :param address: address of socket server
-        :type address: str
+        :type address: str, optional
         :param port: port for socket server
-        :type port: int
+        :type port: int, optional
 
         :raises OSError:
-            - IP address is invalid.
+             IP address is invalid.
         :raises TypeError:
-            - Port is not a int.
+             Port is not a int.
         :raises ValueError:
-            - Port is not i range 1 - 65536.
-
-
-        - Example of valid constructor::
-
-            socket_client = SocketClient("192.168.1.100", 32001)
-
-        - Example of invalid constructor::
-
-            socket_client = SocketClient("A92.168.1.100", 320001)
-
+             Port is not i range 1 - 65536.
     """
 
     def __init__(self, address='192.168.1.100', port=80):
@@ -47,12 +40,23 @@ class SocketClient(ComBase):
             return "Socket is connected to IP: {} on port {}".format(self.__address, self.__port)
 
     def close(self):
+        """
+            :Description:
+                Close communication and self destroy.
+        """
         self.__sock.close()
         ComBase.close(self)
 
     def connect_to_device(self):
         """
-        Establish communication with server(ESP32).
+            :Description:
+                Establish serial communication with server via Wi-Fi.\n
+                Send information about connection status.
+
+            :raises WindowsError:
+                A connection attempt failed because the connected party did not properly respond after
+                a period of time, or established connection failed because
+                connected host has failed to respond
         """
         try:
             if self.first_connection:
@@ -77,7 +81,15 @@ class SocketClient(ComBase):
 
     def get_data(self):
         """
-            Receive data from server and send signal containing data a byte array.
+            :Description:
+                Receive data from device and send signal containing data as a byte array.\n
+                Whenever one of the following errors raise, method will try to resolve problem by reconnecting.
+
+            :raises WindowsError:
+                Unable to reach network.\n
+
+            :raises AttributeError:
+                SocketClient was not set properly.
         """
 
         while True:
@@ -95,7 +107,7 @@ class SocketClient(ComBase):
                 # TODO Printovat do GUI do statusbaru
                 logging.info("Unable to reach network!")
                 self.connect_to_device()
-            except AttributeError as e:
+            except AttributeError:
                 logging.warning("SocketClient was not set properly", exc_info=True)
                 self.connect_to_device()
 
@@ -104,7 +116,14 @@ class SocketClient(ComBase):
     @staticmethod
     def check_address(address):
         """
-            Check validity of IP address.
+            :Description:
+                Check if IP address is in a valid format.
+
+            :param address: IP address.
+            :type address: str
+
+            :raises OSError:
+                IP address is not in a valid format.
         """
         try:
             socket.inet_aton(address)
@@ -116,7 +135,17 @@ class SocketClient(ComBase):
     @staticmethod
     def check_port(port):
         """
-            Check validity of port type and range.
+            :Description:
+                Check if port is int in range 1 - 65535.
+
+            :param port: Communication port.
+            :type port: int
+
+            :raises ValueError:
+                Port is not in range of 1 - 65535.
+
+            :raises TypeError:
+                Port is not an int.
         """
         try:
             if type(port) != int:
@@ -133,28 +162,27 @@ class SocketClient(ComBase):
             raise TypeError(error_msg)
 
 if __name__ == "__main__":
-    """
-        Useful for communication test
-    """
     from datetime import datetime
 
     def process_data(data):
         id = int.from_bytes(data[:4], "big")
         msg = data[4:]
 
+        now = datetime.now()
+        current_time = now.strftime("%H:%M:%S")
+        print("Current Time = ", current_time, " ")
         print("ID: {}".format(id))
         for i, m in enumerate(msg):
             print("{}\t{}".format(i, m))
 
-    addr = '192.168.1.100'
-    port = 80
+    addr = '192.168.4.1'
+    port = 23
     com = SocketClient(addr, port)
     com.data_received.connect(process_data)
-    com.connect_to_server()
+    com.connect_to_device()
     print(com)
 
     while True:
-        now = datetime.now()
-        current_time = now.strftime("%H:%M:%S")
-        print("Current Time = ", current_time , " ")
+        pass
+
 

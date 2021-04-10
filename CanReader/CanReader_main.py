@@ -1,7 +1,3 @@
-"""
-Main handler of project.
-
-"""
 import logging
 import sys
 import threading
@@ -10,7 +6,6 @@ from queue import Queue
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtCore import QThreadPool
 
-from CanReader.Communication.ComBase import ComBase
 from CanReader.Communication.SerialCom import SerialCom
 from CanReader.Communication.SocketClient import SocketClient
 from CanReader.Config.CanBus.CanConfigHandler import CanConfigHandler
@@ -22,12 +17,13 @@ from CanReader.Logger.DataLogger import DataLogger
 
 
 class App:
-    '''
-        This is a main class of whole application.
-        \n
-        This class handle communication ,data processing and gui in separate threads.
-        Main purpose of this class is to convey data from one thread to another one.
-    '''
+    """
+        :Description:
+            This is a main class of whole application.\n
+            This class handle communication, data processing and gui as separate threads.\n
+            Purpose of this class is to convey data from one task to another one.\n
+            Another task of this class is to log received data.
+    """
 
     def __init__(self):
         self.data_logger = DataLogger()
@@ -47,8 +43,9 @@ class App:
 
     def start_communication(self, com_type: str):
         """
-            Creates and run communication thread depending on communication type.
-            Connect received data signal with data processing thread function
+            :Description:
+                Creates and run communication thread depending on communication type.\n
+                Connect received data signal with data processing thread function.
 
             :param com_type: Type of communication Wifi or Serial COM
             :type com_type: str
@@ -75,16 +72,35 @@ class App:
             self.communication.start()
 
     def stop_communication(self):
+        """
+            :Description:
+                Slot for disconnect signal from UI.\n
+                Send signal to communication thread to stop communication and self destroy.
+        """
         if isinstance(self.communication, (SerialCom, SocketClient)):
             self.communication.stop_signal.emit()
 
     def delete_communication(self):
+        """
+            :Description:
+                Used to remove reference to communication address after it was closed.\n
+                Garbage collector will do rest when there is no reference pointing to this memory space.
+        """
         self.communication = None
 
     def run_data_processing(self, data_from_formula):
         """
-            Run Data Managers in threadpool.
-            Data Managers will send signal containing DataPoint to data processing queue
+            :Description:
+                Run Data Manager as QRunnable in threadpool.\n
+                Data Manager sends signal containing DataPoint to data processing queue.\n
+                Threadpool is set to have max 4 threads.
+
+            :param data_from_formula: Received data send from communication task.
+            :type data_from_formula: bytearray
+
+            .. note::
+                Number of threads in threadpool should variable depending on users cpu.
+                Max 60% of available threads or so.
         """
         if len(data_from_formula) == 12:
             logging.debug(data_from_formula)
@@ -95,7 +111,10 @@ class App:
 
     def run_gui(self):
         """
-            This method runs in separate thread, that take cares of data visualization and interaction with user.
+            :Description:
+                Runs GUI in separate thread, that take cares of data visualization and interaction with user.\n
+                Connects all GUI signals with backend slots and vice versa.\n
+                Setup GUI update rate.
         """
         gui = QtWidgets.QApplication(sys.argv)
 
@@ -118,26 +137,54 @@ class App:
 
     def update_config(self):
         """
-            This method is called either at booting app or whenever data config is changed.
+            :Description:
+                Loads Can data config.\n
+                Method is called either at booting app or whenever data config is changed.
         """
         config = CanConfigHandler()
         self.data_config_list = config.load_from_config_file()
 
-    def receive_processed_data(self, data_point, can_id, can_data ):
+    def receive_processed_data(self, data_point, can_id, can_data):
+        """
+            :Description:
+                Put data point to the data queue.\n
+                If queue is full head is removed.\n
+                Send corresponding can id and raw data to data logger and to the main window as status.
+
+            :param data_point: Data point contains real value to be shown and necessary routing config.
+            :type: DataPoint
+
+            :param can_id: Can id respectively to data point.
+            :param can_id: str
+
+            :param can_data: Can binary data respectively to data point.
+            :param can_data: bin
+        """
         if self.processed_data_queue.full():
             self.processed_data_queue.get()
 
         self.processed_data_queue.put(data_point)
-        #print(self.processed_data_queue.qsize())
 
         self.main_window.update_can_msg_signal.emit(can_id, can_data)
 
         self.data_logger.get_raw_can(can_id, can_data)
 
     def update_gui(self):
+        """
+            :Description:
+                Sends update signal to main window, which runs data queue processing.
+        """
         self.main_window.update_data_signal.emit(self.processed_data_queue)
 
     def on_app_exit(self):
+        """
+            :Description:
+                Invoke just before app will be closed.\n
+                Saves collected data regardless of its size.
+
+            :raises OSError:
+                Could not save data.
+        """
         try:
             logging.debug("Saving data ...")
             self.data_logger.save_raw_can()

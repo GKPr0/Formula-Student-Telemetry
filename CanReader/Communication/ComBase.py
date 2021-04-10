@@ -5,12 +5,19 @@ from PyQt5.QtCore import QThread, pyqtSignal
 
 
 class ComBase(QThread):
+    """
+        :Inherit: :class:`QThread`
+
+        :Description:
+            Base communication class used as inheritance class for other more complex com classes.\n
+            Implement signal communication with superior task and start, close methods.
+    """
     status_changed = pyqtSignal(str)
     data_received = pyqtSignal(bytearray)
     stop_signal = pyqtSignal()
 
     MSG_SIZE = 12  # bytes
-    TIMEOUT = 1  # sec
+    TIMEOUT = 3  # sec
 
     def __init__(self):
         QThread.__init__(self)
@@ -24,25 +31,43 @@ class ComBase(QThread):
         logging.debug("Com deleted")
 
     def stop_com(self):
+        """
+            :Description:
+                Stop main communication loop and self destroy.
+        """
         self.running = False
         self.close()
 
     def close(self):
+        """
+            :Description:
+                Emit status change as "Offline".\n
+                Self Destroy.
+        """
         self.status = "Offline"
         self.status_changed.emit(self.status)
         self.quit()
         logging.debug("Com closing")
 
     def connect_to_device(self):
+        """
+            :raises NotImplementedError:
+                Python way of saying this method is virtual.
+        """
         raise NotImplementedError()
 
     def get_data(self):
+        """
+            :raises NotImplementedError:
+                Python way of saying this method is virtual.
+        """
         raise NotImplementedError()
 
     def run(self):
         """
-            This method is called when thread is started with start() method.
-            Main communication loop
+            :Description:
+                This method is called when thread is started with start() method.\n
+                Main communication loop
         """
         while self.status == "Offline":
             self.connect_to_device()

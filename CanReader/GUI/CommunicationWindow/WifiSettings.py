@@ -10,7 +10,15 @@ from CanReader.GUI.UpdateWindow.WarningWindow import WarningWindow
 
 class WifiSettingWindow(QMainWindow):
     """
-        Take care about settings of wifi communication.
+        :Inherit: :class:`QMainWindow`
+
+        :Description:
+            Create window with settings for Wi-Fi communication.\n
+            Let user adjust configuration for Wi-Fi communication.\n
+            UI was created in Qt Designer and loaded from "WifiSettings.ui"
+
+        :param parent: Parent widget
+        :type parent: QWidget
     """
 
     def __init__(self, parent):
@@ -36,12 +44,33 @@ class WifiSettingWindow(QMainWindow):
         self.show()
 
     def show_actual_ip(self):
+        """
+            :Description:
+                Show actual ip settings.
+        """
         self.ip_input.setText(str(self.ip))
 
     def show_actual_port(self):
+        """
+            :Description:
+                Show actual port settings .
+        """
         self.port_input.setText(str(self.port))
 
     def save_settings(self):
+        """
+            :Description:
+                Save new Wi-Fi configuration.
+
+            :raises ValueError:
+                -- Port in not convertible to integer.\n
+
+            :raises ArithmeticError:
+                Port is not in range 1 - 65535.
+
+            :raises OSError:
+                IP address is not valid.
+        """
         ip = self.ip_input.text()
         port = self.port_input.text()
 
@@ -51,6 +80,20 @@ class WifiSettingWindow(QMainWindow):
 
     @staticmethod
     def check_ip(ip):
+        """
+            :Description:
+                Check if IP address is in a valid format.\n
+                If error is raised Warning Window will pop up.
+
+            :param ip: IP address.
+            :type ip: str
+
+            :raises OSError:
+                IP address is not in a valid format.
+
+            :return: True if check is passed.
+            :rtype: bool
+        """
         try:
             socket.inet_aton(ip)
             return True
@@ -61,6 +104,23 @@ class WifiSettingWindow(QMainWindow):
 
     @staticmethod
     def check_port(port):
+        """
+            :Description:
+                Check if port is int in range 1 - 65535.\n
+                If error is raised Warning Window will pop up.
+
+            :param port: Communication port.
+            :type port: int
+
+            :raises ValueError:
+                -- Port in not convertible to integer.\n
+
+            :raises ArithmeticError:
+                Port is not in range 1 - 65535.
+
+            :return: True if check is passed.
+            :rtype: bool
+        """
         try:
             if not(1 <= int(port) <= 65535):
                 raise ArithmeticError

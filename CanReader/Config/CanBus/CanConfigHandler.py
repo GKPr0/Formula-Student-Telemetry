@@ -6,18 +6,18 @@ from CanReader.Config.ConfigHandler import ConfigHandler
 
 class CanConfigHandler(ConfigHandler):
     """
-        This class has access to CAN config file.
-        Can load config and return it as a list of CanDataConfig objects,
-        or can update config sections from given CanDataConfig object.
+        :Inherit: :class:`ConfigHandler`
+
+        :Description:
+            Main task is to handle CAN config file.\n
+            Can load config and return it as a list of CanDataConfig objects,
+            or update config sections from given CanDataConfig object.
 
         :param config_file_name: Name of config file.
         :type config_file_name: str
 
-        :raises TypeError:
-            - Config file name does not end with '.ini'.
-            - Config file name contains disallowed symbols.
-        :raises OSError:
-            - Config file with given name does not exist.
+        :raises:
+            For error handling see base class :class:`ConfigHandler`.
 
     """
 
@@ -26,14 +26,15 @@ class CanConfigHandler(ConfigHandler):
 
     def update_section_in_config(self, data_config):
         """
-            Update config parameters for already existing variable.
-            After updating save changes to file.
+            :Description:
+                Update config section with new config for already existing section.\n
+                Automatically save changes to file.
 
-            :param data_config: Updated setting of variable
+            :param data_config: Updated section config
             :type data_config: CanDataConfig
 
             :raises TypeError:
-                - Parameter data_config is not a CanDataConfig type.
+                Parameter data_config is not a CanDataConfig type.
 
         """
         self.check_update_parameter_type(data_config)
@@ -61,10 +62,11 @@ class CanConfigHandler(ConfigHandler):
 
     def load_from_config_file(self):
         """
-            Load every section saved in config file to DataConfig objects.
+            :Description:
+                Load every section saved in config file to list of DataConfig objects.
 
             :return: List of DataConfig object.
-            :rtype: CanDataConfig
+            :rtype: list[CanDataConfig]
         """
         data_config_list = []
         sections = self.config.sections()
@@ -77,17 +79,21 @@ class CanConfigHandler(ConfigHandler):
 
     def load_selected_from_config_file(self, config_id):
         """
+            :Description:
+                Load selected section from config file.\n
+                Section is selected by unique id.
 
-        :param config_id: id of data config that is supposed to be loaded
-        :type config_id: int
+            :param config_id: Id of data config section.
+            :type config_id: int
 
-        :return: data in form of object DataConfig for selected configuration
-        :rtype: CanDataConfig
+            :return: data in form of object DataConfig for selected configuration
+            :rtype: CanDataConfig
 
-        :raises TypeError: config_id is not an integer
+            :raises TypeError:
+                Config id is not an integer.
 
-        :raises ValueError: config_id is greater then maximal id in config file
-
+            :raises ValueError:
+                Config id is not in range of existing config sections.
         """
 
         self.check_config_id(config_id)
@@ -111,20 +117,31 @@ class CanConfigHandler(ConfigHandler):
     @staticmethod
     def check_update_parameter_type(data_config):
         """
-            Check type of data config
+            :Description:
+                Check type of data config
+
+            :raises TypeError:
+                Parameter data_config is not a CanDataConfig type.
         """
         try:
             if type(data_config) != CanDataConfig:
                 raise TypeError
         except TypeError:
-            error_msg = "As a parameter is expected DataConfig not " + type(data_config)
+            error_msg = "As a parameter is expected CanDataConfig not " + type(data_config)
             logging.exception(error_msg)
             raise TypeError(error_msg)
 
     @staticmethod
     def check_config_id(config_id):
         """
-            Check type and value of config id that is supposed to be loaded
+            :Description:
+                Check type and value of config id that is supposed to be loaded
+
+            :raises TypeError:
+                Config id is not an integer.
+
+            :raises ValueError:
+                Config id is not in range of existing config sections.
         """
         try:
             if type(config_id) != int:
@@ -136,7 +153,7 @@ class CanConfigHandler(ConfigHandler):
             logging.exception(error_msg)
             raise TypeError(error_msg)
         except ValueError:
-            error_msg = "Config id must be in range of data config in config file {}" \
+            error_msg = "Config id must be in range of data config in config file 0 - {}" \
                 .format(CanConfigHandler().number_of_data_configs)
             logging.exception(error_msg)
             raise ValueError(error_msg)

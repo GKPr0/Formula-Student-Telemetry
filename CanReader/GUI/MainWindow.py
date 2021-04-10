@@ -15,8 +15,12 @@ from CanReader.GUI.UpdateWindow.UpdateWindow import UpdateWindow
 
 class MainWindow(QMainWindow):
     """
-        Main class of graphical part.
-         Contains all other graphical widget and send data to them
+        :Inherit: :class:`QMainWindow`
+
+        :Description:
+            Main class of graphical part.\n
+            Holds all other graphical widgets and communicate with them.\n
+            UI was created in Qt Designer and loaded from "MainWindow.ui"
     """
 
     update_config_signal = QtCore.pyqtSignal()
@@ -98,17 +102,28 @@ class MainWindow(QMainWindow):
         self.show()
 
     def fill_tabs_with_variables(self):
+        """
+             :Description:
+                This method is called only once when initializing.\n
+                Append appropriate variable configuration for each tab.\n
+                Based on given config graphics is generated and values are updated.
+        """
         for config in self.data_config_list:
             group_id = config.group_id
             overview_id = config.overview_id
             if group_id < (self.tab_widget.count()) and group_id !=0:
                 widget = self.tab_widget.widget(group_id)
                 widget.add_config_variable(config)
-            if overview_id != 0:
+            if overview_id > 0:
                 widget = self.tab_widget.widget(0)
                 widget.add_config_variable(config)
 
     def let_tabs_generate_graphics(self):
+        """
+            :Description:
+                This method is called only once when initializing.\n
+                Lets graph tabs and error tabs generate graphics based on configuration.
+        """
         for tab_index in range(1, self.tab_widget.count()):
             tab = self.tab_widget.widget(tab_index)
             if type(tab) == GraphTab:
@@ -121,6 +136,12 @@ class MainWindow(QMainWindow):
             tab.sort_widget_list_by_id()
 
     def activate_current_tab(self):
+        """
+            :Description:
+                Activate all widgets in selected graph tab.\n
+                All other widget from graph tabs will be deactivated.\n
+                Deactivated widget do not update values in graph, so app runs faster.
+        """
         current_widget = self.tab_widget.currentWidget()
         for tab in self.tab_list:
             if type(tab) == GraphTab:
@@ -131,7 +152,8 @@ class MainWindow(QMainWindow):
 
     def show_variable_list_used_in_current_tab(self):
         """
-            This method update shown variable according to selected tab view(engine, suspension ,etc..)
+            :Description:
+                Update list of shown variable according to selected tab view(engine, suspension ,etc..)
         """
         current_widget = self.tab_widget.currentWidget()
         self.variable_list.clear()
@@ -148,9 +170,11 @@ class MainWindow(QMainWindow):
 
     def push_data_to_tabs(self, queue):
         """
-            This method takes data received from formula and sends them to place where will be displayed
+            :Description:
+                Takes data received from formula and sends them to appropriate widget.
+
             :param queue: Queue of list of DataPoints containing decoded and processed data from formula
-            :type queue: list(DataPoint)
+            :type queue: Queue(list[DataPoint])
         """
         if not queue.empty():
             data_list = queue.get()
@@ -171,7 +195,8 @@ class MainWindow(QMainWindow):
 
     def send_com_request(self):
         """
-            Send signal to start communication of specific type
+            :Description:
+                Send signal to start communication of specific type
         """
         if self.com_status.text() == "Offline":
             com_type = self.cbox_com_type.currentText()
@@ -180,6 +205,11 @@ class MainWindow(QMainWindow):
             self.disconnect_request_signal.emit()
 
     def open_com_setting_window(self):
+        """
+            :Description:
+                Opens communication settings window.\n
+                Based on user selection is opened either Serial config or Wi-Fi config.
+        """
         com_type = self.cbox_com_type.currentText()
         if com_type.lower() == "wifi":
             self.com_setting_window = WifiSettingWindow(self)
@@ -188,17 +218,27 @@ class MainWindow(QMainWindow):
 
     def update_can_msg(self, can_id, can_msg):
         """
-            This method update can message label in gui
-            :param can_id: last received can id
-            :param can_msg: last received can message
+            :Description:
+                Updates can message label in UI.
+
+            :param can_id: Last received can id.
+            :type can_id: str
+
+            :param can_msg: Last received can message.
+            :type can_msg: str
         """
 
         self.can_msg.setText(" ID:{} \t Data: {}".format(can_id, can_msg))
 
     def update_connection_status(self, status):
         """
-            This method update connection status between app and formula
-            :param status: Status can be "Offline" ,"Reconnecting", "Online"
+            :Description:
+                Show current connection status.\n
+                Based on new status change button between "Connect" and "Disconnect".\n
+                Status can be "Offline", "Connecting","Reconnecting", "Online"
+
+            :param status: Connection status.
+            :type status: str
         """
         if status != self.com_status.text():
             self.com_status.setText(status)
@@ -209,8 +249,9 @@ class MainWindow(QMainWindow):
 
     def open_update_window(self):
         """
-            This method is invoked when update button is clicked.
-            Open update window, where user can adjust configuration for selected variable
+            :Description:
+                This method is invoked when update button is clicked.\n
+                Open update window, where user can adjust configuration for selected can variable.
         """
         selected_variable_position = self.variable_list.currentRow()
         if selected_variable_position != -1:
@@ -218,7 +259,8 @@ class MainWindow(QMainWindow):
 
     def set_data_config_list(self):
         """
-            This method load current data configuration
+            :Description:
+                Loads current data configuration.
         """
         config = CanConfigHandler()
         self.data_config_list = config.load_from_config_file()
