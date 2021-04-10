@@ -41,7 +41,7 @@ def check_group_id(group_id):
         if group_id < 0 or group_id > 20:
             raise ValueError
     except ValueError:
-        error_msg = "Group id must be number in range of 0 - 999."
+        error_msg = "Group id must be number in range of 0 - 20."
         logging.exception(error_msg)
         raise ValueError(error_msg)
     except TypeError:

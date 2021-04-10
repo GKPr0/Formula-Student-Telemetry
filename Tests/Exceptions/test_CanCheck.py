@@ -16,13 +16,14 @@ class TestCanCheck(unittest.TestCase):
         check_id(15)
 
     def test_group_id_value(self):
-        # Make sure group id is in valid range 0 - 999
+        # Make sure group id is in valid range 0 - 20
         self.assertRaises(ValueError, check_group_id, -1)
+        self.assertRaises(ValueError, check_group_id, 21)
         self.assertRaises(ValueError, check_group_id, 1000)
 
         check_group_id(0)
-        check_group_id(500)
-        check_group_id(999)
+        check_group_id(10)
+        check_group_id(20)
 
     def test_group_id_type(self):
         # Make sure group id is a valid type -> integer
