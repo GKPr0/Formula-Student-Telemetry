@@ -1,129 +1,78 @@
 #include <Arduino.h>
-#include <WiFi.h>
-#include <esp_wifi.h>
-#include <can.hpp>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "server.h"
+#include "can.h"
+#include "soc/timer_group_struct.h"
+#include "soc/timer_group_reg.h"
 
-#define TEST
+TaskHandle_t canTask;
+TaskHandle_t serverTask;
 
-// WiFi credentials
-const char* ssid     = "Krakonos69";
-const char* password = "Fstulracing69";
+// Queue init
+const size_t msg_queue_size = 1000; 
+const size_t msg_send_count = 700;
+QueueHandle_t messageQueue =  xQueueCreate(msg_queue_size, sizeof(CanMessage));
 
-// Wifi setting
-const IPAddress local_IP(192, 168, 4, 1);
-const IPAddress gateway(192, 168, 4, 100);
-const IPAddress subnet(255, 255, 255, 0);
-const unsigned int port = 23;
+void test(void *param){
+  for(;;){
+    if( uxQueueMessagesWaiting(messageQueue) > msg_send_count)
+    {
+      Serial.println("Sending data");
+      uint8_t dataToSend[msg_send_count * msg_size];
+      CanMessage canMsg;
+      for(int i = 0; i < msg_send_count; i++)
+      {
+        if(xQueueReceive(messageQueue, &(canMsg), (TickType_t) 0) == pdPASS)
+        {
+          printCanMsg(canMsg);
+          memcpy(dataToSend + msg_size * i, canMsg.msg, msg_size);
+        }
+      }
 
-const uint8_t wifi_protocol = 7; //  802.11 available b=1, g=2, n=4 ,lr=8 can be combined as follow 1,3,7,8,15
-const int8_t wifi_tx_power = 82;  // Maximum WiFi transmitting power, unit is 0.25dBm, range is [40, 82] corresponding to 10dBm - 20.5dBm here.
-
-WiFiServer server(port); 
-
-// Data Variables
-const size_t can_queue_size = 10;
-const size_t msg_size = 12; 
-const size_t packet_size = 100;
-uint8_t data[msg_size * packet_size];
-uint32_t id;
-
-void printWiFiInfo()
-{
-  IPAddress IP = WiFi.softAPIP();
-  
-  Serial.println("Network " + String(ssid) +" is running");
-  Serial.print("AP IP address: ");
-  Serial.println(IP);
-
-  int8_t power = 0;
-  esp_wifi_get_max_tx_power(&power);
-  Serial.print("Max tx power set to: ");
-  Serial.print((float)(power/4));
-  Serial.println("dBm");
-
-  uint8_t protocol;
-  esp_wifi_get_protocol(WIFI_IF_AP, &protocol);
-  Serial.print("Protocol set to:");
-  Serial.println(protocol);
-}
-
-
-void serverSetup() 
-{
-  // Stop any previous WiFi
-  WiFi.disconnect(); 
-
-  WiFi.mode(WIFI_AP);
-
-  // Set communication protocol
-  // Způsobuje problémy
-  /*if(esp_wifi_set_protocol(WIFI_IF_AP, wifi_protocol) != ESP_OK)
-  {
-    Serial.println("Setting WiFi protocol failed");
-    ESP.restart();
-  }*/
-
-  // Set tx max power
-  if(esp_wifi_set_max_tx_power(wifi_tx_power) != ESP_OK)
-  {
-    Serial.println("Setting max tx power failed");
-    ESP.restart();
+      for(int i = 0; i < msg_send_count * msg_size; i++){
+        Serial.print(dataToSend[i]);
+      }
+    }
   }
-
-  // Configurating the AP
-  if(!WiFi.softAPConfig(local_IP, gateway, subnet))
-  {
-    Serial.println("AP failed to configurate");
-    ESP.restart();
-  }
-
-  delay(50);
-
-  if(!WiFi.softAP(ssid, password)) // softAP(ssid, password, channel, hidden, num_of_clients)
-  {
-    Serial.println("Starting AP failed");
-    ESP.restart();
-  }
-  
-  delay(50);
-
-  printWiFiInfo();
-
-  server.begin();
 }
 
 void setup() {
   Serial.begin(115200);
 
-  canSetup(can_queue_size);
+  canSetup();
+  delay(50);
+
   serverSetup();
+  delay(50);
+  
+  // Run CanHandler on core 1
+  xTaskCreatePinnedToCore(
+    canHandler,      /* Function to implement the task */
+    "CanHandler",    /* Name of the task */
+    10000,           /* Stack size in words */
+    NULL,            /* Task input parameter */
+    0,               /* Priority of the task */
+    &canTask,        /* Task handle. */
+    1);              /* Core where the task should run */
+  
+  delay(50);
+
+  // Run ServerHandler on core 0
+  xTaskCreatePinnedToCore(
+    serverHandler,   /* Function to implement the task */
+    "ServerHandler", /* Name of the task */
+    20000,           /* Stack size in words */
+    NULL,            /* Task input parameter */
+    0,               /* Priority of the task */
+    &serverTask,     /* Task handle. */
+    0);              /* Core where the task should run */
+  
+  delay(50);
 }
 
 void loop() {
-  
-  WiFiClient client = server.available();
-
-  if (client) {
-    while (client.connected()) {  
-      Serial.println("Connected");
-      #ifndef TEST
-        canDataPack dataPack = canReceive();
-
-        if(dataPack.canID != 0){
-          
-          convertDataPackToByteArray(data, dataPack);        
-          Serial.println("Converted");
-          client.write(data, msg_size);
-          Serial.println("Send"); 
-        }
-      #else
-        generateTestData(1582, data);
-        client.write(data, msg_size);
-      #endif
-
-      delay(10); 
-    }
-    client.stop();  
-  }
+  //Delete arduino framework main task (loop)
+  vTaskDelete(NULL);
 }
 
