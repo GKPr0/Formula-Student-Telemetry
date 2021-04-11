@@ -212,20 +212,18 @@ class Graph(PlotWidget):
     def extend_data_storage(self):
         """
             :Description:
-                Extend data storage arrays by double.\n
+                Extend data storage arrays by 1000 elements.\n
                 Used when the new value does not fit to the array.
 
-            .. note::
-                Would be good to implement new system of allocating space.\n
-                Allocating double of actual space might be a problem at certain level.
         """
-        # TODO new allocating system
+        new_size = self.data_x.shape[0] + 1000
+
         tmp_x = self.data_x
-        self.data_x = np.empty(self.data_x.shape[0] * 2)
+        self.data_x = np.empty(new_size)
         self.data_x[:tmp_x.shape[0]] = tmp_x
 
         tmp_y = self.data_y
-        self.data_y = np.empty(self.data_y.shape[0] * 2)
+        self.data_y = np.empty(new_size)
         self.data_y[:tmp_y.shape[0]] = tmp_y
 
 
