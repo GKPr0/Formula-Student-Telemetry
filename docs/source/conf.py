@@ -55,12 +55,13 @@ html_theme = "sphinx_rtd_theme"
 html_theme_options = {
     'display_version': True,
     'prev_next_buttons_location': 'bottom',
+    'logo_only': True,
     # Toc options
     'sticky_navigation': True
 }
 
 html_show_sourcelink = True
-html_logo = '../../CanReader/Images/icon.png'
+html_logo = '../../CanReader/Images/formula-1-text.png'
 html_static_path = ['_static']
 html_css_files = ['css/custom.css']
 htmlhelp_basename = project
