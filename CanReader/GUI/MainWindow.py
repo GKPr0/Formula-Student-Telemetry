@@ -11,6 +11,7 @@ from CanReader.GUI.ErrorTab.ErrorTab import ErrorTab
 from CanReader.GUI.GraphTabs.GraphTab import GraphTab
 from CanReader.GUI.OverviewTab.OverviewTab import OverviewTab
 from CanReader.GUI.UpdateWindow.UpdateWindow import UpdateWindow
+from CanReader.GUI.Help.AboutWindow.AboutDialog import AboutDialog
 
 
 class MainWindow(QMainWindow):
@@ -34,13 +35,15 @@ class MainWindow(QMainWindow):
         QMainWindow.__init__(self)
         uic.loadUi('GUI/MainWindow.ui', self)
 
-        self.setWindowIcon(QtGui.QIcon('Images/icon.png'))
-
         # Get dataConfig
         self.data_config_list = []
         self.set_data_config_list()
 
         self.action_save = self.findChild(QAction, "action_save")
+        self.action_about = self.findChild(QAction, "action_about")
+
+        # help connections
+        self.action_about.triggered.connect(self.open_about_dialog)
 
         # testCommunication interface
         self.button_com = self.findChild(QPushButton, "button_connect")
@@ -264,3 +267,6 @@ class MainWindow(QMainWindow):
         """
         config = CanConfigHandler()
         self.data_config_list = config.load_from_config_file()
+
+    def open_about_dialog(self):
+        self.about_dialog = AboutDialog()

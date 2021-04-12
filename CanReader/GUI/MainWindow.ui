@@ -28,6 +28,10 @@
   <property name="windowTitle">
    <string>CanReader FS Tul Racing</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../Images/formula-1.svg</normaloff>../Images/formula-1.svg</iconset>
+  </property>
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
@@ -1425,30 +1429,76 @@ QProgressBar::chunk
     </property>
     <addaction name="separator"/>
     <addaction name="action_save"/>
-    <addaction name="actionLoad"/>
-   </widget>
-   <widget class="QMenu" name="menuAbout">
-    <property name="title">
-     <string>About</string>
-    </property>
+    <addaction name="action_load"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
     </property>
+    <addaction name="action_about"/>
+    <addaction name="action_documentation"/>
    </widget>
    <addaction name="menuFile"/>
-   <addaction name="menuAbout"/>
    <addaction name="menuHelp"/>
   </widget>
   <action name="action_save">
+   <property name="icon">
+    <iconset>
+     <normaloff>../Images/download.svg</normaloff>../Images/download.svg</iconset>
+   </property>
    <property name="text">
     <string>Save</string>
    </property>
+   <property name="toolTip">
+    <string>Save data to file.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
   </action>
-  <action name="actionLoad">
+  <action name="action_load">
+   <property name="icon">
+    <iconset>
+     <normaloff>../Images/folder1.svg</normaloff>../Images/folder1.svg</iconset>
+   </property>
    <property name="text">
     <string>Load</string>
+   </property>
+   <property name="toolTip">
+    <string>Loads data from file.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
+  </action>
+  <action name="action_about">
+   <property name="icon">
+    <iconset>
+     <normaloff>../Images/information.svg</normaloff>../Images/information.svg</iconset>
+   </property>
+   <property name="text">
+    <string>About</string>
+   </property>
+   <property name="toolTip">
+    <string>Show about dialog.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="action_documentation">
+   <property name="icon">
+    <iconset>
+     <normaloff>../Images/question.svg</normaloff>../Images/question.svg</iconset>
+   </property>
+   <property name="text">
+    <string>Documentation</string>
+   </property>
+   <property name="toolTip">
+    <string>Open documentation.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
    </property>
   </action>
  </widget>

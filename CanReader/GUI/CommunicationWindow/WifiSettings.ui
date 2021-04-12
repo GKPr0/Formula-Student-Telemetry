@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../Images/wifi_icon.png</normaloff>../../Images/wifi_icon.png</iconset>
+    <normaloff>../../Images/wi-fi.svg</normaloff>../../Images/wi-fi.svg</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">/*Copyright (c) DevSec Studio. All rights reserved.
