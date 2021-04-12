@@ -272,6 +272,10 @@ class MainWindow(QMainWindow):
         self.data_config_list = config.load_from_config_file()
 
     def open_about_dialog(self):
+        """
+            :Description:
+                Open about dialog.
+        """
         self.about_dialog = AboutDialog()
 
     def open_documentation_window(self):
