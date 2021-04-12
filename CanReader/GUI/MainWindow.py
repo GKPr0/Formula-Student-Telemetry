@@ -12,6 +12,7 @@ from CanReader.GUI.GraphTabs.GraphTab import GraphTab
 from CanReader.GUI.OverviewTab.OverviewTab import OverviewTab
 from CanReader.GUI.UpdateWindow.UpdateWindow import UpdateWindow
 from CanReader.GUI.Help.AboutWindow.AboutDialog import AboutDialog
+from CanReader.GUI.Help.Documentation.DocWindow import DocWindow
 
 
 class MainWindow(QMainWindow):
@@ -41,9 +42,11 @@ class MainWindow(QMainWindow):
 
         self.action_save = self.findChild(QAction, "action_save")
         self.action_about = self.findChild(QAction, "action_about")
+        self.action_documentation = self.findChild(QAction, "action_documentation")
 
         # help connections
         self.action_about.triggered.connect(self.open_about_dialog)
+        self.action_documentation.triggered.connect(self.open_documentation_window)
 
         # testCommunication interface
         self.button_com = self.findChild(QPushButton, "button_connect")
@@ -270,3 +273,10 @@ class MainWindow(QMainWindow):
 
     def open_about_dialog(self):
         self.about_dialog = AboutDialog()
+
+    def open_documentation_window(self):
+        """
+            :Description:
+                Open documentation window.
+        """
+        self.documentation_win = DocWindow()

@@ -2,3 +2,4 @@ PyQt5~=5.15.2
 pyqtgraph~=0.11.0
 pyserial~=3.4
 numpy~=1.19.2
+PyQtWebEngine~=5.15.4
