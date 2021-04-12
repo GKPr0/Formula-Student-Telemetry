@@ -1,0 +1,302 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Config.Communication.ComConfigHandler &mdash; CanReader 1.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> CanReader
+          
+
+          
+            
+            <img src="../../../_static/icon.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p><span class="caption-text">Starting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Configuration of Project Environment</a></li>
+</ul>
+<p><span class="caption-text">User Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/comSettings.html">Communication Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/canSettings.html">Can Message Settings</a></li>
+</ul>
+<p><span class="caption-text">Code Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/communication.html">Communication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/config.html">Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/dataProcessing.html">Data Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/gui.html">GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/logger.html">Logger</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">CanReader</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>Config.Communication.ComConfigHandler</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for Config.Communication.ComConfigHandler</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">CanReader.Config.ConfigHandler</span> <span class="kn">import</span> <span class="n">ConfigHandler</span>
+
+
+<div class="viewcode-block" id="ComConfigHandler"><a class="viewcode-back" href="../../../code/config.html#Config.Communication.ComConfigHandler.ComConfigHandler">[docs]</a><span class="k">class</span> <span class="nc">ComConfigHandler</span><span class="p">(</span><span class="n">ConfigHandler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :Inherit: :class:`ConfigHandler`</span>
+
+<span class="sd">        :Description:</span>
+<span class="sd">            Main task is to handle Com config file.\n</span>
+
+<span class="sd">        :param config_file_name:</span>
+<span class="sd">            Name of config file.</span>
+<span class="sd">        :type config_file_name:</span>
+<span class="sd">            str, optional</span>
+
+<span class="sd">        :raises:</span>
+<span class="sd">            For error handling see base class :class:`ConfigHandler`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_file_name</span><span class="o">=</span><span class="s2">&quot;communication_config.ini&quot;</span><span class="p">):</span>
+        <span class="n">ConfigHandler</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_file_name</span><span class="o">=</span><span class="n">config_file_name</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ComConfigHandler.load_serial_info"><a class="viewcode-back" href="../../../code/config.html#Config.Communication.ComConfigHandler.ComConfigHandler.load_serial_info">[docs]</a>    <span class="k">def</span> <span class="nf">load_serial_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Load current serial com config.</span>
+
+<span class="sd">            :returns:</span>
+<span class="sd">                - Port (:py:class:`str`)</span>
+<span class="sd">                - BaudRate (:py:class:`int`)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">port</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;serial&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">)</span>
+        <span class="n">baud_rate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s2">&quot;serial&quot;</span><span class="p">,</span> <span class="s2">&quot;baud rate&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">port</span><span class="p">,</span> <span class="n">baud_rate</span></div>
+
+<div class="viewcode-block" id="ComConfigHandler.update_serial_info"><a class="viewcode-back" href="../../../code/config.html#Config.Communication.ComConfigHandler.ComConfigHandler.update_serial_info">[docs]</a>    <span class="k">def</span> <span class="nf">update_serial_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">baud_rate</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Update serial com config.</span>
+
+<span class="sd">            :param port: Name of com port.</span>
+<span class="sd">            :type port: str</span>
+
+<span class="sd">            :param baud_rate: Desired baud rate.</span>
+<span class="sd">            :type baud_rate: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;serial&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">port</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;serial&quot;</span><span class="p">,</span> <span class="s2">&quot;baud rate&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">baud_rate</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_config</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="ComConfigHandler.load_wifi_info"><a class="viewcode-back" href="../../../code/config.html#Config.Communication.ComConfigHandler.ComConfigHandler.load_wifi_info">[docs]</a>    <span class="k">def</span> <span class="nf">load_wifi_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Load current Wi-Fi com config.</span>
+
+<span class="sd">            :returns:</span>
+<span class="sd">                - Ip (:py:class:`str`)</span>
+<span class="sd">                - Port (:py:class:`int`)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ip</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;wifi&quot;</span><span class="p">,</span> <span class="s2">&quot;ip&quot;</span><span class="p">)</span>
+        <span class="n">port</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="s2">&quot;wifi&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ip</span><span class="p">,</span> <span class="n">port</span></div>
+
+<div class="viewcode-block" id="ComConfigHandler.update_wifi_info"><a class="viewcode-back" href="../../../code/config.html#Config.Communication.ComConfigHandler.ComConfigHandler.update_wifi_info">[docs]</a>    <span class="k">def</span> <span class="nf">update_wifi_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Update Wi-Fi com config.</span>
+
+<span class="sd">            :param ip: Ip address of remote device.</span>
+<span class="sd">            :type ip: str</span>
+
+<span class="sd">            :param port: Port on which devices will communicate.</span>
+<span class="sd">            :type port: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;wifi&quot;</span><span class="p">,</span> <span class="s2">&quot;ip&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ip</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;wifi&quot;</span><span class="p">,</span> <span class="s2">&quot;port&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">port</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_config</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright Ondrej Vacek.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

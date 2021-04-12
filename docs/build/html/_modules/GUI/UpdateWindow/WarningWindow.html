@@ -1,0 +1,443 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>GUI.UpdateWindow.WarningWindow &mdash; CanReader 1.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> CanReader
+          
+
+          
+            
+            <img src="../../../_static/icon.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p><span class="caption-text">Starting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Configuration of Project Environment</a></li>
+</ul>
+<p><span class="caption-text">User Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/comSettings.html">Communication Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/canSettings.html">Can Message Settings</a></li>
+</ul>
+<p><span class="caption-text">Code Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/communication.html">Communication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/config.html">Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/dataProcessing.html">Data Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/gui.html">GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/logger.html">Logger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/canExceptions.html">Can Exceptions</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">CanReader</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>GUI.UpdateWindow.WarningWindow</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for GUI.UpdateWindow.WarningWindow</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">PyQt5.QtWidgets</span> <span class="kn">import</span> <span class="n">QMessageBox</span>
+
+
+<div class="viewcode-block" id="WarningWindow"><a class="viewcode-back" href="../../../code/gui.html#GUI.UpdateWindow.WarningWindow.WarningWindow">[docs]</a><span class="k">class</span> <span class="nc">WarningWindow</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :Description:</span>
+<span class="sd">            Used to check user&#39;s inputs and pop up warning window if needed.</span>
+
+<span class="sd">        :param can_id: Can id in hex format.</span>
+<span class="sd">        :type can_id: str</span>
+
+<span class="sd">        :param start_bit: Data start bit in can msg.</span>
+<span class="sd">        :type start_bit: int</span>
+
+<span class="sd">        :param length: Data length in can msg.</span>
+<span class="sd">        :type length: int</span>
+
+<span class="sd">        :param multiplier: Data multiplier in can msg.</span>
+<span class="sd">        :type multiplier: float, int</span>
+
+<span class="sd">        :param offset: Data offset in can msg.</span>
+<span class="sd">        :type offset: float, int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">can_id</span><span class="p">,</span> <span class="n">start_bit</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">multiplier</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">endian</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">can_id</span> <span class="o">=</span> <span class="n">can_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_bit</span> <span class="o">=</span> <span class="n">start_bit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">multiplier</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="n">offset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endian</span> <span class="o">=</span> <span class="n">endian</span>
+
+<div class="viewcode-block" id="WarningWindow.check_user_inputs"><a class="viewcode-back" href="../../../code/gui.html#GUI.UpdateWindow.WarningWindow.WarningWindow.check_user_inputs">[docs]</a>    <span class="k">def</span> <span class="nf">check_user_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Runs series of checks on class input parameters.</span>
+
+<span class="sd">            :return: True if all checked parameters are valid.</span>
+<span class="sd">            :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_can_id</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_start_bit</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_length</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_multiplier</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_offset</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_endian</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="WarningWindow.show_warning_window"><a class="viewcode-back" href="../../../code/gui.html#GUI.UpdateWindow.WarningWindow.WarningWindow.show_warning_window">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">show_warning_window</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Display warning message box with given title and message</span>
+
+<span class="sd">            :param title: Title of message box.</span>
+<span class="sd">            :param title: str</span>
+
+<span class="sd">            :param msg: Message that will be displayed.</span>
+<span class="sd">            :type msg: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">warningwindow</span> <span class="o">=</span> <span class="n">QMessageBox</span><span class="p">()</span>
+        <span class="n">warningwindow</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Warning</span><span class="p">)</span>
+        <span class="n">warningwindow</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+        <span class="n">warningwindow</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">warningwindow</span><span class="o">.</span><span class="n">setStandardButtons</span><span class="p">(</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">Ok</span><span class="p">)</span>
+        <span class="n">warningwindow</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="WarningWindow.check_can_id"><a class="viewcode-back" href="../../../code/gui.html#GUI.UpdateWindow.WarningWindow.WarningWindow.check_can_id">[docs]</a>    <span class="k">def</span> <span class="nf">check_can_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Can id is expected to be convertible to HEX string of max len 8.\n</span>
+<span class="sd">                If error is raised Warning Window will pop up.</span>
+
+<span class="sd">                :raises TypeError:</span>
+<span class="sd">                    Can_id is not a string.</span>
+
+<span class="sd">                :raises ValueError:</span>
+<span class="sd">                    Can_id is hex string longer then 8.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">can_id</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">can_id</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">can_id</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">8</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_warning_window</span><span class="p">(</span><span class="s2">&quot;Can ID Error&quot;</span><span class="p">,</span> <span class="s2">&quot;Can ID must be a hex string of max 8 hex values&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;User tried to input </span><span class="si">{}</span><span class="s2">. Can ID must be a hex string&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">can_id</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="WarningWindow.check_start_bit"><a class="viewcode-back" href="../../../code/gui.html#GUI.UpdateWindow.WarningWindow.WarningWindow.check_start_bit">[docs]</a>    <span class="k">def</span> <span class="nf">check_start_bit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Start bit is expected to be convertible to int in range of 0 - 63.\n</span>
+<span class="sd">                If error is raised Warning Window will pop up.</span>
+
+<span class="sd">            :raises ValueError:</span>
+<span class="sd">                Start bit is not an integer.</span>
+
+<span class="sd">            :raises ArithmeticError:</span>
+<span class="sd">                Start bit is not in range 0 - 63.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_bit</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_bit</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">63</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ArithmeticError</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_warning_window</span><span class="p">(</span><span class="s2">&quot;Start bit Error&quot;</span><span class="p">,</span> <span class="s2">&quot;Start bit must be an integer&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;User tried to input </span><span class="si">{}</span><span class="s2">. Start bit must be an integer&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_bit</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">except</span> <span class="ne">ArithmeticError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_warning_window</span><span class="p">(</span><span class="s2">&quot;Start bit Error&quot;</span><span class="p">,</span> <span class="s2">&quot;Start bit must be in range 0 - 63&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;User tried to input </span><span class="si">{}</span><span class="s2">. Start bit must be in range 0 - 63&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_bit</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="WarningWindow.check_length"><a class="viewcode-back" href="../../../code/gui.html#GUI.UpdateWindow.WarningWindow.WarningWindow.check_length">[docs]</a>    <span class="k">def</span> <span class="nf">check_length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Length is expected to by convertible to int in range of 1 - 63.\n</span>
+<span class="sd">                If error is raised Warning Window will pop up.</span>
+
+<span class="sd">            :raises ValueError:</span>
+<span class="sd">                Length bit is not an integer.</span>
+
+<span class="sd">            :raises ArithmeticError:</span>
+<span class="sd">                Length is not in range 1 - 63.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">63</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ArithmeticError</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_warning_window</span><span class="p">(</span><span class="s2">&quot;Length Error&quot;</span><span class="p">,</span> <span class="s2">&quot;Length must be an integer&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;User tried to input </span><span class="si">{}</span><span class="s2">. Length must be an integer&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">except</span> <span class="ne">ArithmeticError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_warning_window</span><span class="p">(</span><span class="s2">&quot;Length Error&quot;</span><span class="p">,</span> <span class="s2">&quot;Length must be in range 1 - 63&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;User tried to input </span><span class="si">{}</span><span class="s2">. Length must be in range 1 - 63&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="WarningWindow.check_multiplier"><a class="viewcode-back" href="../../../code/gui.html#GUI.UpdateWindow.WarningWindow.WarningWindow.check_multiplier">[docs]</a>    <span class="k">def</span> <span class="nf">check_multiplier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Multiplier is expected to by convertible to float.\n</span>
+<span class="sd">                Cannot be equal to 0.\n</span>
+<span class="sd">                If error is raised Warning Window will pop up.</span>
+
+<span class="sd">            :raises ValueError:</span>
+<span class="sd">                Multiplier is not an integer or float.</span>
+
+<span class="sd">            :raises ArithmeticError:</span>
+<span class="sd">                Multiplier is equal to 0.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ArithmeticError</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_warning_window</span><span class="p">(</span><span class="s2">&quot;Multiplier Error&quot;</span><span class="p">,</span> <span class="s2">&quot;Multiplier must be an integer or float&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;User tried to input </span><span class="si">{}</span><span class="s2">. Multiplier must be an integer or float&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">except</span> <span class="ne">ArithmeticError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_warning_window</span><span class="p">(</span><span class="s2">&quot;Multiplier Error&quot;</span><span class="p">,</span> <span class="s2">&quot;Multiplier cannot be 0&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;User tried to input </span><span class="si">{}</span><span class="s2">. Multiplier cannot be 0&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="WarningWindow.check_offset"><a class="viewcode-back" href="../../../code/gui.html#GUI.UpdateWindow.WarningWindow.WarningWindow.check_offset">[docs]</a>    <span class="k">def</span> <span class="nf">check_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Offset is expected to by convertible to float.\n</span>
+<span class="sd">                If error is raised Warning Window will pop up.</span>
+
+<span class="sd">            :raises TypeError:</span>
+<span class="sd">                Offset is not an integer or float.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_warning_window</span><span class="p">(</span><span class="s2">&quot;Offset Error&quot;</span><span class="p">,</span> <span class="s2">&quot;Offset must be an integer or float&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;User tried to input </span><span class="si">{}</span><span class="s2">. Offset must be an integer or float&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="WarningWindow.check_endian"><a class="viewcode-back" href="../../../code/gui.html#GUI.UpdateWindow.WarningWindow.WarningWindow.check_endian">[docs]</a>    <span class="k">def</span> <span class="nf">check_endian</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Endian is expected to be convertible to str and have value of &quot;L&quot; or &quot;B&quot;.\n</span>
+<span class="sd">                If error is raised Warning Window will pop up.</span>
+
+<span class="sd">            :raises TypeError:</span>
+<span class="sd">                Endian is not a str.</span>
+
+<span class="sd">            :raises ValueError:</span>
+<span class="sd">                Endian is not a &quot;L&quot; or &quot;B&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">endian</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">endian</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;L&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_warning_window</span><span class="p">(</span><span class="s2">&quot;Endian Error&quot;</span><span class="p">,</span> <span class="s2">&quot;Endian must be string&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;User tried to input </span><span class="si">{}</span><span class="s2">. Endian must be string&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">endian</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_warning_window</span><span class="p">(</span><span class="s2">&quot;Endian Error&quot;</span><span class="p">,</span> <span class="s2">&quot;Endian is expected as &#39;L&#39; or &#39;B&#39;&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;User tried to input </span><span class="si">{}</span><span class="s2">. Endian is expected as &#39;L&#39; or &#39;B&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">endian</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">False</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright Ondrej Vacek.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
