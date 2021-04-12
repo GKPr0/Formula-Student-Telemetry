@@ -1,7 +1,8 @@
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap, QFont
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QHBoxLayout, QPushButton, QFrame
+from datetime import datetime
 
 
 class ErrorWidget(QWidget):
@@ -20,12 +21,6 @@ class ErrorWidget(QWidget):
 
         :param id: CAN ID used to identify where data should be send.
         :param id: str
-
-        .. note::
-            In future this should be implemented:
-                1. System to recognize OK from No data ie. Error should be as 0 and OK as 1.
-                2. Do not change state once was changed to ERROR until user manually resets.
-                3. On Error show label with timestamp showing time of ERROR.
     """
 
     ICONS = {
@@ -42,27 +37,52 @@ class ErrorWidget(QWidget):
         self.name = name
         self.id = id
         self.status = None
+        self.locked = False
 
         self.update_signal.connect(self.update_data)
 
         layout = QVBoxLayout()
 
         img = QPixmap(self.ICONS["Yellow"])
-        self.label_img = QLabel()
-        self.label_img.setStyleSheet("border: 0px")
-        self.label_img.setPixmap(img)
-        self.label_img.setAlignment(Qt.AlignCenter)
-        layout.addWidget(self.label_img)
+        self.icon = QLabel()
+        self.icon.setPixmap(img)
+        self.icon.setAlignment(Qt.AlignCenter)
+        layout.addWidget(self.icon)
 
-        label = QLabel(self.name)
-        label.setStyleSheet("border: 0px")
-        font = QFont("MS Shell", 9, QFont.Bold)
-        label.setFont(font)
-        label.setAlignment(Qt.AlignCenter)
-        label.setWordWrap(True)
-        layout.addWidget(label)
+        # Name label
+        self.name_label = QLabel(self.name)
+        self.name_label.setStyleSheet("color: rgb(255,255,255);"
+                                      "font: bold \"MS Shell\"; "
+                                      "font-size: 9; "
+                                      "qproperty-alignment: AlignCenter;")
+        self.name_label.setWordWrap(True)
+        layout.addWidget(self.name_label)
+
+        # Error layout
+        self.error_frame = QFrame()
+        error_layout = QHBoxLayout()
+
+        self.time_label = QLabel("")
+        self.time_label.setFixedSize(65, 21)
+        self.time_label.setStyleSheet("color: rgb(255,0,0);"
+                                      "font: \"MS Shell\";"
+                                      "font-size: 9;"
+                                      "qproperty-alignment: AlignCenter;")
+        error_layout.addWidget(self.time_label, alignment=Qt.AlignRight | Qt.AlignHCenter)
+
+        self.reset_button = QPushButton("Reset")
+        self.reset_button.setFixedSize(70, 21)
+        self.reset_button.setStyleSheet("color: rgb(255,0,0); "
+                                        "font: bold \"MS Shell\"; "
+                                        "font-size: 9")
+        self.reset_button.clicked.connect(self.error_reset)
+        error_layout.addWidget(self.reset_button, alignment=Qt.AlignLeft | Qt.AlignHCenter)
+
+        self.error_frame.setLayout(error_layout)
+        layout.addWidget(self.error_frame)
 
         self.setLayout(layout)
+        self.error_frame.hide()
 
     def update_data(self, status):
         """
@@ -72,11 +92,48 @@ class ErrorWidget(QWidget):
             :param status: New status value.
             :type status: bool
         """
-        if self.status != status:
+        if not self.locked and self.status != status:
             self.status = status
             if bool(self.status):
                 img = QPixmap(self.ICONS["Red"])
+                self.error_received()
             else:
                 img = QPixmap(self.ICONS["Green"])
 
-            self.label_img.setPixmap(img)
+            self.icon.setPixmap(img)
+
+    def error_received(self):
+        """
+            :Description:
+                Used when error status is received.\n
+                Shows time of error and reset button.\n
+                Locks widget do new states won't change anything.
+        """
+        timestamp = datetime.now().strftime("%H:%M:%S")
+        self.time_label.setText(timestamp)
+
+        self.name_label.setStyleSheet("color: rgb(255, 0, 0);"
+                                      "font: bold \"MS Shell\"; "
+                                      "font-size: 9; "
+                                      "qproperty-alignment: AlignCenter;")
+        self.error_frame.show()
+        self.locked = True
+
+    def error_reset(self):
+        """
+            :Description:
+                Event handler for reset button click.\n
+                Hide reset button and timestamp.\n
+                Sets icon to yellow.\n
+                Unlock widget and set state to None.
+        """
+        img = QPixmap(self.ICONS["Yellow"])
+        self.icon.setPixmap(img)
+
+        self.name_label.setStyleSheet("color: rgb(255, 255, 255);"
+                                      "font: bold \"MS Shell\"; "
+                                      "font-size: 9; "
+                                      "qproperty-alignment: AlignCenter;")
+        self.error_frame.hide()
+        self.locked = False
+        self.status = None
