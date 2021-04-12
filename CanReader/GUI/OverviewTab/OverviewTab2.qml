@@ -16,10 +16,10 @@ Item {
             oilTmpGauge.value = slider.value
             oilPressureGauge.value = slider.value
             fuelPressureGauge.value = slider.value
-            flDumperGauge.value = slider.value
-            frDumperGauge.value = slider.value
-            rlDumperGauge.value = slider.value
-            rrDumperGauge.value = slider.value
+            fl_dumper.value = slider.value + 5
+            fr_dumper.value = slider.value + 5
+            rl_dumper.value = slider.value - 5
+            rr_dumper.value = slider.value - 5
             throttleGauge.value = slider.value
             brakeGauge.value = slider.value
             batteryValue.text = slider.value
@@ -27,16 +27,16 @@ Item {
     }
 
     Connections {
-        target: button
+        target: centerButton
         onClicked: {
-            flDumperGauge.minimumValue = flDumperGauge.value - 25
-            flDumperGauge.maximumValue = flDumperGauge.value + 25
-            frDumperGauge.minimumValue = frDumperGauge.value - 25
-            frDumperGauge.maximumValue = frDumperGauge.value + 25
-            rlDumperGauge.minimumValue = rlDumperGauge.value - 25
-            rlDumperGauge.maximumValue = rlDumperGauge.value + 25
-            rrDumperGauge.minimumValue = rrDumperGauge.value - 25
-            rrDumperGauge.maximumValue = rrDumperGauge.value + 25
+            flDumperGauge.minimumValue = parseInt(flDumperGauge.value - 25/2)
+            flDumperGauge.maximumValue = parseInt(flDumperGauge.value + 25/2)
+            frDumperGauge.minimumValue = parseInt(frDumperGauge.value - 25/2)
+            frDumperGauge.maximumValue = parseInt(frDumperGauge.value + 25/2)
+            rlDumperGauge.minimumValue = parseInt(rlDumperGauge.value - 25/2)
+            rlDumperGauge.maximumValue = parseInt(rlDumperGauge.value + 25/2)
+            rrDumperGauge.minimumValue = parseInt(rrDumperGauge.value - 25/2)
+            rrDumperGauge.maximumValue = parseInt(rrDumperGauge.value + 25/2)
             coolantFanState.active = true;
             fuelPumpState.active = true;
         }
@@ -57,10 +57,10 @@ Item {
     Connections{
         target: cltGauge
         onValueChanged:{
-            if(cltGauge.value > 115 || parseInt(CLT_sensor.value) === 1 ){
+            if(cltGauge.value >= 125 || parseInt(CLT_sensor.value) === 1 ){
                 waterTempStatus.source = "water_temp_error.png"
             }
-            else if(cltGauge.value > 115){
+            else if((cltGauge.value > 115) && (cltGauge.value < 125)){
                 waterTempStatus.source = "water_temp_warning.png"
             }else{
                 waterTempStatus.source = "water_temp_normal.png"
@@ -157,8 +157,8 @@ Item {
 
             Item {
                 id: suspension
-                x: 857
-                width: 223
+                x: 843
+                width: 237
                 anchors.top: parent.top
                 anchors.topMargin: 0
                 anchors.bottomMargin: 0
@@ -206,6 +206,18 @@ Item {
                         anchors.rightMargin: 0
                         horizontalAlignment: Text.AlignHCenter
                     }
+
+                    Label {
+                        id: flValue
+                        x: -6
+                        y: 36
+                        color: "#ffffff"
+                        text: parseFloat(fl_dumper.value).toFixed(2)
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        rotation: -90
+                    }
                 }
 
                 Gauge {
@@ -249,6 +261,18 @@ Item {
                         anchors.rightMargin: 0
                         horizontalAlignment: Text.AlignHCenter
                     }
+
+                    Label {
+                        id: frValue
+                        x: -6
+                        y: 36
+                        color: "#ffffff"
+                        text: parseFloat(fr_dumper.value).toFixed(2)
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        rotation: -90
+                    }
                 }
 
                 Gauge {
@@ -264,7 +288,7 @@ Item {
                     anchors.bottom: parent.bottom
                     value: rl_dumper.value
                     minimumValue: 25
-                    maximumValue: 75
+                    maximumValue: 50
 
                     Behavior on value {
                         NumberAnimation {
@@ -293,6 +317,18 @@ Item {
                         anchors.top: parent.bottom
                         horizontalAlignment: Text.AlignHCenter
                     }
+
+                    Label {
+                        id: rlValue
+                        x: -6
+                        y: 36
+                        color: "#ffffff"
+                        text: parseFloat(rl_dumper.value).toFixed(2)
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        rotation: -90
+                    }
                 }
 
                 Gauge {
@@ -307,7 +343,7 @@ Item {
                     anchors.bottom: parent.bottom
                     value: rr_dumper.value
                     minimumValue: 25
-                    maximumValue: 75
+                    maximumValue: 50
 
                     Behavior on value {
                         NumberAnimation {
@@ -336,6 +372,18 @@ Item {
                         anchors.rightMargin: 0
                         horizontalAlignment: Text.AlignHCenter
                     }
+
+                    Label {
+                        id: rrValue
+                        x: -6
+                        y: 36
+                        color: "#ffffff"
+                        text: parseFloat(rr_dumper.value).toFixed(2)
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.right: parent.right
+                        anchors.rightMargin: 0
+                        rotation: -90
+                    }
                 }
 
                 Text {
@@ -353,17 +401,35 @@ Item {
                 }
 
                 Button {
-                    id: button
+                    id: centerButton
                     x: 66
-                    y: 71
-                    width: 40
+                    width: 58
                     height: 15
-                    text: qsTr("SET")
-                    anchors.verticalCenterOffset: 110
                     anchors.horizontalCenterOffset: 0
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.top: image.verticalCenter
+                    anchors.topMargin: 84
                     anchors.horizontalCenter: parent.horizontalCenter
-                }
+
+                    contentItem: Text {
+                            text: qsTr("Center")
+                            color: "#ffffff"
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            elide: Text.ElideRight
+                        }
+                    background: Rectangle {
+                            implicitWidth: parent.width
+                            implicitHeight: parent.height
+                            border.width: 1
+                            border.color: "#051a39"
+                            radius: 4
+                            gradient: Gradient {
+                                GradientStop { position: 0.6 ; color: "#545454"}
+                                GradientStop { position: 1.0 ; color: "#3B3B3B"}
+                                }
+                            }
+
+                    }
 
                 Image {
                     id: image
@@ -371,12 +437,13 @@ Item {
                     y: -66
                     width: 180
                     height: 120
-                    anchors.verticalCenterOffset: 10
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.right: parent.right
                     rotation: -90
                     fillMode: Image.PreserveAspectFit
                     source: "formule.png"
+                    anchors.verticalCenterOffset: 10
+                    anchors.horizontalCenter: parent.horizontalCenter
                 }
             }
 
@@ -424,7 +491,7 @@ Item {
                         x: 3
                         y: 28
                         color: "#bdbebf"
-                        text: parseFloat(battery.value).toFixed(2)
+                        text: "#parseFloat(battery.value).toFixed(2)#"
                         anchors.verticalCenterOffset: 30
                         anchors.horizontalCenterOffset: -5
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -628,10 +695,10 @@ Item {
                     color: "#bdbebf"
                     text: qsTr("THROTTLE")
                     anchors.verticalCenterOffset: 0
-                    anchors.horizontalCenterOffset: 10
-                    anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: parent.right
                     verticalAlignment: Text.AlignVCenter
+                    anchors.rightMargin: -10
                     rotation: -90
                     horizontalAlignment: Text.AlignHCenter
                 }
@@ -667,10 +734,10 @@ Item {
                     id: brakeLabel
                     color: "#bdbebf"
                     text: qsTr("BRAKE")
-                    anchors.horizontalCenterOffset: 10
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.right: parent.right
                     verticalAlignment: Text.AlignVCenter
+                    anchors.rightMargin: 0
                     rotation: -90
                     horizontalAlignment: Text.AlignHCenter
                 }
@@ -755,6 +822,8 @@ Item {
                 clip: false
                 anchors.bottomMargin: 20
                 anchors.margins: 10
+                baselineOffset: 0
+                z: 0
 
                 Behavior on value {
                     NumberAnimation {
@@ -1054,9 +1123,4 @@ Item {
 
 
 
-/*##^##
-Designer {
-    D{i:8;anchors_width:204;anchors_x:876}D{i:13;anchors_width:33;anchors_x:85}D{i:21;anchors_width:33;anchors_x:74}
-D{i:27;anchors_x:"-627";anchors_y:"-66"}D{i:40;anchors_width:161}
-}
-##^##*/
+
