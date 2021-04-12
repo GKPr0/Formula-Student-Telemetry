@@ -21,11 +21,10 @@ class DataLogger:
         self.automatic_path = "./AutomaticDataLog.txt"
         self.can_dict = {}
 
-    def get_raw_can(self, can_id, can_data):
+    def push_raw_can(self, can_id, can_data):
         """
         :Description:
-            Collects incoming data in format:\n
-            "2020/8/5 16:16:27.883		ID:603	Data:1111111100000100000000000000000000000001101100000000010000000010"\n
+            Push incoming data to the storage if there is difference:\n
             Every 1000 entry save to the file.\n
 
         :param can_id: ID of incoming CAN data
@@ -33,15 +32,15 @@ class DataLogger:
         :param can_data: Actual CAN data
         :type can_data: str
         """
+        if self.is_can_data_modified(can_id, can_data):
+            time_stamp = DataLogger.get_timestamp()
 
-        time_stamp = DataLogger.get_timestamp()
+            data = "{}\t\tID:{}\tData:{}\n".format(str(time_stamp), can_id, can_data)
+            self.raw_data.append(data)
 
-        data = "{}\t\tID:{}\tData:{}\n".format(str(time_stamp), can_id, can_data)
-        self.raw_data.append(data)
-
-        if len(self.raw_data) > 1000:
-            self.save_raw_can()
-            self.raw_data.clear()
+            if len(self.raw_data) > 1000:
+                self.save_raw_can()
+                self.raw_data.clear()
 
     def is_can_data_modified(self, can_id, can_data):
         """
@@ -57,6 +56,16 @@ class DataLogger:
         :return: True if data on specific id do not mach saved data
         :rtype: bool
         """
+        update = True
+        if can_id in self.can_dict:
+            if can_data == self.can_dict[can_id]:
+                update = False
+
+        if update:
+            self.can_dict[can_id] = can_data
+            return True
+        else:
+            return False
 
     def save_raw_can(self):
         """

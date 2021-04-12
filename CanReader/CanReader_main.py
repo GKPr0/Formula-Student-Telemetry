@@ -167,7 +167,7 @@ class App:
 
         self.main_window.update_can_msg_signal.emit(can_id, can_data)
 
-        self.data_logger.get_raw_can(can_id, can_data)
+        self.data_logger.push_raw_can(can_id, can_data)
 
     def update_gui(self):
         """
