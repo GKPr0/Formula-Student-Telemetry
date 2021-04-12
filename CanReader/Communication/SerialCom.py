@@ -41,6 +41,8 @@ class SerialCom(ComBase):
         self.__port = port.upper()
         self.__baud_rate = bauds
 
+        self.__serial = None
+
     def __repr__(self):
         if self.status == "Offline":
             return "Device is disconnected"
@@ -52,7 +54,8 @@ class SerialCom(ComBase):
             :Description:
                 Close communication and self destroy.
         """
-        self.__serial.close()
+        if self.__serial is not None:
+            self.__serial.close()
         ComBase.close(self)
 
     def connect_to_device(self):
