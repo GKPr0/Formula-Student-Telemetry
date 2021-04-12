@@ -72,7 +72,7 @@ Item {
         target: oilPressureGauge
         onValueChanged:{
             if(oilPressureGauge.value > 8){
-                 oilPressureStatus.source = "oil_pres_error.png"
+                oilPressureStatus.source = "oil_pres_error.png"
             }
             else if(oilPressureGauge.value < 1){
                 oilPressureStatus.source = "oil_pres_warning.png"
@@ -162,9 +162,9 @@ Item {
                 anchors.top: parent.top
                 anchors.topMargin: 0
                 anchors.bottomMargin: 0
-                anchors.rightMargin: 0
-                anchors.right: parent.right
                 anchors.bottom: parent.bottom
+                anchors.horizontalCenterOffset: secondaryOverview.width > 1300 ? (secondaryOverview.width/3 - width/2) : (secondaryOverview.width/3)
+                anchors.horizontalCenter: parent.horizontalCenter
                 Gauge {
                     id: flDumperGauge
                     width: 33
@@ -407,29 +407,29 @@ Item {
                     height: 15
                     anchors.horizontalCenterOffset: 0
                     anchors.top: image.verticalCenter
-                    anchors.topMargin: 84
+                    anchors.topMargin: 83
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     contentItem: Text {
-                            text: qsTr("Center")
-                            color: "#ffffff"
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            elide: Text.ElideRight
-                        }
-                    background: Rectangle {
-                            implicitWidth: parent.width
-                            implicitHeight: parent.height
-                            border.width: 1
-                            border.color: "#051a39"
-                            radius: 4
-                            gradient: Gradient {
-                                GradientStop { position: 0.6 ; color: "#545454"}
-                                GradientStop { position: 1.0 ; color: "#3B3B3B"}
-                                }
-                            }
-
+                        text: qsTr("Center")
+                        color: "#ffffff"
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        elide: Text.ElideRight
                     }
+                    background: Rectangle {
+                        implicitWidth: parent.width
+                        implicitHeight: parent.height
+                        border.width: 1
+                        border.color: "#051a39"
+                        radius: 4
+                        gradient: Gradient {
+                            GradientStop { position: 0.6 ; color: "#545454"}
+                            GradientStop { position: 1.0 ; color: "#3B3B3B"}
+                        }
+                    }
+
+                }
 
                 Image {
                     id: image
@@ -462,7 +462,7 @@ Item {
                     id: statsText
                     x: 57
                     color: "#bdbebf"
-                    text: qsTr("Stats")
+                    text: qsTr("STATS")
                     fontSizeMode: Text.Fit
                     anchors.top: parent.top
                     anchors.topMargin: 8
@@ -478,7 +478,7 @@ Item {
                     y: 34
                     width: 36
                     height: 32
-                    anchors.verticalCenterOffset: -35
+                    anchors.verticalCenterOffset: -40
                     visible: true
                     anchors.horizontalCenterOffset: 0
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -520,11 +520,11 @@ Item {
                     y: 99
                     width: 48
                     height: 50
-                    anchors.horizontalCenterOffset: -100
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenterOffset: -80
                     anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 11
                     source: "engine_warning.png"
+                    anchors.verticalCenterOffset: 60
                     fillMode: Image.PreserveAspectFit
                 }
 
@@ -534,10 +534,10 @@ Item {
                     y: 96
                     width: 64
                     height: 53
+                    anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 11
                     source: "water_temp_normal.png"
+                    anchors.verticalCenterOffset: 60
                     fillMode: Image.PreserveAspectFit
                 }
 
@@ -547,11 +547,11 @@ Item {
                     y: 102
                     width: 53
                     height: 47
-                    anchors.horizontalCenterOffset: 100
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenterOffset: 80
                     anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 11
                     source: "oil_pres_warning.png"
+                    anchors.verticalCenterOffset: 60
                     fillMode: Image.PreserveAspectFit
                 }
 
@@ -559,21 +559,24 @@ Item {
                     id: coolantFanState
                     x: 37
                     y: 32
-                    anchors.verticalCenterOffset: -35
+                    width: 35
+                    height: 35
+                    anchors.verticalCenterOffset: -40
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenterOffset: -100
+                    anchors.horizontalCenterOffset: -80
                     anchors.horizontalCenter: parent.horizontalCenter
                     color: Qt.rgba(0 , 255, 0, 0.5)
 
                     Label {
                         id: cltStatuslabel
                         x: -11
-                        y: 38
                         color: "#bdbebf"
                         text: qsTr("CLT FAN ")
+                        anchors.top: parent.bottom
                         anchors.horizontalCenterOffset: 0
                         anchors.horizontalCenter: parent.horizontalCenter
                         verticalAlignment: Text.AlignVCenter
+                        anchors.topMargin: 10
                         horizontalAlignment: Text.AlignHCenter
                     }
                 }
@@ -582,19 +585,22 @@ Item {
                     id: fuelPumpState
                     x: 217
                     y: 32
-                    anchors.verticalCenterOffset: -35
+                    width: 35
+                    height: 35
+                    color: "#8000ff00"
+                    anchors.verticalCenterOffset: -40
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenterOffset: 100
+                    anchors.horizontalCenterOffset: 80
                     anchors.horizontalCenter: parent.horizontalCenter
-                    color: Qt.rgba(0 , 255, 0, 0.5)
 
                     Label {
                         id: fuelPumpStateLabel
                         x: 2
-                        y: 40
                         color: "#bdbebf"
                         text: qsTr("FUEL PUMP")
+                        anchors.top: parent.bottom
                         verticalAlignment: Text.AlignVCenter
+                        anchors.topMargin: 10
                         horizontalAlignment: Text.AlignHCenter
                         anchors.horizontalCenterOffset: 0
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -606,26 +612,13 @@ Item {
 
             Item {
                 id: safety
-                width: 161
+                width: 243
                 anchors.top: parent.top
                 anchors.topMargin: 0
                 anchors.bottom: parent.bottom
+                anchors.horizontalCenterOffset: secondaryOverview.width > 1300 ? (-secondaryOverview.width/3 + width/2) : (-secondaryOverview.width/3)
+                anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottomMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-
-                Slider {
-                    id: slider
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    anchors.bottom: parent.bottom
-                    anchors.left: parent.left
-                    wheelEnabled: false
-                    anchors.top: parent.top
-                    to: 150
-                    value: 0
-                    from: -50
-                }
 
                 Text {
                     id: safety_text
@@ -639,6 +632,146 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
                     font.pixelSize: 15
+                }
+
+                StatusIndicator {
+                    id: bspdState
+                    width: 35
+                    height: 35
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenterOffset: -75
+                    anchors.verticalCenterOffset: -40
+                    anchors.horizontalCenter: parent.horizontalCenter
+
+                    Label {
+                        id: bspdLabel
+                        x: 0
+                        width: 26
+                        height: 10
+                        color: "#bdbebf"
+                        text: qsTr("BSPD")
+                        anchors.top: parent.bottom
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        anchors.topMargin: 10
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                }
+
+                StatusIndicator {
+                    id: cockpitState
+                    width: 35
+                    height: 35
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenterOffset: 60
+                    anchors.horizontalCenterOffset: 0
+                    Label {
+                        id: cockpitLabel
+                        x: 0
+                        width: 34
+                        height: 13
+                        color: "#bdbebf"
+                        text: qsTr("Cockpit")
+                        anchors.top: parent.bottom
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.topMargin: 10
+                    }
+                }
+
+                StatusIndicator {
+                    id: leftState
+                    width: 35
+                    height: 35
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenterOffset: 60
+                    anchors.horizontalCenterOffset: -75
+                    Label {
+                        id: leftLabel
+                        x: 0
+                        width: 20
+                        height: 15
+                        color: "#bdbebf"
+                        text: qsTr("Left")
+                        anchors.top: parent.bottom
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.topMargin: 10
+                    }
+                }
+
+                StatusIndicator {
+                    id: rightState
+                    width: 35
+                    height: 35
+                    anchors.verticalCenter: parent.verticalCenter
+                    active: false
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenterOffset: 60
+                    anchors.horizontalCenterOffset: 75
+                    Label {
+                        id: rightLabel
+                        x: 0
+                        width: 34
+                        height: 13
+                        color: "#bdbebf"
+                        text: qsTr("Right")
+                        anchors.top: parent.bottom
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.topMargin: 10
+                    }
+                }
+
+                StatusIndicator {
+                    id: botsState
+                    width: 35
+                    height: 35
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenterOffset: -40
+                    anchors.horizontalCenterOffset: 0
+                    Label {
+                        id: botsLabel
+                        x: 0
+                        width: 26
+                        height: 10
+                        color: "#bdbebf"
+                        text: qsTr("BOTS")
+                        anchors.top: parent.bottom
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.topMargin: 10
+                    }
+                }
+
+                StatusIndicator {
+                    id: inertiaSwitchState
+                    width: 35
+                    height: 35
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenterOffset: -40
+                    anchors.horizontalCenterOffset: 75
+                    Label {
+                        id: inertiaSwitchLabel
+                        x: 0
+                        width: 26
+                        height: 10
+                        color: "#bdbebf"
+                        text: qsTr("Inertia")
+                        anchors.top: parent.bottom
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.topMargin: 10
+                    }
                 }
             }
         }
@@ -1113,6 +1246,30 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
                 }
+            }
+
+            Slider {
+                id: slider
+                x: 0
+                y: 480
+                anchors.bottom: parent.bottom
+                anchors.horizontalCenter: parent.horizontalCenter
+                wheelEnabled: false
+                to: 150
+                value: 0
+                from: -50
+            }
+
+            Rectangle {
+                id: line
+                x: 97
+                y: 272
+                width: mainOverview.width
+                height: 1
+                color: "#bdbebf"
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 0
+                anchors.horizontalCenter: parent.horizontalCenter
             }
 
         }
