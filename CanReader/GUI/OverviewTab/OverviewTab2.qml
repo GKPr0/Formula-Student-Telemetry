@@ -8,6 +8,7 @@ Item {
     width: 1080
     height: 720
 
+
     Connections {
         target: slider
         onValueChanged: {
@@ -158,18 +159,18 @@ Item {
             Item {
                 id: suspension
                 x: 843
-                width: 237
+                width: secondaryOverview.width > 1080 ? parseInt(secondaryOverview.width/4.5) : 240
                 anchors.top: parent.top
                 anchors.topMargin: 0
                 anchors.bottomMargin: 0
                 anchors.bottom: parent.bottom
-                anchors.horizontalCenterOffset: secondaryOverview.width > 1300 ? (secondaryOverview.width/3 - width/2) : (secondaryOverview.width/3)
+                anchors.horizontalCenterOffset: secondaryOverview.width > 1300 ? (secondaryOverview.width/3 - width/3) : (secondaryOverview.width/3)
                 anchors.horizontalCenter: parent.horizontalCenter
                 Gauge {
                     id: flDumperGauge
                     width: 33
-                    anchors.right: parent.horizontalCenter
-                    anchors.rightMargin: 60
+                    anchors.right: image.left
+                    anchors.rightMargin: -35
                     anchors.bottom: parent.verticalCenter
                     anchors.bottomMargin: 10
                     anchors.topMargin: 0
@@ -188,7 +189,7 @@ Item {
                     style: GaugeStyle {
                         valueBar: Rectangle {
                             color: Qt.rgba(1 +flDumperGauge.value / flDumperGauge.maximumValue, 1 - flDumperGauge.value / flDumperGauge.maximumValue, 0, 1)
-                            implicitWidth: 16
+                            implicitWidth: suspension.width / 15
                         }
                     }
 
@@ -197,13 +198,14 @@ Item {
                         height: 16
                         color: "#bdbebf"
                         text: qsTr("FL")
+                        font.pointSize: secondaryOverview.width > 1080 ? parseInt(secondaryOverview.width / 125) : 8
                         anchors.topMargin: -4
                         verticalAlignment: Text.AlignVCenter
                         anchors.leftMargin: 8
                         anchors.right: parent.right
                         anchors.top: parent.bottom
                         anchors.left: parent.left
-                        anchors.rightMargin: 0
+                        anchors.rightMargin: suspension.width > 270 ? -suspension.width / 55 : 0
                         horizontalAlignment: Text.AlignHCenter
                     }
 
@@ -211,11 +213,17 @@ Item {
                         id: flValue
                         x: -6
                         y: 36
+                        width: 25
+                        height: suspension.width / 15
                         color: "#ffffff"
                         text: parseFloat(fl_dumper.value).toFixed(2)
+                        font.pointSize: secondaryOverview.width > 1080 ? parseInt(secondaryOverview.width / 125) : 8
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.right: parent.right
-                        anchors.rightMargin: 0
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        font.bold: true
+                        anchors.rightMargin: suspension.width > 320 ? -suspension.width / 80 : 0
                         rotation: -90
                     }
                 }
@@ -223,8 +231,8 @@ Item {
                 Gauge {
                     id: frDumperGauge
                     width: 33
-                    anchors.left: parent.horizontalCenter
-                    anchors.leftMargin: 50
+                    anchors.left: image.right
+                    anchors.leftMargin: -40
                     anchors.bottom: parent.verticalCenter
                     anchors.bottomMargin: 10
                     anchors.topMargin: 0
@@ -243,7 +251,7 @@ Item {
                     style: GaugeStyle {
                         valueBar: Rectangle {
                             color: Qt.rgba(1 +frDumperGauge.value / frDumperGauge.maximumValue, 1 - frDumperGauge.value / frDumperGauge.maximumValue, 0, 1)
-                            implicitWidth: 16
+                            implicitWidth: suspension.width / 15
                         }
                     }
 
@@ -252,13 +260,14 @@ Item {
                         height: 16
                         color: "#bdbebf"
                         text: qsTr("FR")
+                        font.pointSize: secondaryOverview.width > 1080 ? parseInt(secondaryOverview.width / 125) : 8
                         anchors.topMargin: -4
                         anchors.leftMargin: 8
                         verticalAlignment: Text.AlignVCenter
                         anchors.top: parent.bottom
                         anchors.right: parent.right
                         anchors.left: parent.left
-                        anchors.rightMargin: 0
+                        anchors.rightMargin: suspension.width > 270 ? -suspension.width / 55 : 0
                         horizontalAlignment: Text.AlignHCenter
                     }
 
@@ -266,11 +275,17 @@ Item {
                         id: frValue
                         x: -6
                         y: 36
+                        width: 25
+                        height: suspension.width / 15
                         color: "#ffffff"
                         text: parseFloat(fr_dumper.value).toFixed(2)
+                        font.pointSize: secondaryOverview.width > 1080 ? parseInt(secondaryOverview.width / 125) : 8
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.right: parent.right
-                        anchors.rightMargin: 0
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        font.bold: true
+                        anchors.rightMargin: suspension.width > 320 ? -suspension.width / 80 : 0
                         rotation: -90
                     }
                 }
@@ -281,8 +296,8 @@ Item {
                     width: 33
                     anchors.top: parent.verticalCenter
                     anchors.topMargin: 10
-                    anchors.right: parent.horizontalCenter
-                    anchors.rightMargin: 60
+                    anchors.right: image.left
+                    anchors.rightMargin: -35
                     anchors.bottomMargin: 15
                     tickmarkStepSize: 0
                     anchors.bottom: parent.bottom
@@ -299,7 +314,7 @@ Item {
                     style: GaugeStyle {
                         valueBar: Rectangle {
                             color: Qt.rgba(1 +rlDumperGauge.value / rlDumperGauge.maximumValue, 1 - rlDumperGauge.value / rlDumperGauge.maximumValue, 0, 1)
-                            implicitWidth: 16
+                            implicitWidth: suspension.width / 15
                         }
                     }
 
@@ -308,8 +323,9 @@ Item {
                         height: 16
                         color: "#bdbebf"
                         text: qsTr("RL")
+                        font.pointSize: secondaryOverview.width > 1080 ? parseInt(secondaryOverview.width / 125) : 8
                         anchors.right: parent.right
-                        anchors.rightMargin: 0
+                        anchors.rightMargin: suspension.width > 270 ? -suspension.width / 55 : 0
                         anchors.left: parent.left
                         anchors.leftMargin: 8
                         anchors.topMargin: -4
@@ -322,11 +338,17 @@ Item {
                         id: rlValue
                         x: -6
                         y: 36
+                        width: 25
+                        height: suspension.width / 15
                         color: "#ffffff"
                         text: parseFloat(rl_dumper.value).toFixed(2)
+                        font.pointSize: secondaryOverview.width > 1080 ? parseInt(secondaryOverview.width / 125) : 8
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.right: parent.right
-                        anchors.rightMargin: 0
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        font.bold: true
+                        anchors.rightMargin: suspension.width > 320 ? -suspension.width / 80 : 0
                         rotation: -90
                     }
                 }
@@ -334,8 +356,8 @@ Item {
                 Gauge {
                     id: rrDumperGauge
                     width: 33
-                    anchors.left: parent.horizontalCenter
-                    anchors.leftMargin: 50
+                    anchors.left: image.right
+                    anchors.leftMargin: -40
                     anchors.top: parent.verticalCenter
                     anchors.topMargin: 10
                     anchors.bottomMargin: 15
@@ -354,7 +376,7 @@ Item {
                     style: GaugeStyle {
                         valueBar: Rectangle {
                             color: Qt.rgba(1 +rrDumperGauge.value / rrDumperGauge.maximumValue, 1 - rrDumperGauge.value / rrDumperGauge.maximumValue, 0, 1)
-                            implicitWidth: 16
+                            implicitWidth: suspension.width / 15
                         }
                     }
 
@@ -363,13 +385,14 @@ Item {
                         height: 16
                         color: "#bdbebf"
                         text: qsTr("RR")
+                        font.pointSize: secondaryOverview.width > 1080 ? parseInt(secondaryOverview.width / 125) : 8
                         anchors.topMargin: -4
                         verticalAlignment: Text.AlignVCenter
                         anchors.leftMargin: 8
                         anchors.right: parent.right
                         anchors.top: parent.bottom
                         anchors.left: parent.left
-                        anchors.rightMargin: 0
+                        anchors.rightMargin: suspension.width > 270 ? -suspension.width / 55 : 0
                         horizontalAlignment: Text.AlignHCenter
                     }
 
@@ -377,11 +400,17 @@ Item {
                         id: rrValue
                         x: -6
                         y: 36
+                        width: 25
+                        height: suspension.width / 15
                         color: "#ffffff"
                         text: parseFloat(rr_dumper.value).toFixed(2)
+                        font.pointSize: secondaryOverview.width > 1080 ? parseInt(secondaryOverview.width / 125) : 8
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.right: parent.right
-                        anchors.rightMargin: 0
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        font.bold: true
+                        anchors.rightMargin: suspension.width > 320 ? -suspension.width / 80 : 0
                         rotation: -90
                     }
                 }
@@ -393,21 +422,21 @@ Item {
                     text: qsTr("SUSPENSION")
                     anchors.horizontalCenterOffset: 0
                     anchors.top: parent.top
-                    anchors.topMargin: 8
+                    anchors.topMargin: 5
                     anchors.horizontalCenter: parent.horizontalCenter
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: 15
+                    font.pointSize: secondaryOverview.width > 1080 ? parseInt(secondaryOverview.width / 83) : 13
                 }
 
                 Button {
                     id: centerButton
                     x: 66
-                    width: 58
-                    height: 15
+                    width: parseInt(parent.width / 4)
+                    height: parseInt(parent.width / 16)
                     anchors.horizontalCenterOffset: 0
-                    anchors.top: image.verticalCenter
-                    anchors.topMargin: 83
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 3
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     contentItem: Text {
@@ -435,10 +464,9 @@ Item {
                     id: image
                     x: -627
                     y: -66
-                    width: 180
-                    height: 120
+                    width: parseInt((parent.width * 3) / 4)
+                    height: parseInt((parent.width) / 2)
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.right: parent.right
                     rotation: -90
                     fillMode: Image.PreserveAspectFit
                     source: "formule.png"
@@ -450,7 +478,7 @@ Item {
             Item {
                 id: stats
                 x: 220
-                width: 306
+                width: secondaryOverview.width > 1080 ? parseInt(secondaryOverview.width/4.5) : 240
                 height: 160
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
@@ -465,20 +493,20 @@ Item {
                     text: qsTr("STATS")
                     fontSizeMode: Text.Fit
                     anchors.top: parent.top
-                    anchors.topMargin: 8
+                    anchors.topMargin: 5
                     anchors.horizontalCenter: parent.horizontalCenter
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: 15
+                    font.pointSize: secondaryOverview.width > 1080 ? parseInt(secondaryOverview.width / 83) : 13
                 }
 
                 Image {
                     id: batteryImg
                     x: 135
                     y: 34
-                    width: 36
-                    height: 32
-                    anchors.verticalCenterOffset: -40
+                    width: parent.width > parent.height ? parseInt(parent.width / 6.5) : parseInt(parent.height / 6.5)
+                    height: width
+                    anchors.verticalCenterOffset: -parseInt(parent.height / 6)
                     visible: true
                     anchors.horizontalCenterOffset: 0
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -489,14 +517,14 @@ Item {
                     Label {
                         id: batteryValue
                         x: 3
-                        y: 28
                         color: "#bdbebf"
-                        text: "#parseFloat(battery.value).toFixed(2)#"
-                        anchors.verticalCenterOffset: 30
+                        text: parseFloat(battery.value).toFixed(2)
+                        anchors.top: parent.bottom
+                        font.pointSize: secondaryOverview.width > 1080 ? parseInt(secondaryOverview.width / 135) : 8
                         anchors.horizontalCenterOffset: -5
                         anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.verticalCenter: parent.verticalCenter
                         verticalAlignment: Text.AlignVCenter
+                        anchors.topMargin: 10
                         horizontalAlignment: Text.AlignRight
 
                         Label {
@@ -518,13 +546,13 @@ Item {
                     id: engineStatus
                     x: 34
                     y: 99
-                    width: 48
-                    height: 50
+                    width: parent.width > parent.height ? parseInt(parent.width / 4) : parseInt(parent.height / 4)
+                    height: width
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenterOffset: -80
+                    anchors.horizontalCenterOffset: -parseInt(parent.width / 3.2)
                     anchors.horizontalCenter: parent.horizontalCenter
                     source: "engine_warning.png"
-                    anchors.verticalCenterOffset: 60
+                    anchors.verticalCenterOffset: parseInt(parent.height / 4)
                     fillMode: Image.PreserveAspectFit
                 }
 
@@ -532,12 +560,12 @@ Item {
                     id: waterTempStatus
                     x: 94
                     y: 96
-                    width: 64
-                    height: 53
+                    width: parent.width > parent.height ? parseInt(parent.width / 4) : parseInt(parent.height / 4)
+                    height: width
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                     source: "water_temp_normal.png"
-                    anchors.verticalCenterOffset: 60
+                    anchors.verticalCenterOffset: parseInt(parent.height / 4)
                     fillMode: Image.PreserveAspectFit
                 }
 
@@ -545,13 +573,13 @@ Item {
                     id: oilPressureStatus
                     x: 164
                     y: 102
-                    width: 53
-                    height: 47
+                    width: parent.width > parent.height ? parseInt(parent.width / 4) : parseInt(parent.height / 4)
+                    height: width
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenterOffset: 80
+                    anchors.horizontalCenterOffset: parseInt(parent.width / 3.2)
                     anchors.horizontalCenter: parent.horizontalCenter
                     source: "oil_pres_warning.png"
-                    anchors.verticalCenterOffset: 60
+                    anchors.verticalCenterOffset: 5 + parseInt(parent.height / 4)
                     fillMode: Image.PreserveAspectFit
                 }
 
@@ -559,11 +587,11 @@ Item {
                     id: coolantFanState
                     x: 37
                     y: 32
-                    width: 35
-                    height: 35
-                    anchors.verticalCenterOffset: -40
+                    width: parent.width > parent.height ? parseInt(parent.width / 6.5) : parseInt(parent.height / 6.5)
+                    height: width
+                    anchors.verticalCenterOffset: -parseInt(parent.height / 6)
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenterOffset: -80
+                    anchors.horizontalCenterOffset: -parseInt(parent.width / 3.2)
                     anchors.horizontalCenter: parent.horizontalCenter
                     color: Qt.rgba(0 , 255, 0, 0.5)
 
@@ -572,6 +600,7 @@ Item {
                         x: -11
                         color: "#bdbebf"
                         text: qsTr("CLT FAN ")
+                        font.pointSize: secondaryOverview.width > 1080 ? parseInt(secondaryOverview.width / 135) : 8
                         anchors.top: parent.bottom
                         anchors.horizontalCenterOffset: 0
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -585,12 +614,12 @@ Item {
                     id: fuelPumpState
                     x: 217
                     y: 32
-                    width: 35
-                    height: 35
+                    width: parent.width > parent.height ? parseInt(parent.width / 6.5) : parseInt(parent.height / 6.5)
+                    height: width
                     color: "#8000ff00"
-                    anchors.verticalCenterOffset: -40
+                    anchors.verticalCenterOffset: -parseInt(parent.height / 6)
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenterOffset: 80
+                    anchors.horizontalCenterOffset: parseInt(parent.width / 3.2)
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     Label {
@@ -598,6 +627,7 @@ Item {
                         x: 2
                         color: "#bdbebf"
                         text: qsTr("FUEL PUMP")
+                        font.pointSize: secondaryOverview.width > 1080 ? parseInt(secondaryOverview.width / 135) : 8
                         anchors.top: parent.bottom
                         verticalAlignment: Text.AlignVCenter
                         anchors.topMargin: 10
@@ -612,11 +642,11 @@ Item {
 
             Item {
                 id: safety
-                width: 243
+                width: secondaryOverview.width > 1080 ? parseInt(secondaryOverview.width/4.5) : 240
                 anchors.top: parent.top
                 anchors.topMargin: 0
                 anchors.bottom: parent.bottom
-                anchors.horizontalCenterOffset: secondaryOverview.width > 1300 ? (-secondaryOverview.width/3 + width/2) : (-secondaryOverview.width/3)
+                anchors.horizontalCenterOffset: secondaryOverview.width > 1300 ? (-secondaryOverview.width/3 + width/3) : (-secondaryOverview.width/3)
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottomMargin: 0
 
@@ -627,20 +657,20 @@ Item {
                     color: "#bdbebf"
                     text: qsTr("SAFETY")
                     anchors.top: parent.top
-                    anchors.topMargin: 8
+                    anchors.topMargin: 5
                     anchors.horizontalCenter: parent.horizontalCenter
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
-                    font.pixelSize: 15
+                    font.pointSize: secondaryOverview.width > 1080 ? parseInt(secondaryOverview.width / 83) : 13
                 }
 
                 StatusIndicator {
                     id: bspdState
-                    width: 35
-                    height: 35
+                    width: parent.width > parent.height ? parseInt(parent.width / 6.5) : parseInt(parent.height / 6.5)
+                    height: width
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.horizontalCenterOffset: -75
-                    anchors.verticalCenterOffset: -40
+                    anchors.horizontalCenterOffset: -parseInt(parent.width / 3.2)
+                    anchors.verticalCenterOffset: -parseInt(parent.height / 6)
                     anchors.horizontalCenter: parent.horizontalCenter
 
                     Label {
@@ -650,6 +680,7 @@ Item {
                         height: 10
                         color: "#bdbebf"
                         text: qsTr("BSPD")
+                        font.pointSize: secondaryOverview.width > 1080 ? parseInt(secondaryOverview.width / 135) : 8
                         anchors.top: parent.bottom
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
@@ -660,11 +691,11 @@ Item {
 
                 StatusIndicator {
                     id: cockpitState
-                    width: 35
-                    height: 35
+                    width: parent.width > parent.height ? parseInt(parent.width / 6.5) : parseInt(parent.height / 6.5)
+                    height: width
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenterOffset: 60
+                    anchors.verticalCenterOffset: parseInt(parent.height / 4)
                     anchors.horizontalCenterOffset: 0
                     Label {
                         id: cockpitLabel
@@ -673,6 +704,7 @@ Item {
                         height: 13
                         color: "#bdbebf"
                         text: qsTr("Cockpit")
+                        font.pointSize: secondaryOverview.width > 1080 ? parseInt(secondaryOverview.width / 135) : 8
                         anchors.top: parent.bottom
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
@@ -683,12 +715,12 @@ Item {
 
                 StatusIndicator {
                     id: leftState
-                    width: 35
-                    height: 35
+                    width: parent.width > parent.height ? parseInt(parent.width / 6.5) : parseInt(parent.height / 6.5)
+                    height: width
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenterOffset: 60
-                    anchors.horizontalCenterOffset: -75
+                    anchors.verticalCenterOffset: parseInt(parent.height / 4)
+                    anchors.horizontalCenterOffset: -parseInt(parent.width / 3.2)
                     Label {
                         id: leftLabel
                         x: 0
@@ -696,6 +728,7 @@ Item {
                         height: 15
                         color: "#bdbebf"
                         text: qsTr("Left")
+                        font.pointSize: secondaryOverview.width > 1080 ? parseInt(secondaryOverview.width / 135) : 8
                         anchors.top: parent.bottom
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
@@ -706,13 +739,13 @@ Item {
 
                 StatusIndicator {
                     id: rightState
-                    width: 35
-                    height: 35
+                    width: parent.width > parent.height ? parseInt(parent.width / 6.5) : parseInt(parent.height / 6.5)
+                    height: width
                     anchors.verticalCenter: parent.verticalCenter
                     active: false
                     anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenterOffset: 60
-                    anchors.horizontalCenterOffset: 75
+                    anchors.verticalCenterOffset: parseInt(parent.height / 4)
+                    anchors.horizontalCenterOffset: parseInt(parent.width / 3.2)
                     Label {
                         id: rightLabel
                         x: 0
@@ -720,6 +753,7 @@ Item {
                         height: 13
                         color: "#bdbebf"
                         text: qsTr("Right")
+                        font.pointSize: secondaryOverview.width > 1080 ? parseInt(secondaryOverview.width / 135) : 8
                         anchors.top: parent.bottom
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
@@ -730,11 +764,11 @@ Item {
 
                 StatusIndicator {
                     id: botsState
-                    width: 35
-                    height: 35
+                    width: parent.width > parent.height ? parseInt(parent.width / 6.5) : parseInt(parent.height / 6.5)
+                    height: width
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenterOffset: -40
+                    anchors.verticalCenterOffset: -parseInt(parent.height / 6)
                     anchors.horizontalCenterOffset: 0
                     Label {
                         id: botsLabel
@@ -743,6 +777,7 @@ Item {
                         height: 10
                         color: "#bdbebf"
                         text: qsTr("BOTS")
+                        font.pointSize: secondaryOverview.width > 1080 ? parseInt(secondaryOverview.width / 135) : 8
                         anchors.top: parent.bottom
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
@@ -753,12 +788,12 @@ Item {
 
                 StatusIndicator {
                     id: inertiaSwitchState
-                    width: 35
-                    height: 35
+                    width: parent.width > parent.height ? parseInt(parent.width / 6.5) : parseInt(parent.height / 6.5)
+                    height: width
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenterOffset: -40
-                    anchors.horizontalCenterOffset: 75
+                    anchors.verticalCenterOffset: -parseInt(parent.height / 6)
+                    anchors.horizontalCenterOffset: parseInt(parent.width / 3.2)
                     Label {
                         id: inertiaSwitchLabel
                         x: 0
@@ -766,6 +801,7 @@ Item {
                         height: 10
                         color: "#bdbebf"
                         text: qsTr("Inertia")
+                        font.pointSize: secondaryOverview.width > 1080 ? parseInt(secondaryOverview.width / 135) : 8
                         anchors.top: parent.bottom
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
@@ -796,11 +832,11 @@ Item {
             Gauge {
                 id: throttleGauge
                 width: 40
-                height: 200
+                height: mainOverview.width > 1080 ? parseInt(mainOverview.width / 5.4) : 200
                 scale: 1
                 anchors.horizontalCenterOffset: 0
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: 20
+                anchors.bottomMargin: mainOverview.width > 1450 ? -parseInt(mainOverview.width / 120) : 15
                 anchors.horizontalCenter: parent.horizontalCenter
                 rotation: 90
                 tickmarkStepSize: 0
@@ -814,7 +850,7 @@ Item {
                 style: GaugeStyle {
                     valueBar: Rectangle {
                         color: Qt.rgba(0 , 1, 0, 0.5)
-                        implicitWidth: 16
+                        implicitWidth: mainOverview.width > 1080 ? parseInt(mainOverview.width / 67.5) : parseInt(240 / 15)
                     }
                 }
 
@@ -825,13 +861,16 @@ Item {
                     id: throttleLabel
                     x: 0
                     y: 62
+                    width: 50
+                    height: 15
                     color: "#bdbebf"
                     text: qsTr("THROTTLE")
+                    font.pointSize: mainOverview.width > 1080 ? parseInt(mainOverview.width / 125) : 8
                     anchors.verticalCenterOffset: 0
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                     verticalAlignment: Text.AlignVCenter
-                    anchors.rightMargin: -10
+                    anchors.rightMargin: mainOverview.width > 1350 ? -(10 + parseInt(mainOverview.width / 250)) : -10
                     rotation: -90
                     horizontalAlignment: Text.AlignHCenter
                 }
@@ -840,10 +879,10 @@ Item {
             Gauge {
                 id: brakeGauge
                 width: 40
-                height: 170
+                height: mainOverview.width > 1080 ? parseInt(mainOverview.width / 6) : 180
                 anchors.horizontalCenterOffset: 0
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: -10
+                anchors.bottomMargin: mainOverview.width > 1450 ? -parseInt(mainOverview.width / 45) : -5
                 anchors.horizontalCenter: parent.horizontalCenter
                 rotation: 90
                 tickmarkStepSize: 0
@@ -857,7 +896,7 @@ Item {
                 style: GaugeStyle {
                     valueBar: Rectangle {
                         color: Qt.rgba(1 , 0, 0, 0.5)
-                        implicitWidth: 16
+                        implicitWidth: mainOverview.width > 1080 ? parseInt(mainOverview.width / 67.5) : parseInt(240 / 15)
                     }
                 }
                 minimumValue: 0
@@ -865,12 +904,15 @@ Item {
                 maximumValue: 100
                 Label {
                     id: brakeLabel
+                    width: 30
+                    height: 15
                     color: "#bdbebf"
                     text: qsTr("BRAKE")
+                    font.pointSize: mainOverview.width > 1080 ? parseInt(mainOverview.width / 125) : 8
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                     verticalAlignment: Text.AlignVCenter
-                    anchors.rightMargin: 0
+                    anchors.rightMargin: mainOverview.width > 1350 ? -parseInt(mainOverview.width / 250) : 0
                     rotation: -90
                     horizontalAlignment: Text.AlignHCenter
                 }
@@ -937,6 +979,7 @@ Item {
                     id: rpmMultiplier1
                     color: "#bdbebf"
                     text: qsTr("RPM x100")
+                    font.pointSize: mainOverview.width > 1080 ? parseInt(mainOverview.width / 125) : 8
                     anchors.verticalCenterOffset: -40
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -956,7 +999,7 @@ Item {
                 anchors.bottomMargin: 20
                 anchors.margins: 10
                 baselineOffset: 0
-                z: 0
+                font.pointSize: mainOverview.width > 1080 ? parseInt(mainOverview.width / 125) : 8
 
                 Behavior on value {
                     NumberAnimation {
@@ -979,11 +1022,10 @@ Item {
                     height: 16
                     color: "#bdbebf"
                     text: qsTr("OILT")
+                    font.pointSize: mainOverview.width > 1080 ? parseInt(mainOverview.width / 125) : 8
                     anchors.bottomMargin: -15
-                    anchors.leftMargin: 0
                     verticalAlignment: Text.AlignVCenter
                     anchors.right: parent.right
-                    anchors.left: parent.left
                     anchors.bottom: parent.bottom
                     anchors.rightMargin: 0
                     horizontalAlignment: Text.AlignHCenter
@@ -1044,7 +1086,7 @@ Item {
                     tickmarkLabel: Text {
                         color: styleData.value >= 8 ? "#e34c22" : "#e5e5e5"
                         text: styleData.value
-                        font.pixelSize: Math.max(6, outerRadius * 0.1)
+                        font.pixelSize: Math.max(6, outerRadius * 0.13)
                         antialiasing: true
                     }
                     minorTickmark: Rectangle {
@@ -1060,6 +1102,7 @@ Item {
                     id: oilPressureLabel
                     color: "#bdbebf"
                     text: qsTr("OILP")
+                    font.pointSize: mainOverview.width > 1080 ? parseInt(mainOverview.width / 125) : 8
                     anchors.verticalCenterOffset: -30
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
@@ -1077,7 +1120,9 @@ Item {
                 anchors.top: parent.top
                 anchors.bottomMargin: 20
                 anchors.margins: 10
-
+                value: coolant_tmp.value
+                maximumValue: 130
+                font.pointSize: mainOverview.width > 1080 ? parseInt(mainOverview.width / 125) : 8
                 Behavior on value {
                     NumberAnimation {
                         duration: 1000
@@ -1090,19 +1135,17 @@ Item {
                         implicitWidth: 16
                     }
                 }
-                value: coolant_tmp.value
-                maximumValue: 130
+
                 Label {
                     id: cltLabel
                     y: 271
                     height: 16
                     color: "#bdbebf"
                     text: qsTr("CLT")
+                    font.pointSize: mainOverview.width > 1080 ? parseInt(mainOverview.width / 125) : 8
                     anchors.bottomMargin: -15
-                    anchors.leftMargin: 0
                     verticalAlignment: Text.AlignVCenter
                     anchors.right: parent.right
-                    anchors.left: parent.left
                     anchors.bottom: parent.bottom
                     anchors.rightMargin: 0
                     horizontalAlignment: Text.AlignHCenter
@@ -1122,19 +1165,20 @@ Item {
                 anchors.verticalCenterOffset: 0
                 anchors.verticalCenter: rpmGauge.verticalCenter
                 verticalAlignment: Text.AlignVCenter
-                font.pointSize: 12
+                font.pointSize: mainOverview.width > 1080 ? parseInt(mainOverview.width / 60) : 16
                 horizontalAlignment: Text.AlignHCenter
 
                 Label {
-                    id: label1
+                    id: speedLabel
                     x: 8
                     y: 27
                     color: "#bdbebf"
                     text: qsTr("SPEED")
-                    anchors.verticalCenterOffset: -20
+                    anchors.bottom: parent.top
                     anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
                     verticalAlignment: Text.AlignVCenter
+                    anchors.bottomMargin: 0
+                    font.pointSize: mainOverview.width > 1080 ? parseInt(mainOverview.width / 60) : 16
                     horizontalAlignment: Text.AlignHCenter
                 }
             }
@@ -1196,7 +1240,7 @@ Item {
                     tickmarkLabel: Text {
                         color: styleData.value >= 4 ? "#e34c22" : "#e5e5e5"
                         text: styleData.value
-                        font.pixelSize: Math.max(6, outerRadius * 0.1)
+                        font.pixelSize: Math.max(6, outerRadius * 0.13)
                         antialiasing: true
                     }
                     minorTickmark: Rectangle {
@@ -1212,6 +1256,7 @@ Item {
                     id: fuelPressureLabel
                     color: "#bdbebf"
                     text: qsTr("FUELP")
+                    font.pointSize: mainOverview.width > 1080 ? parseInt(mainOverview.width / 125) : 8
                     anchors.verticalCenterOffset: -30
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
@@ -1231,19 +1276,20 @@ Item {
                 anchors.horizontalCenter: oilPressureGauge.horizontalCenter
                 anchors.verticalCenter: rpmGauge.verticalCenter
                 verticalAlignment: Text.AlignVCenter
-                font.pointSize: 12
+                font.pointSize: mainOverview.width > 1080 ? parseInt(mainOverview.width / 60) : 16
                 horizontalAlignment: Text.AlignHCenter
 
                 Label {
-                    id: label
+                    id: gearLabel
                     x: 8
                     y: 9
                     color: "#bdbebf"
                     text: qsTr("GEAR")
-                    anchors.verticalCenterOffset: -20
+                    anchors.bottom: parent.top
                     anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
                     verticalAlignment: Text.AlignVCenter
+                    anchors.bottomMargin: 0
+                    font.pointSize: mainOverview.width > 1080 ? parseInt(mainOverview.width / 60) : 16
                     horizontalAlignment: Text.AlignHCenter
                 }
             }
@@ -1266,6 +1312,7 @@ Item {
                 y: 272
                 width: mainOverview.width
                 height: 1
+                opacity: 0.578
                 color: "#bdbebf"
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
