@@ -69,4 +69,4 @@ htmlhelp_basename = project
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {'https://docs.python.org/': None}
 
-# To build docs run: sphinx-build ./source ../Docs
+# To build docs run: sphinx-build ./source ../docs
