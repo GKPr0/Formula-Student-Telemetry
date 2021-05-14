@@ -1,0 +1,500 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Data Processing &mdash; CanReader 1.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'1.0.1',
+              LANGUAGE:'en',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="GUI" href="gui.html" />
+    <link rel="prev" title="Config" href="config.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/formula-1-text.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Starting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Configuration of Project Environment</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/comSettings.html">Communication Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/canSettings.html">Can Message Settings</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Code Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="communication.html">Communication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Config</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Data Processing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-DataProcessing.DataPoint">DataPoint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-DataProcessing.DataProcessing">DataProcessing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-DataProcessing.DataProcessingManager">DataProcessingManager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-DataProcessing.RawData">RawData</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logger.html">Logger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="canExceptions.html">Can Exceptions</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CanReader</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Data Processing</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/code/dataProcessing.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="data-processing">
+<h1>Data Processing<a class="headerlink" href="#data-processing" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-DataProcessing.DataPoint">
+<span id="datapoint"></span><h2>DataPoint<a class="headerlink" href="#module-DataProcessing.DataPoint" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="DataProcessing.DataPoint.DataPoint">
+<em class="property">class </em><code class="descclassname">DataProcessing.DataPoint.</code><code class="descname">DataPoint</code><span class="sig-paren">(</span><em>id</em>, <em>group_id</em>, <em>overview_id</em>, <em>name</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/DataPoint.html#DataPoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#DataProcessing.DataPoint.DataPoint" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">This Class contains data information like name, value, id, group id and overview id.</p>
+<p>Containing data are being used to update values in graphical interface.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Id of widget in display group</li>
+<li><strong>group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Id of display group in UI</li>
+<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Name of variable</li>
+<li><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Real value.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – <p>– Widget id is not an integer.</p>
+<p>– Overview id is not an integer.</p>
+<p>– Group id is not an integer.</p>
+<p>– Name is not a str.</p>
+<p>– Value is not a float or int.</p>
+</li>
+<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – <p>– Widget id is not in range 1 - 50.</p>
+<p>– Overview id is not in range 1 - 50.</p>
+<p>– Group id is not in range 0 - 20.</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-DataProcessing.DataProcessing">
+<span id="dataprocessing"></span><h2>DataProcessing<a class="headerlink" href="#module-DataProcessing.DataProcessing" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="DataProcessing.DataProcessing.DataProcessing">
+<em class="property">class </em><code class="descclassname">DataProcessing.DataProcessing.</code><code class="descname">DataProcessing</code><span class="sig-paren">(</span><em>can_id</em>, <em>can_data</em>, <em>config_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/DataProcessing.html#DataProcessing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#DataProcessing.DataProcessing.DataProcessing" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">This class takes ID, binary data and list of configs as input.</p>
+<p>Main task is to decode and processed binary data based on given config list.</p>
+<p>Resulting object will contain information like name, value, id and group id.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>can_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Id of CAN message</li>
+<li><strong>can_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – CAN message in binary format</li>
+<li><strong>config_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a><em>[</em><a class="reference internal" href="config.html#Config.CanBus.CanDataConfig.CanDataConfig" title="Config.CanBus.CanDataConfig.CanDataConfig"><em>CanDataConfig</em></a><em>]</em>) – List of data configurations</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – <p>– Can_id is not a hex string.</p>
+<p>– Data is not a binary str.</p>
+</li>
+<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – <p>– Can_id is hex string longer then 8.</p>
+<p>– Can_data does not have length of 8 bytes (64 bits).</p>
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="DataProcessing.DataProcessing.DataProcessing.data_decode">
+<code class="descname">data_decode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/DataProcessing.html#DataProcessing.data_decode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#DataProcessing.DataProcessing.DataProcessing.data_decode" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Checks if there are data configurations for given can id.</p>
+<p>If so call processed data for each configuration
+where conf can id == given can id.</p>
+<p>As result return list of DataPoints,
+containing useful information as widget id, group id, name, value, etc.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">List of DataPoints</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)">list</a>[<a class="reference internal" href="#DataProcessing.DataPoint.DataPoint" title="DataProcessing.DataPoint.DataPoint">DataPoint</a>]</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="DataProcessing.DataProcessing.DataProcessing.data_process">
+<em class="property">static </em><code class="descname">data_process</code><span class="sig-paren">(</span><em>bin_data</em>, <em>data_config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/DataProcessing.html#DataProcessing.data_process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#DataProcessing.DataProcessing.DataProcessing.data_process" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Takes binary data and suitable data configuration as input.</p>
+<p>Based on given configuration processed data -&gt; convert data from binary to real value.</p>
+<dl class="docutils">
+<dt>Conversion is done as follows:</dt>
+<dd><ol class="first last arabic simple">
+<li>Convert bin data to int in right format (Little or Big endian)</li>
+<li>Multiply data by configuration multiplier</li>
+<li>Add configuration offset</li>
+</ol>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>bin_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Can data in binary format.</li>
+<li><strong>data_config</strong> (<a class="reference internal" href="config.html#Config.CanBus.CanDataConfig.CanDataConfig" title="Config.CanBus.CanDataConfig.CanDataConfig"><em>CanDataConfig</em></a>) – Suitable configuration</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Real value processed by given configuration</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)">float</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-DataProcessing.DataProcessingManager">
+<span id="dataprocessingmanager"></span><h2>DataProcessingManager<a class="headerlink" href="#module-DataProcessing.DataProcessingManager" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="DataProcessing.DataProcessingManager.DataProcessingManager">
+<em class="property">class </em><code class="descclassname">DataProcessing.DataProcessingManager.</code><code class="descname">DataProcessingManager</code><span class="sig-paren">(</span><em>received_data</em>, <em>data_config_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/DataProcessingManager.html#DataProcessingManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#DataProcessing.DataProcessingManager.DataProcessingManager" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Inherit:</th><td class="field-body"><p class="first"><code class="xref py py-class docutils literal notranslate"><span class="pre">QRunnable</span></code></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Description:</th><td class="field-body"><p class="first">This class inherit from QRunnable -&gt; can run as separate task.</p>
+<p>Takes care of data processing flow.</p>
+<p>Data to superior task are being passed with Qt Signal.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>received_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.9)"><em>bytearray</em></a>) – Received data in raw format.</li>
+<li><strong>data_config_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a><em>[</em><a class="reference internal" href="config.html#Config.CanBus.CanDataConfig.CanDataConfig" title="Config.CanBus.CanDataConfig.CanDataConfig"><em>CanDataConfig</em></a><em>]</em>) – List of data configurations</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="DataProcessing.DataProcessingManager.DataProcessingManager.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/DataProcessingManager.html#DataProcessingManager.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#DataProcessing.DataProcessingManager.DataProcessingManager.run" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><dl class="first last docutils">
+<dt>Runs data processing sequence:</dt>
+<dd><ol class="first last arabic simple">
+<li>Split received data to ID and Data.</li>
+<li>Decode and processed data based on configuration.</li>
+<li>Send data to superior task with QtSignal</li>
+</ol>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="DataProcessing.DataProcessingManager.DataSignal">
+<em class="property">class </em><code class="descclassname">DataProcessing.DataProcessingManager.</code><code class="descname">DataSignal</code><a class="reference internal" href="../_modules/DataProcessing/DataProcessingManager.html#DataSignal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#DataProcessing.DataProcessingManager.DataSignal" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Inherit:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">QObject</span></code></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Description:</th><td class="field-body">Helper class for <a class="reference internal" href="#DataProcessing.DataProcessingManager.DataProcessingManager" title="DataProcessing.DataProcessingManager.DataProcessingManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataProcessingManager</span></code></a> allowing usage of Qt Signal.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-DataProcessing.RawData">
+<span id="rawdata"></span><h2>RawData<a class="headerlink" href="#module-DataProcessing.RawData" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="DataProcessing.RawData.RawData">
+<em class="property">class </em><code class="descclassname">DataProcessing.RawData.</code><code class="descname">RawData</code><span class="sig-paren">(</span><em>raw_data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/RawData.html#RawData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#DataProcessing.RawData.RawData" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">This class takes raw received data from remote device.</p>
+<p>Used to split raw data into ID and data part.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>raw_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.9)"><em>bytearray</em></a>) – Received data from remote device in its raw format.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – Raw data are not a bytearray.</li>
+<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – Raw data do not have 12 bytes.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="DataProcessing.RawData.RawData.split_data">
+<code class="descname">split_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/RawData.html#RawData.split_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#DataProcessing.RawData.RawData.split_data" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Split ID and data part from raw_data.</p>
+<p>Data will be returned in binary code with fixed length 64 bit.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li>ID (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>)</li>
+<li>Data (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) -&gt; (in python bin is str with leading ‘0b’)</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="gui.html" class="btn btn-neutral float-right" title="GUI" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="config.html" class="btn btn-neutral float-left" title="Config" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright Ondrej Vacek.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

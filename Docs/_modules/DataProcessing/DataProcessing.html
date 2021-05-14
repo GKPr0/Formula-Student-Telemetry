@@ -1,0 +1,330 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>DataProcessing.DataProcessing &mdash; CanReader 1.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.1',
+              LANGUAGE:'en',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html">
+          
+
+          
+            
+            <img src="../../_static/formula-1-text.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Starting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Configuration of Project Environment</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/comSettings.html">Communication Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/canSettings.html">Can Message Settings</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Code Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../code/communication.html">Communication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code/config.html">Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code/dataProcessing.html">Data Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code/gui.html">GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code/logger.html">Logger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code/canExceptions.html">Can Exceptions</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">CanReader</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>DataProcessing.DataProcessing</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for DataProcessing.DataProcessing</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">CanReader.DataProcessing.DataPoint</span> <span class="k">import</span> <span class="n">DataPoint</span>
+<span class="kn">from</span> <span class="nn">CanReader.Exceptions.CanCheck</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<div class="viewcode-block" id="DataProcessing"><a class="viewcode-back" href="../../code/dataProcessing.html#DataProcessing.DataProcessing.DataProcessing">[docs]</a><span class="k">class</span> <span class="nc">DataProcessing</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :Description:</span>
+<span class="sd">            This class takes ID, binary data and list of configs as input.\n</span>
+<span class="sd">            Main task is to decode and processed binary data based on given config list.\n</span>
+<span class="sd">            Resulting object will contain information like name, value, id and group id.</span>
+
+<span class="sd">        :param can_id: Id of CAN message</span>
+<span class="sd">        :type can_id: str</span>
+<span class="sd">        :param can_data: CAN message in binary format</span>
+<span class="sd">        :type can_data: str</span>
+<span class="sd">        :param config_list: List of data configurations</span>
+<span class="sd">        :type config_list: list[CanDataConfig]</span>
+
+<span class="sd">        :raises TypeError:</span>
+<span class="sd">            -- Can_id is not a hex string.\n</span>
+<span class="sd">            -- Data is not a binary str.\n</span>
+<span class="sd">        :raises ValueError:</span>
+<span class="sd">            -- Can_id is hex string longer then 8.\n</span>
+<span class="sd">            -- Can_data does not have length of 8 bytes (64 bits).\n</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">can_id</span><span class="p">,</span> <span class="n">can_data</span><span class="p">,</span> <span class="n">config_list</span><span class="p">):</span>
+        <span class="c1"># Validate ID and Data</span>
+        <span class="n">check_can_id</span><span class="p">(</span><span class="n">can_id</span><span class="p">)</span>
+        <span class="n">check_binary_can_data</span><span class="p">(</span><span class="n">can_data</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__config_list</span> <span class="o">=</span> <span class="n">config_list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__can_id</span> <span class="o">=</span> <span class="n">can_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__can_data</span> <span class="o">=</span> <span class="n">can_data</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">__data_point_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;ID: </span><span class="si">{}</span><span class="s2"> </span><span class="se">\t</span><span class="s2"> Data:</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__can_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">__can_data</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DataProcessing.data_decode"><a class="viewcode-back" href="../../code/dataProcessing.html#DataProcessing.DataProcessing.DataProcessing.data_decode">[docs]</a>    <span class="k">def</span> <span class="nf">data_decode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Checks if there are data configurations for given can id.\n</span>
+<span class="sd">                If so call processed data for each configuration</span>
+<span class="sd">                where conf can id == given can id.\n</span>
+<span class="sd">                As result return list of DataPoints,</span>
+<span class="sd">                containing useful information as widget id, group id, name, value, etc.</span>
+
+<span class="sd">            :return: List of DataPoints</span>
+<span class="sd">            :rtype: list[DataPoint]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">data_config</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__config_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">data_config</span><span class="o">.</span><span class="n">can_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">__can_id</span><span class="p">:</span>
+                <span class="n">widget_id</span> <span class="o">=</span> <span class="n">data_config</span><span class="o">.</span><span class="n">widget_id</span>
+                <span class="n">group_id</span> <span class="o">=</span> <span class="n">data_config</span><span class="o">.</span><span class="n">group_id</span>
+                <span class="n">overview_id</span> <span class="o">=</span> <span class="n">data_config</span><span class="o">.</span><span class="n">overview_id</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">data_config</span><span class="o">.</span><span class="n">name</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_process</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__can_data</span><span class="p">,</span> <span class="n">data_config</span><span class="p">)</span>
+
+                <span class="n">data_point</span> <span class="o">=</span> <span class="n">DataPoint</span><span class="p">(</span><span class="n">widget_id</span><span class="p">,</span> <span class="n">group_id</span><span class="p">,</span> <span class="n">overview_id</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__data_point_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_point</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__data_point_list</span></div>
+
+<div class="viewcode-block" id="DataProcessing.data_process"><a class="viewcode-back" href="../../code/dataProcessing.html#DataProcessing.DataProcessing.DataProcessing.data_process">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">data_process</span><span class="p">(</span><span class="n">bin_data</span><span class="p">,</span> <span class="n">data_config</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Takes binary data and suitable data configuration as input.\n</span>
+<span class="sd">                Based on given configuration processed data -&gt; convert data from binary to real value.\n</span>
+<span class="sd">                Conversion is done as follows:</span>
+<span class="sd">                    1. Convert bin data to int in right format (Little or Big endian)</span>
+<span class="sd">                    2. Multiply data by configuration multiplier</span>
+<span class="sd">                    3. Add configuration offset</span>
+
+<span class="sd">            :param bin_data: Can data in binary format.</span>
+<span class="sd">            :type bin_data: str</span>
+<span class="sd">            :param data_config: Suitable configuration</span>
+<span class="sd">            :type data_config: CanDataConfig</span>
+
+<span class="sd">            :return: Real value processed by given configuration</span>
+<span class="sd">            :rtype: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="n">data_config</span><span class="o">.</span><span class="n">length</span>
+        <span class="n">start_bit</span> <span class="o">=</span> <span class="n">data_config</span><span class="o">.</span><span class="n">start_bit</span>
+        <span class="n">end_bit</span> <span class="o">=</span> <span class="n">start_bit</span> <span class="o">+</span> <span class="n">length</span>
+        <span class="n">multiplier</span> <span class="o">=</span> <span class="n">data_config</span><span class="o">.</span><span class="n">multiplier</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="n">data_config</span><span class="o">.</span><span class="n">offset</span>
+
+        <span class="k">if</span> <span class="n">data_config</span><span class="o">.</span><span class="n">endian</span> <span class="o">==</span> <span class="s2">&quot;L&quot;</span> <span class="ow">and</span> <span class="n">length</span> <span class="o">&gt;</span> <span class="mi">7</span><span class="p">:</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">bin_data</span><span class="p">[</span><span class="n">start_bit</span><span class="p">:</span><span class="n">end_bit</span><span class="p">]</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">tmp</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="mi">8</span><span class="p">:(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">8</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span> <span class="o">/</span> <span class="mi">8</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">data</span><span class="p">)),</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">bin_data</span><span class="p">[</span><span class="n">start_bit</span><span class="p">:</span><span class="n">end_bit</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">((</span><span class="n">data</span> <span class="o">*</span> <span class="n">multiplier</span><span class="p">)</span> <span class="o">+</span> <span class="n">offset</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright Ondrej Vacek.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

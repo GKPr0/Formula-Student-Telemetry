@@ -1,0 +1,313 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>GUI.OverviewTab.OverviewTab &mdash; CanReader 1.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../../',
+              VERSION:'1.0.1',
+              LANGUAGE:'en',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html">
+          
+
+          
+            
+            <img src="../../../_static/formula-1-text.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Starting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installing.html">Configuration of Project Environment</a></li>
+</ul>
+<p class="caption"><span class="caption-text">User Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/comSettings.html">Communication Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/canSettings.html">Can Message Settings</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Code Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/communication.html">Communication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/config.html">Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/dataProcessing.html">Data Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/gui.html">GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/logger.html">Logger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../code/canExceptions.html">Can Exceptions</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">CanReader</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>GUI.OverviewTab.OverviewTab</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for GUI.OverviewTab.OverviewTab</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">PyQt5</span> <span class="k">import</span> <span class="n">QtCore</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="k">import</span> <span class="n">QUrl</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtQuickWidgets</span> <span class="k">import</span> <span class="n">QQuickWidget</span>
+
+<span class="kn">from</span> <span class="nn">CanReader.GUI.OverviewTab.QmlObjectManager</span> <span class="k">import</span> <span class="n">QmlObjectManager</span>
+<span class="kn">from</span> <span class="nn">CanReader.GUI.Tab</span> <span class="k">import</span> <span class="n">Tab</span>
+
+
+<div class="viewcode-block" id="OverviewTab"><a class="viewcode-back" href="../../../code/gui.html#GUI.OverviewTab.OverviewTab.OverviewTab">[docs]</a><span class="k">class</span> <span class="nc">OverviewTab</span><span class="p">(</span><span class="n">QQuickWidget</span><span class="p">,</span> <span class="n">Tab</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :Inherit: :class:`Tab`, :Inherit: :class:`QQuickWidget`</span>
+
+<span class="sd">        :Description:</span>
+<span class="sd">            Overview tab is acting as dashboard in real car.\n</span>
+<span class="sd">            Design and behavior of overview tab is defined in *.qml file.\n</span>
+<span class="sd">            Task of this class is to load qml file and connect all variables to it.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">update_data_signal</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">QQuickWidget</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">group_id</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_variable_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_data_signal</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_data</span><span class="p">)</span>
+
+        <span class="c1"># Create dict of objects representing UI components</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object_dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;rpm_gauge&quot;</span><span class="p">:</span> <span class="n">QmlObjectManager</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+            <span class="s2">&quot;gear&quot;</span><span class="p">:</span> <span class="n">QmlObjectManager</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span> <span class="s2">&quot;int&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;coolant_tmp&quot;</span><span class="p">:</span> <span class="n">QmlObjectManager</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+            <span class="s2">&quot;oil_tmp&quot;</span><span class="p">:</span> <span class="n">QmlObjectManager</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span>
+            <span class="s2">&quot;oil_pressure&quot;</span><span class="p">:</span> <span class="n">QmlObjectManager</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>
+            <span class="s2">&quot;fuel_pressure&quot;</span><span class="p">:</span> <span class="n">QmlObjectManager</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span>
+            <span class="s2">&quot;fl_dumper&quot;</span><span class="p">:</span> <span class="n">QmlObjectManager</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span>
+            <span class="s2">&quot;fr_dumper&quot;</span><span class="p">:</span> <span class="n">QmlObjectManager</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span>
+            <span class="s2">&quot;rl_dumper&quot;</span><span class="p">:</span> <span class="n">QmlObjectManager</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span>
+            <span class="s2">&quot;rr_dumper&quot;</span><span class="p">:</span> <span class="n">QmlObjectManager</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span>
+            <span class="s2">&quot;tps&quot;</span><span class="p">:</span> <span class="n">QmlObjectManager</span><span class="p">(</span><span class="mi">11</span><span class="p">),</span>
+            <span class="s2">&quot;brake&quot;</span><span class="p">:</span> <span class="n">QmlObjectManager</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span>
+            <span class="s2">&quot;battery&quot;</span><span class="p">:</span> <span class="n">QmlObjectManager</span><span class="p">(</span><span class="mi">13</span><span class="p">),</span>
+            <span class="s2">&quot;FPS&quot;</span><span class="p">:</span> <span class="n">QmlObjectManager</span><span class="p">(</span><span class="mi">14</span><span class="p">),</span>
+            <span class="s2">&quot;CFS&quot;</span><span class="p">:</span> <span class="n">QmlObjectManager</span><span class="p">(</span><span class="mi">15</span><span class="p">),</span>
+            <span class="s2">&quot;WBO_sensor&quot;</span><span class="p">:</span> <span class="n">QmlObjectManager</span><span class="p">(</span><span class="mi">16</span><span class="p">),</span>
+            <span class="s2">&quot;FP_sensor&quot;</span> <span class="p">:</span> <span class="n">QmlObjectManager</span><span class="p">(</span><span class="mi">17</span><span class="p">),</span>
+            <span class="s2">&quot;CLT_sensor&quot;</span><span class="p">:</span> <span class="n">QmlObjectManager</span><span class="p">(</span><span class="mi">18</span><span class="p">),</span>
+            <span class="s2">&quot;knock_detect&quot;</span><span class="p">:</span> <span class="n">QmlObjectManager</span><span class="p">(</span><span class="mi">19</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">object_dict</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rootContext</span><span class="p">()</span><span class="o">.</span><span class="n">setContextProperty</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">object_dict</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+
+        <span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setSource</span><span class="p">(</span><span class="n">QUrl</span><span class="o">.</span><span class="n">fromLocalFile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="s2">&quot;OverviewTab2.qml&quot;</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setResizeMode</span><span class="p">(</span><span class="n">QQuickWidget</span><span class="o">.</span><span class="n">SizeRootObjectToView</span><span class="p">)</span>
+
+<div class="viewcode-block" id="OverviewTab.add_config_variable"><a class="viewcode-back" href="../../../code/gui.html#GUI.OverviewTab.OverviewTab.OverviewTab.add_config_variable">[docs]</a>    <span class="k">def</span> <span class="nf">add_config_variable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Add configuration to config list for new variable.</span>
+
+<span class="sd">            :param variable: New variable config.</span>
+<span class="sd">            :type variable: CanDataConfig</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_variable_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">variable</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OverviewTab.update_data"><a class="viewcode-back" href="../../../code/gui.html#GUI.OverviewTab.OverviewTab.OverviewTab.update_data">[docs]</a>    <span class="k">def</span> <span class="nf">update_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_point</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Replace overview variable value.</span>
+
+<span class="sd">            :param data_point: Data point containing new data.</span>
+<span class="sd">            :type data_point: DataPoint</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">object_dict</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">overview_id</span> <span class="o">==</span> <span class="n">data_point</span><span class="o">.</span><span class="n">overview_id</span><span class="p">:</span>
+                <span class="n">obj</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">data_point</span><span class="o">.</span><span class="n">value</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright Ondrej Vacek.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
