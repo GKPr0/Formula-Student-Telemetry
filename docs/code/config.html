@@ -1,10 +1,11 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Config &mdash; CanReader 1.0.1 documentation</title>
@@ -13,6 +14,7 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
 
   
   
@@ -28,21 +30,10 @@
   <![endif]-->
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../',
-              VERSION:'1.0.1',
-              LANGUAGE:'en',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -70,7 +61,7 @@
 
           
             
-            <img src="../_static/formula-1-text.png" class="logo" alt="Logo"/>
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -103,18 +94,18 @@
               
             
             
-              <p class="caption"><span class="caption-text">Starting</span></p>
+              <p><span class="caption-text">Starting</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installing.html">Configuration of Project Environment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">User Manual</span></p>
+<p><span class="caption-text">User Manual</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../user/overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user/comSettings.html">Communication Settings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user/canSettings.html">Can Message Settings</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Code Documentation</span></p>
+<p><span class="caption-text">Code Documentation</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="communication.html">Communication</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Config</a><ul>
@@ -201,250 +192,215 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="config">
+  <section id="config">
 <h1>Config<a class="headerlink" href="#config" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-Config.ConfigHandler">
+<section id="module-Config.ConfigHandler">
 <span id="confighandler"></span><h2>ConfigHandler<a class="headerlink" href="#module-Config.ConfigHandler" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<dl class="py class">
 <dt id="Config.ConfigHandler.ConfigHandler">
-<em class="property">class </em><code class="descclassname">Config.ConfigHandler.</code><code class="descname">ConfigHandler</code><span class="sig-paren">(</span><em>config_file_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/ConfigHandler.html#ConfigHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Config.ConfigHandler.ConfigHandler" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Base class for handling <a href="#id1"><span class="problematic" id="id2">*</span></a>.ini configs.</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>config_file_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Name of config file.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – <p>– Config file name does not end with ‘.ini’.</p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Config.ConfigHandler.</span></code><code class="sig-name descname"><span class="pre">ConfigHandler</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_file_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/ConfigHandler.html#ConfigHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Config.ConfigHandler.ConfigHandler" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><p>Base class for handling <a href="#id1"><span class="problematic" id="id2">*</span></a>.ini configs.</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><p><strong>config_file_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Name of config file.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – <p>– Config file name does not end with ‘.ini’.</p>
 <p>– Config file name contains disallowed symbols.</p>
-</li>
-<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#FileNotFoundError" title="(in Python v3.9)"><strong>FileNotFoundError</strong></a> – Config file with given name does not exist.</li>
+</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#FileNotFoundError" title="(in Python v3.9)"><strong>FileNotFoundError</strong></a> – Config file with given name does not exist.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
-<dl class="staticmethod">
+</dd>
+</dl>
+<dl class="py method">
 <dt id="Config.ConfigHandler.ConfigHandler.check_config_file">
-<em class="property">static </em><code class="descname">check_config_file</code><span class="sig-paren">(</span><em>config_file_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/ConfigHandler.html#ConfigHandler.check_config_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Config.ConfigHandler.ConfigHandler.check_config_file" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Check if config file exists and name ends with ‘.ini’ and contains only allowed symbols A-Z, a-z ,0-9.</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>config_file_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Name of config file.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – <p>– Config file name does not end with ‘.ini’.</p>
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">check_config_file</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_file_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/ConfigHandler.html#ConfigHandler.check_config_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Config.ConfigHandler.ConfigHandler.check_config_file" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><p>Check if config file exists and name ends with ‘.ini’ and contains only allowed symbols A-Z, a-z ,0-9.</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><p><strong>config_file_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Name of config file.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – <p>– Config file name does not end with ‘.ini’.</p>
 <p>– Config file name contains disallowed symbols.</p>
-</li>
-<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#FileNotFoundError" title="(in Python v3.9)"><strong>FileNotFoundError</strong></a> – Config file with given name does not exist.</li>
+</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#FileNotFoundError" title="(in Python v3.9)"><strong>FileNotFoundError</strong></a> – Config file with given name does not exist.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Config.ConfigHandler.ConfigHandler.save_config">
-<code class="descname">save_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/ConfigHandler.html#ConfigHandler.save_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Config.ConfigHandler.ConfigHandler.save_config" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Save updated config.</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname"><span class="pre">save_config</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/ConfigHandler.html#ConfigHandler.save_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Config.ConfigHandler.ConfigHandler.save_config" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><p>Save updated config.</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Config.ConfigHandler.ConfigHandler.setup_config">
-<code class="descname">setup_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/ConfigHandler.html#ConfigHandler.setup_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Config.ConfigHandler.ConfigHandler.setup_config" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Load config and save number of config sections.</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname"><span class="pre">setup_config</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/ConfigHandler.html#ConfigHandler.setup_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Config.ConfigHandler.ConfigHandler.setup_config" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><p>Load config and save number of config sections.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-<div class="section" id="can-config">
+</section>
+<section id="can-config">
 <h2>Can Config<a class="headerlink" href="#can-config" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="module-Config.CanBus.CanConfigHandler">
+<section id="module-Config.CanBus.CanConfigHandler">
 <span id="canconfighandler"></span><h3>CanConfigHandler<a class="headerlink" href="#module-Config.CanBus.CanConfigHandler" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
+<dl class="py class">
 <dt id="Config.CanBus.CanConfigHandler.CanConfigHandler">
-<em class="property">class </em><code class="descclassname">Config.CanBus.CanConfigHandler.</code><code class="descname">CanConfigHandler</code><span class="sig-paren">(</span><em>config_file_name='can_config.ini'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/CanBus/CanConfigHandler.html#CanConfigHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Config.CanBus.CanConfigHandler.CanConfigHandler" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Inherit:</th><td class="field-body"><p class="first"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigHandler</span></code></p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Main task is to handle CAN config file.</p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Config.CanBus.CanConfigHandler.</span></code><code class="sig-name descname"><span class="pre">CanConfigHandler</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'can_config.ini'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/CanBus/CanConfigHandler.html#CanConfigHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Config.CanBus.CanConfigHandler.CanConfigHandler" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list">
+<dt class="field-odd">Inherit</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigHandler</span></code></p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Main task is to handle CAN config file.</p>
 <p>Can load config and return it as a list of CanDataConfig objects,
 or update config sections from given CanDataConfig object.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>config_file_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Name of config file.</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last">For error handling see base class <code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigHandler</span></code>.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<dl class="staticmethod">
+</dd>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config_file_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Name of config file.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>For error handling see base class <code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigHandler</span></code>.</p>
+</dd>
+</dl>
+<dl class="py method">
 <dt id="Config.CanBus.CanConfigHandler.CanConfigHandler.check_config_id">
-<em class="property">static </em><code class="descname">check_config_id</code><span class="sig-paren">(</span><em>config_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/CanBus/CanConfigHandler.html#CanConfigHandler.check_config_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Config.CanBus.CanConfigHandler.CanConfigHandler.check_config_id" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Check type and value of config id that is supposed to be loaded</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – Config id is not an integer.</li>
-<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – Config id is not in range of existing config sections.</li>
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">check_config_id</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/CanBus/CanConfigHandler.html#CanConfigHandler.check_config_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Config.CanBus.CanConfigHandler.CanConfigHandler.check_config_id" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><p>Check type and value of config id that is supposed to be loaded</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – Config id is not an integer.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – Config id is not in range of existing config sections.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="py method">
 <dt id="Config.CanBus.CanConfigHandler.CanConfigHandler.check_update_parameter_type">
-<em class="property">static </em><code class="descname">check_update_parameter_type</code><span class="sig-paren">(</span><em>data_config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/CanBus/CanConfigHandler.html#CanConfigHandler.check_update_parameter_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Config.CanBus.CanConfigHandler.CanConfigHandler.check_update_parameter_type" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Check type of data config</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – Parameter data_config is not a CanDataConfig type.</td>
-</tr>
-</tbody>
-</table>
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">check_update_parameter_type</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/CanBus/CanConfigHandler.html#CanConfigHandler.check_update_parameter_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Config.CanBus.CanConfigHandler.CanConfigHandler.check_update_parameter_type" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><p>Check type of data config</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – Parameter data_config is not a CanDataConfig type.</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Config.CanBus.CanConfigHandler.CanConfigHandler.load_from_config_file">
-<code class="descname">load_from_config_file</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/CanBus/CanConfigHandler.html#CanConfigHandler.load_from_config_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Config.CanBus.CanConfigHandler.CanConfigHandler.load_from_config_file" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Load every section saved in config file to list of DataConfig objects.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">List of DataConfig object.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)">list</a>[<a class="reference internal" href="#Config.CanBus.CanDataConfig.CanDataConfig" title="Config.CanBus.CanDataConfig.CanDataConfig">CanDataConfig</a>]</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-name descname"><span class="pre">load_from_config_file</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/CanBus/CanConfigHandler.html#CanConfigHandler.load_from_config_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Config.CanBus.CanConfigHandler.CanConfigHandler.load_from_config_file" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><p>Load every section saved in config file to list of DataConfig objects.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of DataConfig object.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)">list</a>[<a class="reference internal" href="#Config.CanBus.CanDataConfig.CanDataConfig" title="Config.CanBus.CanDataConfig.CanDataConfig">CanDataConfig</a>]</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Config.CanBus.CanConfigHandler.CanConfigHandler.load_selected_from_config_file">
-<code class="descname">load_selected_from_config_file</code><span class="sig-paren">(</span><em>config_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/CanBus/CanConfigHandler.html#CanConfigHandler.load_selected_from_config_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Config.CanBus.CanConfigHandler.CanConfigHandler.load_selected_from_config_file" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Load selected section from config file.</p>
+<code class="sig-name descname"><span class="pre">load_selected_from_config_file</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/CanBus/CanConfigHandler.html#CanConfigHandler.load_selected_from_config_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Config.CanBus.CanConfigHandler.CanConfigHandler.load_selected_from_config_file" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><p>Load selected section from config file.</p>
 <p>Section is selected by unique id.</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>config_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Id of data config section.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">data in form of object DataConfig for selected configuration</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#Config.CanBus.CanDataConfig.CanDataConfig" title="Config.CanBus.CanDataConfig.CanDataConfig">CanDataConfig</a></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – Config id is not an integer.</li>
-<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – Config id is not in range of existing config sections.</li>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><p><strong>config_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Id of data config section.</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>data in form of object DataConfig for selected configuration</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#Config.CanBus.CanDataConfig.CanDataConfig" title="Config.CanBus.CanDataConfig.CanDataConfig">CanDataConfig</a></p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – Config id is not an integer.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – Config id is not in range of existing config sections.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Config.CanBus.CanConfigHandler.CanConfigHandler.update_section_in_config">
-<code class="descname">update_section_in_config</code><span class="sig-paren">(</span><em>data_config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/CanBus/CanConfigHandler.html#CanConfigHandler.update_section_in_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Config.CanBus.CanConfigHandler.CanConfigHandler.update_section_in_config" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Update config section with new config for already existing section.</p>
+<code class="sig-name descname"><span class="pre">update_section_in_config</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/CanBus/CanConfigHandler.html#CanConfigHandler.update_section_in_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Config.CanBus.CanConfigHandler.CanConfigHandler.update_section_in_config" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><p>Update config section with new config for already existing section.</p>
 <p>Automatically save changes to file.</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data_config</strong> (<a class="reference internal" href="#Config.CanBus.CanDataConfig.CanDataConfig" title="Config.CanBus.CanDataConfig.CanDataConfig"><em>CanDataConfig</em></a>) – Updated section config</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – Parameter data_config is not a CanDataConfig type.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><p><strong>data_config</strong> (<a class="reference internal" href="#Config.CanBus.CanDataConfig.CanDataConfig" title="Config.CanBus.CanDataConfig.CanDataConfig"><em>CanDataConfig</em></a>) – Updated section config</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – Parameter data_config is not a CanDataConfig type.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-Config.CanBus.CanDataConfig">
+</section>
+<section id="module-Config.CanBus.CanDataConfig">
 <span id="candataconfig"></span><h3>CanDataConfig<a class="headerlink" href="#module-Config.CanBus.CanDataConfig" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
+<dl class="py class">
 <dt id="Config.CanBus.CanDataConfig.CanDataConfig">
-<em class="property">class </em><code class="descclassname">Config.CanBus.CanDataConfig.</code><code class="descname">CanDataConfig</code><span class="sig-paren">(</span><em>id</em>, <em>group_id</em>, <em>widget_id</em>, <em>overview_id</em>, <em>name</em>, <em>unit</em>, <em>can_id</em>, <em>start_bit</em>, <em>length</em>, <em>multiplier</em>, <em>offset</em>, <em>endian</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/CanBus/CanDataConfig.html#CanDataConfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Config.CanBus.CanDataConfig.CanDataConfig" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">This class contains data configuration.</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Unique id.</li>
-<li><strong>group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Id of display group in UI.</li>
-<li><strong>group_id</strong> – Id of widget in display group.</li>
-<li><strong>overview_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Id of widget in overview tab.</li>
-<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Name of variable.</li>
-<li><strong>unit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Unit type of value (°C, Km/h, …)</li>
-<li><strong>can_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Id of can message.</li>
-<li><strong>start_bit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Bit on which data starts.</li>
-<li><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Number of bits to read starting from start bit.</li>
-<li><strong>multiplier</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Multiplier for data bounded with start bit and length.</li>
-<li><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Offset of value gained from bounded data with start bit and length.</li>
-<li><strong>endian</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Type of endian (Little, Big).</li>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Config.CanBus.CanDataConfig.</span></code><code class="sig-name descname"><span class="pre">CanDataConfig</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">widget_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overview_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">can_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_bit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">endian</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/CanBus/CanDataConfig.html#CanDataConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Config.CanBus.CanDataConfig.CanDataConfig" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><p>This class contains data configuration.</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Unique id.</p></li>
+<li><p><strong>group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Id of display group in UI.</p></li>
+<li><p><strong>group_id</strong> – Id of widget in display group.</p></li>
+<li><p><strong>overview_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Id of widget in overview tab.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Name of variable.</p></li>
+<li><p><strong>unit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Unit type of value (°C, Km/h, …)</p></li>
+<li><p><strong>can_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Id of can message.</p></li>
+<li><p><strong>start_bit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Bit on which data starts.</p></li>
+<li><p><strong>length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Number of bits to read starting from start bit.</p></li>
+<li><p><strong>multiplier</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Multiplier for data bounded with start bit and length.</p></li>
+<li><p><strong>offset</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Offset of value gained from bounded data with start bit and length.</p></li>
+<li><p><strong>endian</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Type of endian (Little, Big).</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – <p>– Id is not an integer.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – <p>– Id is not an integer.</p>
 <p>– Group id is not an integer.</p>
 <p>– Widget id is not an integer.</p>
 <p>– Overview id is not an integer.</p>
@@ -456,8 +412,8 @@ or update config sections from given CanDataConfig object.</p>
 <p>– Multiplier is not an integer or float.</p>
 <p>– Offset is not an integer or float.</p>
 <p>– Endian is not a str.</p>
-</li>
-<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – <p>– Group id is not in range 0 - 20.</p>
+</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – <p>– Group id is not in range 0 - 20.</p>
 <p>– Widget id is not in range 1 - 50.</p>
 <p>– Overview id is not in range 1 - 50.</p>
 <p>– Can_id is hex string longer then 8.</p>
@@ -465,120 +421,106 @@ or update config sections from given CanDataConfig object.</p>
 <p>– Length is not in range 1 - 63.</p>
 <p>– Multiplier is equal to 0.</p>
 <p>– Endian is not a “L” or “B”.</p>
-</li>
+</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
-</div>
-</div>
-<div class="section" id="serial-config">
+</section>
+</section>
+<section id="serial-config">
 <h2>Serial Config<a class="headerlink" href="#serial-config" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="module-Config.Communication.ComConfigHandler">
+<section id="module-Config.Communication.ComConfigHandler">
 <span id="comconfighandler"></span><h3>ComConfigHandler<a class="headerlink" href="#module-Config.Communication.ComConfigHandler" title="Permalink to this headline">¶</a></h3>
-<dl class="class">
+<dl class="py class">
 <dt id="Config.Communication.ComConfigHandler.ComConfigHandler">
-<em class="property">class </em><code class="descclassname">Config.Communication.ComConfigHandler.</code><code class="descname">ComConfigHandler</code><span class="sig-paren">(</span><em>config_file_name='communication_config.ini'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/Communication/ComConfigHandler.html#ComConfigHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Config.Communication.ComConfigHandler.ComConfigHandler" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Inherit:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigHandler</span></code></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Description:</th><td class="field-body">Main task is to handle Com config file.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>config_file_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Name of config file.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body">For error handling see base class <code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigHandler</span></code>.</td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">Config.Communication.ComConfigHandler.</span></code><code class="sig-name descname"><span class="pre">ComConfigHandler</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_file_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'communication_config.ini'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/Communication/ComConfigHandler.html#ComConfigHandler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Config.Communication.ComConfigHandler.ComConfigHandler" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Inherit</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigHandler</span></code></p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Main task is to handle Com config file.</p>
+</dd>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config_file_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em>, </em><em>optional</em>) – Name of config file.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>For error handling see base class <code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigHandler</span></code>.</p>
+</dd>
+</dl>
+<dl class="py method">
 <dt id="Config.Communication.ComConfigHandler.ComConfigHandler.load_serial_info">
-<code class="descname">load_serial_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/Communication/ComConfigHandler.html#ComConfigHandler.load_serial_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Config.Communication.ComConfigHandler.ComConfigHandler.load_serial_info" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Load current serial com config.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
-<li>Port (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>)</li>
-<li>BaudRate (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>)</li>
+<code class="sig-name descname"><span class="pre">load_serial_info</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/Communication/ComConfigHandler.html#ComConfigHandler.load_serial_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Config.Communication.ComConfigHandler.ComConfigHandler.load_serial_info" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><p>Load current serial com config.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>Port (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>)</p></li>
+<li><p>BaudRate (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>)</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Config.Communication.ComConfigHandler.ComConfigHandler.load_wifi_info">
-<code class="descname">load_wifi_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/Communication/ComConfigHandler.html#ComConfigHandler.load_wifi_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Config.Communication.ComConfigHandler.ComConfigHandler.load_wifi_info" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body">Load current Wi-Fi com config.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
-<li>Ip (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>)</li>
-<li>Port (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>)</li>
+<code class="sig-name descname"><span class="pre">load_wifi_info</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/Communication/ComConfigHandler.html#ComConfigHandler.load_wifi_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Config.Communication.ComConfigHandler.ComConfigHandler.load_wifi_info" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><p>Load current Wi-Fi com config.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>Ip (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>)</p></li>
+<li><p>Port (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>)</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Config.Communication.ComConfigHandler.ComConfigHandler.update_serial_info">
-<code class="descname">update_serial_info</code><span class="sig-paren">(</span><em>port</em>, <em>baud_rate</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/Communication/ComConfigHandler.html#ComConfigHandler.update_serial_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Config.Communication.ComConfigHandler.ComConfigHandler.update_serial_info" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Update serial com config.</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Name of com port.</li>
-<li><strong>baud_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Desired baud rate.</li>
+<code class="sig-name descname"><span class="pre">update_serial_info</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baud_rate</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/Communication/ComConfigHandler.html#ComConfigHandler.update_serial_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Config.Communication.ComConfigHandler.ComConfigHandler.update_serial_info" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><p>Update serial com config.</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Name of com port.</p></li>
+<li><p><strong>baud_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Desired baud rate.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="Config.Communication.ComConfigHandler.ComConfigHandler.update_wifi_info">
-<code class="descname">update_wifi_info</code><span class="sig-paren">(</span><em>ip</em>, <em>port</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/Communication/ComConfigHandler.html#ComConfigHandler.update_wifi_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Config.Communication.ComConfigHandler.ComConfigHandler.update_wifi_info" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Update Wi-Fi com config.</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ip</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Ip address of remote device.</li>
-<li><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Port on which devices will communicate.</li>
+<code class="sig-name descname"><span class="pre">update_wifi_info</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Config/Communication/ComConfigHandler.html#ComConfigHandler.update_wifi_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Config.Communication.ComConfigHandler.ComConfigHandler.update_wifi_info" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><p>Update Wi-Fi com config.</p>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ip</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Ip address of remote device.</p></li>
+<li><p><strong>port</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Port on which devices will communicate.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>

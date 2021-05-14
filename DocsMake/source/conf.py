@@ -61,7 +61,7 @@ html_theme_options = {
 }
 
 html_show_sourcelink = True
-html_logo = '../../CanReader/Images/formula-1-text.png'
+html_logo = '../../CanReader/Images/logo.png'
 html_static_path = ['_static']
 html_css_files = ['css/custom.css']
 htmlhelp_basename = project

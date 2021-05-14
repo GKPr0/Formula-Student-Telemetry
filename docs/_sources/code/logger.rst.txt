@@ -2,6 +2,8 @@
 Logger
 *******
 
+.. _Data logger code:
+
 DataLogger
 ===========
 .. automodule:: Logger.DataLogger

@@ -1,0 +1,510 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>GUI.MainWindow &mdash; CanReader 1.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html">
+          
+
+          
+            
+            <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p><span class="caption-text">Starting</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Configuration of Project Environment</a></li>
+</ul>
+<p><span class="caption-text">User Manual</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/comSettings.html">Communication Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user/canSettings.html">Can Message Settings</a></li>
+</ul>
+<p><span class="caption-text">Code Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../code/communication.html">Communication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code/config.html">Config</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code/dataProcessing.html">Data Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code/gui.html">GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code/logger.html">Logger</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../code/canExceptions.html">Can Exceptions</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">CanReader</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>GUI.MainWindow</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for GUI.MainWindow</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">queue</span> <span class="kn">import</span> <span class="n">Queue</span>
+
+<span class="kn">from</span> <span class="nn">PyQt5</span> <span class="kn">import</span> <span class="n">uic</span><span class="p">,</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtWidgets</span> <span class="kn">import</span> <span class="n">QMainWindow</span><span class="p">,</span> <span class="n">QTabWidget</span><span class="p">,</span> <span class="n">QPushButton</span><span class="p">,</span> <span class="n">QLabel</span><span class="p">,</span> <span class="n">QAction</span><span class="p">,</span> <span class="n">QListWidget</span><span class="p">,</span> <span class="n">QComboBox</span><span class="p">,</span> <span class="n">QToolButton</span>
+
+<span class="kn">from</span> <span class="nn">CanReader.Config.CanBus.CanConfigHandler</span> <span class="kn">import</span> <span class="n">CanConfigHandler</span>
+<span class="kn">from</span> <span class="nn">CanReader.GUI.CommunicationWindow.SerialSettings</span> <span class="kn">import</span> <span class="n">SerialSettingWindow</span>
+<span class="kn">from</span> <span class="nn">CanReader.GUI.CommunicationWindow.WifiSettings</span> <span class="kn">import</span> <span class="n">WifiSettingWindow</span>
+<span class="kn">from</span> <span class="nn">CanReader.GUI.ErrorTab.ErrorTab</span> <span class="kn">import</span> <span class="n">ErrorTab</span>
+<span class="kn">from</span> <span class="nn">CanReader.GUI.GraphTabs.GraphTab</span> <span class="kn">import</span> <span class="n">GraphTab</span>
+<span class="kn">from</span> <span class="nn">CanReader.GUI.OverviewTab.OverviewTab</span> <span class="kn">import</span> <span class="n">OverviewTab</span>
+<span class="kn">from</span> <span class="nn">CanReader.GUI.UpdateWindow.UpdateWindow</span> <span class="kn">import</span> <span class="n">UpdateWindow</span>
+<span class="kn">from</span> <span class="nn">CanReader.GUI.Help.AboutWindow.AboutDialog</span> <span class="kn">import</span> <span class="n">AboutDialog</span>
+<span class="kn">from</span> <span class="nn">CanReader.GUI.Help.Documentation.DocWindow</span> <span class="kn">import</span> <span class="n">DocWindow</span>
+
+
+<div class="viewcode-block" id="MainWindow"><a class="viewcode-back" href="../../code/gui.html#GUI.MainWindow.MainWindow">[docs]</a><span class="k">class</span> <span class="nc">MainWindow</span><span class="p">(</span><span class="n">QMainWindow</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :Inherit: :class:`QMainWindow`</span>
+
+<span class="sd">        :Description:</span>
+<span class="sd">            Main class of graphical part.\n</span>
+<span class="sd">            Holds all other graphical widgets and communicate with them.\n</span>
+<span class="sd">            UI was created in Qt Designer and loaded from &quot;MainWindow.ui&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">update_config_signal</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+    <span class="n">connection_request_signal</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">disconnect_request_signal</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">()</span>
+    <span class="n">update_can_msg_signal</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+    <span class="n">update_connection_status_signal</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">update_data_signal</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">pyqtSignal</span><span class="p">(</span><span class="n">Queue</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">QMainWindow</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">uic</span><span class="o">.</span><span class="n">loadUi</span><span class="p">(</span><span class="s1">&#39;GUI/MainWindow.ui&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># Get dataConfig</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_config_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_data_config_list</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">action_save</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">findChild</span><span class="p">(</span><span class="n">QAction</span><span class="p">,</span> <span class="s2">&quot;action_save&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action_about</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">findChild</span><span class="p">(</span><span class="n">QAction</span><span class="p">,</span> <span class="s2">&quot;action_about&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action_documentation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">findChild</span><span class="p">(</span><span class="n">QAction</span><span class="p">,</span> <span class="s2">&quot;action_documentation&quot;</span><span class="p">)</span>
+
+        <span class="c1"># help connections</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action_about</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">open_about_dialog</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action_documentation</span><span class="o">.</span><span class="n">triggered</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">open_documentation_window</span><span class="p">)</span>
+
+        <span class="c1"># testCommunication interface</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_com</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">findChild</span><span class="p">(</span><span class="n">QPushButton</span><span class="p">,</span> <span class="s2">&quot;button_connect&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_com</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">send_com_request</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_com_setting</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">findChild</span><span class="p">(</span><span class="n">QToolButton</span><span class="p">,</span> <span class="s2">&quot;toolbtn_com_settings&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_com_setting</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">open_com_setting_window</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">com_status</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">findChild</span><span class="p">(</span><span class="n">QLabel</span><span class="p">,</span> <span class="s2">&quot;label_status&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_connection_status_signal</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_connection_status</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cbox_com_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">findChild</span><span class="p">(</span><span class="n">QComboBox</span><span class="p">,</span> <span class="s2">&quot;cbox_com_type&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">can_msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">findChild</span><span class="p">(</span><span class="n">QLabel</span><span class="p">,</span> <span class="s2">&quot;label_can_msg&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_can_msg_signal</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_can_msg</span><span class="p">)</span>
+
+        <span class="c1"># Can variable interface</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_update</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">findChild</span><span class="p">(</span><span class="n">QPushButton</span><span class="p">,</span> <span class="s2">&quot;button_update&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">button_update</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">open_update_window</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">variable_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">findChild</span><span class="p">(</span><span class="n">QListWidget</span><span class="p">,</span> <span class="s2">&quot;variable_list_widget&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variable_list</span><span class="o">.</span><span class="n">itemDoubleClicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">open_update_window</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variable_id_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1">#Create tabs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;overview_tab&quot;</span><span class="p">:</span> <span class="n">OverviewTab</span><span class="p">(),</span>
+            <span class="s2">&quot;intake_tab&quot;</span><span class="p">:</span> <span class="n">GraphTab</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+            <span class="s2">&quot;engine_tab&quot;</span><span class="p">:</span> <span class="n">GraphTab</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+            <span class="s2">&quot;exhaust_tab&quot;</span><span class="p">:</span> <span class="n">GraphTab</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span>
+            <span class="s2">&quot;fluid_tab&quot;</span><span class="p">:</span> <span class="n">GraphTab</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span>
+            <span class="s2">&quot;suspension_tab&quot;</span><span class="p">:</span> <span class="n">GraphTab</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>
+            <span class="s2">&quot;acc_gyro_tab&quot;</span><span class="p">:</span> <span class="n">GraphTab</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span>
+            <span class="s2">&quot;error_tab&quot;</span><span class="p">:</span> <span class="n">ErrorTab</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+         <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab_dict</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+        <span class="c1">#Load tab widget add fill it with tabs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">findChild</span><span class="p">(</span><span class="n">QTabWidget</span><span class="p">,</span> <span class="s2">&quot;tabWidget&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_widget</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab_dict</span><span class="p">[</span><span class="s2">&quot;overview_tab&quot;</span><span class="p">],</span> <span class="s2">&quot;General&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_widget</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab_dict</span><span class="p">[</span><span class="s2">&quot;intake_tab&quot;</span><span class="p">],</span> <span class="s2">&quot;Intake&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_widget</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab_dict</span><span class="p">[</span><span class="s2">&quot;engine_tab&quot;</span><span class="p">],</span> <span class="s2">&quot;Engine&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_widget</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab_dict</span><span class="p">[</span><span class="s2">&quot;exhaust_tab&quot;</span><span class="p">],</span> <span class="s2">&quot;Exhaust&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_widget</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab_dict</span><span class="p">[</span><span class="s2">&quot;fluid_tab&quot;</span><span class="p">],</span> <span class="s2">&quot;Fluid&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_widget</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab_dict</span><span class="p">[</span><span class="s2">&quot;suspension_tab&quot;</span><span class="p">],</span> <span class="s2">&quot;Suspension&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_widget</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab_dict</span><span class="p">[</span><span class="s2">&quot;acc_gyro_tab&quot;</span><span class="p">],</span> <span class="s2">&quot;Acc/Gyro&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_widget</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab_dict</span><span class="p">[</span><span class="s2">&quot;error_tab&quot;</span><span class="p">],</span> <span class="s2">&quot;Error&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_widget</span><span class="o">.</span><span class="n">currentChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">show_variable_list_used_in_current_tab</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_widget</span><span class="o">.</span><span class="n">currentChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">activate_current_tab</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_variable_list_used_in_current_tab</span><span class="p">()</span>
+
+        <span class="c1">#fill tabs with variable configs and generate proper UI</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fill_tabs_with_variables</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">let_tabs_generate_graphics</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_data_signal</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">push_data_to_tabs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<div class="viewcode-block" id="MainWindow.fill_tabs_with_variables"><a class="viewcode-back" href="../../code/gui.html#GUI.MainWindow.MainWindow.fill_tabs_with_variables">[docs]</a>    <span class="k">def</span> <span class="nf">fill_tabs_with_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">             :Description:</span>
+<span class="sd">                This method is called only once when initializing.\n</span>
+<span class="sd">                Append appropriate variable configuration for each tab.\n</span>
+<span class="sd">                Based on given config graphics is generated and values are updated.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">config</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_config_list</span><span class="p">:</span>
+            <span class="n">group_id</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">group_id</span>
+            <span class="n">overview_id</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">overview_id</span>
+            <span class="k">if</span> <span class="n">group_id</span> <span class="o">&lt;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab_widget</span><span class="o">.</span><span class="n">count</span><span class="p">())</span> <span class="ow">and</span> <span class="n">group_id</span> <span class="o">!=</span><span class="mi">0</span><span class="p">:</span>
+                <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab_widget</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="n">group_id</span><span class="p">)</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">add_config_variable</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">overview_id</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab_widget</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">widget</span><span class="o">.</span><span class="n">add_config_variable</span><span class="p">(</span><span class="n">config</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MainWindow.let_tabs_generate_graphics"><a class="viewcode-back" href="../../code/gui.html#GUI.MainWindow.MainWindow.let_tabs_generate_graphics">[docs]</a>    <span class="k">def</span> <span class="nf">let_tabs_generate_graphics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                This method is called only once when initializing.\n</span>
+<span class="sd">                Lets graph tabs and error tabs generate graphics based on configuration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">tab_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab_widget</span><span class="o">.</span><span class="n">count</span><span class="p">()):</span>
+            <span class="n">tab</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab_widget</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="n">tab_index</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span> <span class="o">==</span> <span class="n">GraphTab</span><span class="p">:</span>
+                <span class="n">tab</span><span class="o">.</span><span class="n">create_graphs</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span> <span class="o">==</span> <span class="n">ErrorTab</span><span class="p">:</span>
+                <span class="n">tab</span><span class="o">.</span><span class="n">create_error_widgets</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">tab_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab_widget</span><span class="o">.</span><span class="n">count</span><span class="p">()):</span>
+            <span class="n">tab</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab_widget</span><span class="o">.</span><span class="n">widget</span><span class="p">(</span><span class="n">tab_index</span><span class="p">)</span>
+            <span class="n">tab</span><span class="o">.</span><span class="n">sort_widget_list_by_id</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MainWindow.activate_current_tab"><a class="viewcode-back" href="../../code/gui.html#GUI.MainWindow.MainWindow.activate_current_tab">[docs]</a>    <span class="k">def</span> <span class="nf">activate_current_tab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Activate all widgets in selected graph tab.\n</span>
+<span class="sd">                All other widget from graph tabs will be deactivated.\n</span>
+<span class="sd">                Deactivated widget do not update values in graph, so app runs faster.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">current_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab_widget</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">tab</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span> <span class="o">==</span> <span class="n">GraphTab</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">tab</span> <span class="o">==</span> <span class="n">current_widget</span><span class="p">:</span>
+                    <span class="n">tab</span><span class="o">.</span><span class="n">change_state</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">tab</span><span class="o">.</span><span class="n">change_state</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MainWindow.show_variable_list_used_in_current_tab"><a class="viewcode-back" href="../../code/gui.html#GUI.MainWindow.MainWindow.show_variable_list_used_in_current_tab">[docs]</a>    <span class="k">def</span> <span class="nf">show_variable_list_used_in_current_tab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Update list of shown variable according to selected tab view(engine, suspension ,etc..)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">current_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab_widget</span><span class="o">.</span><span class="n">currentWidget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variable_list</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variable_id_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">config</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_config_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">current_widget</span><span class="o">.</span><span class="n">group_id</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">variable_list</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">variable_id_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">group_id</span> <span class="o">==</span> <span class="n">current_widget</span><span class="o">.</span><span class="n">group_id</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">variable_list</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">variable_id_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MainWindow.push_data_to_tabs"><a class="viewcode-back" href="../../code/gui.html#GUI.MainWindow.MainWindow.push_data_to_tabs">[docs]</a>    <span class="k">def</span> <span class="nf">push_data_to_tabs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queue</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Takes data received from formula and sends them to appropriate widget.</span>
+
+<span class="sd">            :param queue: Queue of list of DataPoints containing decoded and processed data from formula</span>
+<span class="sd">            :type queue: Queue(list[DataPoint])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+            <span class="n">data_list</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+            <span class="k">for</span> <span class="n">data_point</span> <span class="ow">in</span> <span class="n">data_list</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">data_point</span><span class="o">.</span><span class="n">overview_id</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">tab_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">update_data_signal</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">data_point</span><span class="p">)</span>
+
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">data_point</span><span class="o">.</span><span class="n">group_id</span>
+                    <span class="k">if</span> <span class="n">index</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab_list</span><span class="p">):</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span>
+
+                    <span class="bp">self</span><span class="o">.</span><span class="n">tab_list</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">update_data_signal</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">data_point</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> cannot be in group &gt;= </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data_point</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tab_list</span><span class="p">)),</span>
+                                    <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MainWindow.send_com_request"><a class="viewcode-back" href="../../code/gui.html#GUI.MainWindow.MainWindow.send_com_request">[docs]</a>    <span class="k">def</span> <span class="nf">send_com_request</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Send signal to start communication of specific type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">com_status</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;Offline&quot;</span><span class="p">:</span>
+            <span class="n">com_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cbox_com_type</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">connection_request_signal</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">com_type</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">disconnect_request_signal</span><span class="o">.</span><span class="n">emit</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MainWindow.open_com_setting_window"><a class="viewcode-back" href="../../code/gui.html#GUI.MainWindow.MainWindow.open_com_setting_window">[docs]</a>    <span class="k">def</span> <span class="nf">open_com_setting_window</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Opens communication settings window.\n</span>
+<span class="sd">                Based on user selection is opened either Serial config or Wi-Fi config.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">com_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cbox_com_type</span><span class="o">.</span><span class="n">currentText</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">com_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;wifi&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">com_setting_window</span> <span class="o">=</span> <span class="n">WifiSettingWindow</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">com_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;serial&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">com_setting_window</span> <span class="o">=</span> <span class="n">SerialSettingWindow</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MainWindow.update_can_msg"><a class="viewcode-back" href="../../code/gui.html#GUI.MainWindow.MainWindow.update_can_msg">[docs]</a>    <span class="k">def</span> <span class="nf">update_can_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">can_id</span><span class="p">,</span> <span class="n">can_msg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Updates can message label in UI.</span>
+
+<span class="sd">            :param can_id: Last received can id.</span>
+<span class="sd">            :type can_id: str</span>
+
+<span class="sd">            :param can_msg: Last received can message.</span>
+<span class="sd">            :type can_msg: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">can_msg</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot; ID:</span><span class="si">{}</span><span class="s2"> </span><span class="se">\t</span><span class="s2"> Data: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">can_id</span><span class="p">,</span> <span class="n">can_msg</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MainWindow.update_connection_status"><a class="viewcode-back" href="../../code/gui.html#GUI.MainWindow.MainWindow.update_connection_status">[docs]</a>    <span class="k">def</span> <span class="nf">update_connection_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Show current connection status.\n</span>
+<span class="sd">                Based on new status change button between &quot;Connect&quot; and &quot;Disconnect&quot;.\n</span>
+<span class="sd">                Status can be &quot;Offline&quot;, &quot;Connecting&quot;,&quot;Reconnecting&quot;, &quot;Online&quot;</span>
+
+<span class="sd">            :param status: Connection status.</span>
+<span class="sd">            :type status: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">status</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">com_status</span><span class="o">.</span><span class="n">text</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">com_status</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;Offline&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">button_com</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Connect&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">button_com</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;Disconnect&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MainWindow.open_update_window"><a class="viewcode-back" href="../../code/gui.html#GUI.MainWindow.MainWindow.open_update_window">[docs]</a>    <span class="k">def</span> <span class="nf">open_update_window</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                This method is invoked when update button is clicked.\n</span>
+<span class="sd">                Open update window, where user can adjust configuration for selected can variable.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">selected_variable_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">variable_list</span><span class="o">.</span><span class="n">currentRow</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">selected_variable_position</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_win</span> <span class="o">=</span> <span class="n">UpdateWindow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">variable_id_list</span><span class="p">[</span><span class="n">selected_variable_position</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="MainWindow.set_data_config_list"><a class="viewcode-back" href="../../code/gui.html#GUI.MainWindow.MainWindow.set_data_config_list">[docs]</a>    <span class="k">def</span> <span class="nf">set_data_config_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Loads current data configuration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">CanConfigHandler</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_config_list</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">load_from_config_file</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MainWindow.open_about_dialog"><a class="viewcode-back" href="../../code/gui.html#GUI.MainWindow.MainWindow.open_about_dialog">[docs]</a>    <span class="k">def</span> <span class="nf">open_about_dialog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Open about dialog.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">about_dialog</span> <span class="o">=</span> <span class="n">AboutDialog</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MainWindow.open_documentation_window"><a class="viewcode-back" href="../../code/gui.html#GUI.MainWindow.MainWindow.open_documentation_window">[docs]</a>    <span class="k">def</span> <span class="nf">open_documentation_window</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            :Description:</span>
+<span class="sd">                Open documentation window.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">documentation_win</span> <span class="o">=</span> <span class="n">DocWindow</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright Ondrej Vacek.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

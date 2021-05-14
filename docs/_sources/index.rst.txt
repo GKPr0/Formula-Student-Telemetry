@@ -1,3 +1,7 @@
+*************************************
+Content
+*************************************
+
 .. toctree::
     :caption: Starting
     :maxdepth: 2
@@ -12,6 +16,7 @@
     user/overview
     user/comSettings
     user/canSettings
+    user/displayTypes
 
 .. toctree::
     :maxdepth: 3

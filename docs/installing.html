@@ -1,10 +1,11 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Configuration of Project Environment &mdash; CanReader 1.0.1 documentation</title>
@@ -13,6 +14,7 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
 
   
   
@@ -28,21 +30,10 @@
   <![endif]-->
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'1.0.1',
-              LANGUAGE:'en',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -70,7 +61,7 @@
 
           
             
-            <img src="_static/formula-1-text.png" class="logo" alt="Logo"/>
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -103,7 +94,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Starting</span></p>
+              <p><span class="caption-text">Starting</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration of Project Environment</a><ul>
@@ -111,13 +102,13 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">User Manual</span></p>
+<p><span class="caption-text">User Manual</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="user/overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user/comSettings.html">Communication Settings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user/canSettings.html">Can Message Settings</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Code Documentation</span></p>
+<p><span class="caption-text">Code Documentation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="code/communication.html">Communication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="code/config.html">Config</a></li>
@@ -192,42 +183,38 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="configuration-of-project-environment">
+  <section id="configuration-of-project-environment">
 <h1>Configuration of Project Environment<a class="headerlink" href="#configuration-of-project-environment" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="setup-procedure">
+<section id="setup-procedure">
 <h2>Setup procedure<a class="headerlink" href="#setup-procedure" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic">
-<li><dl class="first docutils">
-<dt>Download Pycharm IDE</dt>
-<dd><ul class="first simple">
-<li>Install Pycharm (www.jetbrains.com/pycharm/download/)</li>
+<li><dl>
+<dt>Download Pycharm IDE</dt><dd><ul class="simple">
+<li><p>Install <a class="reference external" href="https://www.jetbrains.com/pycharm/download/">Pycharm</a></p></li>
 </ul>
-<div class="last admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Any other Python IDE would have worked as well, but only the configuration for Pycharm is described in the followed step.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Any other Python IDE would have worked as well, but only the configuration for Pycharm is described in the followed step.</p>
 </div>
 </dd>
 </dl>
 </li>
-<li><dl class="first docutils">
-<dt>Configure project environment</dt>
-<dd><ul class="first last">
-<li><p class="first">Open the CanReader Directory (File -&gt; Open)</p>
-</li>
-<li><dl class="first docutils">
-<dt>Configure the Base Project Interpreter (File -&gt; Settings -&gt; Project Interpreter)</dt>
-<dd><ul class="first last simple">
-<li>Based Project Interpreter: Python 3.8.0</li>
+<li><dl>
+<dt>Configure project environment</dt><dd><ul>
+<li><p>Open the CanReader Directory (File -&gt; Open)</p></li>
+<li><dl class="simple">
+<dt>Configure the Base Project Interpreter (File -&gt; Settings -&gt; Project Interpreter)</dt><dd><ul class="simple">
+<li><p>Based Project Interpreter: Python 3.8.0</p></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><p class="first">Manually install packages to project interpreter (File -&gt; Settings -&gt; Project Interpreter -&gt; plus button on the upper left side of the package table) and apply changes</p>
+<li><p>Manually install packages to project interpreter (File -&gt; Settings -&gt; Project Interpreter -&gt; plus button on the upper left side of the package table) and apply changes</p>
 <blockquote>
 <div><p>OR</p>
 </div></blockquote>
 </li>
-<li><p class="first">Type the command below:</p>
+<li><p>Type the command below:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
@@ -236,14 +223,13 @@
 </dd>
 </dl>
 </li>
-<li><p class="first">Run CanReader.py</p>
-</li>
+<li><p>Run CanReader.py</p></li>
 </ol>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">CanReader_main</span><span class="o">.</span><span class="n">py</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

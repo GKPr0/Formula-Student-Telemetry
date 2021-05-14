@@ -5,7 +5,7 @@ Configuration of Project Environment
 Setup procedure
 ================
 1. Download Pycharm IDE
-      - Install Pycharm (www.jetbrains.com/pycharm/download/)
+      - Install `Pycharm <https://www.jetbrains.com/pycharm/download/>`_
 
       .. note::
         Any other Python IDE would have worked as well, but only the configuration for Pycharm is described in the followed step.

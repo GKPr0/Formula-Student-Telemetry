@@ -1,10 +1,11 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
+  <meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Data Processing &mdash; CanReader 1.0.1 documentation</title>
@@ -13,6 +14,7 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
 
   
   
@@ -28,21 +30,10 @@
   <![endif]-->
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'../',
-              VERSION:'1.0.1',
-              LANGUAGE:'en',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -70,7 +61,7 @@
 
           
             
-            <img src="../_static/formula-1-text.png" class="logo" alt="Logo"/>
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -103,18 +94,19 @@
               
             
             
-              <p class="caption"><span class="caption-text">Starting</span></p>
+              <p><span class="caption-text">Starting</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installing.html">Configuration of Project Environment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">User Manual</span></p>
+<p><span class="caption-text">User Manual</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../user/overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user/comSettings.html">Communication Settings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../user/canSettings.html">Can Message Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user/displayTypes.html">Display Types</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Code Documentation</span></p>
+<p><span class="caption-text">Code Documentation</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="communication.html">Communication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="config.html">Config</a></li>
@@ -195,259 +187,223 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="data-processing">
-<h1>Data Processing<a class="headerlink" href="#data-processing" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-DataProcessing.DataPoint">
+  <section id="data-processing">
+<span id="data-processing-code"></span><h1>Data Processing<a class="headerlink" href="#data-processing" title="Permalink to this headline">¶</a></h1>
+<section id="module-DataProcessing.DataPoint">
 <span id="datapoint"></span><h2>DataPoint<a class="headerlink" href="#module-DataProcessing.DataPoint" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<dl class="py class">
 <dt id="DataProcessing.DataPoint.DataPoint">
-<em class="property">class </em><code class="descclassname">DataProcessing.DataPoint.</code><code class="descname">DataPoint</code><span class="sig-paren">(</span><em>id</em>, <em>group_id</em>, <em>overview_id</em>, <em>name</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/DataPoint.html#DataPoint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#DataProcessing.DataPoint.DataPoint" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">This Class contains data information like name, value, id, group id and overview id.</p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">DataProcessing.DataPoint.</span></code><code class="sig-name descname"><span class="pre">DataPoint</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overview_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/DataPoint.html#DataPoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DataProcessing.DataPoint.DataPoint" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><p>This Class contains data information like name, value, id, group id and overview id.</p>
 <p>Containing data are being used to update values in graphical interface.</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Id of widget in display group</li>
-<li><strong>group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Id of display group in UI</li>
-<li><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Name of variable</li>
-<li><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Real value.</li>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Id of widget in display group</p></li>
+<li><p><strong>group_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Id of display group in UI</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Name of variable</p></li>
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – Real value.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – <p>– Widget id is not an integer.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – <p>– Widget id is not an integer.</p>
 <p>– Overview id is not an integer.</p>
 <p>– Group id is not an integer.</p>
 <p>– Name is not a str.</p>
 <p>– Value is not a float or int.</p>
-</li>
-<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – <p>– Widget id is not in range 1 - 50.</p>
+</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – <p>– Widget id is not in range 1 - 50.</p>
 <p>– Overview id is not in range 1 - 50.</p>
 <p>– Group id is not in range 0 - 20.</p>
-</li>
+</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
-</div>
-<div class="section" id="module-DataProcessing.DataProcessing">
+</section>
+<section id="module-DataProcessing.DataProcessing">
 <span id="dataprocessing"></span><h2>DataProcessing<a class="headerlink" href="#module-DataProcessing.DataProcessing" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<dl class="py class">
 <dt id="DataProcessing.DataProcessing.DataProcessing">
-<em class="property">class </em><code class="descclassname">DataProcessing.DataProcessing.</code><code class="descname">DataProcessing</code><span class="sig-paren">(</span><em>can_id</em>, <em>can_data</em>, <em>config_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/DataProcessing.html#DataProcessing"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#DataProcessing.DataProcessing.DataProcessing" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">This class takes ID, binary data and list of configs as input.</p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">DataProcessing.DataProcessing.</span></code><code class="sig-name descname"><span class="pre">DataProcessing</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">can_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">can_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/DataProcessing.html#DataProcessing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DataProcessing.DataProcessing.DataProcessing" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><p>This class takes ID, binary data and list of configs as input.</p>
 <p>Main task is to decode and processed binary data based on given config list.</p>
 <p>Resulting object will contain information like name, value, id and group id.</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>can_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Id of CAN message</li>
-<li><strong>can_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – CAN message in binary format</li>
-<li><strong>config_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a><em>[</em><a class="reference internal" href="config.html#Config.CanBus.CanDataConfig.CanDataConfig" title="Config.CanBus.CanDataConfig.CanDataConfig"><em>CanDataConfig</em></a><em>]</em>) – List of data configurations</li>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>can_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Id of CAN message</p></li>
+<li><p><strong>can_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – CAN message in binary format</p></li>
+<li><p><strong>config_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a><em>[</em><a class="reference internal" href="config.html#Config.CanBus.CanDataConfig.CanDataConfig" title="Config.CanBus.CanDataConfig.CanDataConfig"><em>CanDataConfig</em></a><em>]</em>) – List of data configurations</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – <p>– Can_id is not a hex string.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – <p>– Can_id is not a hex string.</p>
 <p>– Data is not a binary str.</p>
-</li>
-<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – <p>– Can_id is hex string longer then 8.</p>
+</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – <p>– Can_id is hex string longer then 8.</p>
 <p>– Can_data does not have length of 8 bytes (64 bits).</p>
-</li>
+</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
+</dd>
+</dl>
+<dl class="py method">
 <dt id="DataProcessing.DataProcessing.DataProcessing.data_decode">
-<code class="descname">data_decode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/DataProcessing.html#DataProcessing.data_decode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#DataProcessing.DataProcessing.DataProcessing.data_decode" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Checks if there are data configurations for given can id.</p>
+<code class="sig-name descname"><span class="pre">data_decode</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/DataProcessing.html#DataProcessing.data_decode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DataProcessing.DataProcessing.DataProcessing.data_decode" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><p>Checks if there are data configurations for given can id.</p>
 <p>If so call processed data for each configuration
 where conf can id == given can id.</p>
 <p>As result return list of DataPoints,
 containing useful information as widget id, group id, name, value, etc.</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">List of DataPoints</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)">list</a>[<a class="reference internal" href="#DataProcessing.DataPoint.DataPoint" title="DataProcessing.DataPoint.DataPoint">DataPoint</a>]</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of DataPoints</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)">list</a>[<a class="reference internal" href="#DataProcessing.DataPoint.DataPoint" title="DataProcessing.DataPoint.DataPoint">DataPoint</a>]</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="staticmethod">
+<dl class="py method">
 <dt id="DataProcessing.DataProcessing.DataProcessing.data_process">
-<em class="property">static </em><code class="descname">data_process</code><span class="sig-paren">(</span><em>bin_data</em>, <em>data_config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/DataProcessing.html#DataProcessing.data_process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#DataProcessing.DataProcessing.DataProcessing.data_process" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Takes binary data and suitable data configuration as input.</p>
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">data_process</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bin_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/DataProcessing.html#DataProcessing.data_process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DataProcessing.DataProcessing.DataProcessing.data_process" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><p>Takes binary data and suitable data configuration as input.</p>
 <p>Based on given configuration processed data -&gt; convert data from binary to real value.</p>
-<dl class="docutils">
-<dt>Conversion is done as follows:</dt>
-<dd><ol class="first last arabic simple">
-<li>Convert bin data to int in right format (Little or Big endian)</li>
-<li>Multiply data by configuration multiplier</li>
-<li>Add configuration offset</li>
+<dl class="simple">
+<dt>Conversion is done as follows:</dt><dd><ol class="arabic simple">
+<li><p>Convert bin data to int in right format (Little or Big endian)</p></li>
+<li><p>Multiply data by configuration multiplier</p></li>
+<li><p>Add configuration offset</p></li>
 </ol>
 </dd>
 </dl>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>bin_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Can data in binary format.</li>
-<li><strong>data_config</strong> (<a class="reference internal" href="config.html#Config.CanBus.CanDataConfig.CanDataConfig" title="Config.CanBus.CanDataConfig.CanDataConfig"><em>CanDataConfig</em></a>) – Suitable configuration</li>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>bin_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Can data in binary format.</p></li>
+<li><p><strong>data_config</strong> (<a class="reference internal" href="config.html#Config.CanBus.CanDataConfig.CanDataConfig" title="Config.CanBus.CanDataConfig.CanDataConfig"><em>CanDataConfig</em></a>) – Suitable configuration</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Real value processed by given configuration</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)">float</a></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Real value processed by given configuration</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)">float</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-DataProcessing.DataProcessingManager">
+</section>
+<section id="module-DataProcessing.DataProcessingManager">
 <span id="dataprocessingmanager"></span><h2>DataProcessingManager<a class="headerlink" href="#module-DataProcessing.DataProcessingManager" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<dl class="py class">
 <dt id="DataProcessing.DataProcessingManager.DataProcessingManager">
-<em class="property">class </em><code class="descclassname">DataProcessing.DataProcessingManager.</code><code class="descname">DataProcessingManager</code><span class="sig-paren">(</span><em>received_data</em>, <em>data_config_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/DataProcessingManager.html#DataProcessingManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#DataProcessing.DataProcessingManager.DataProcessingManager" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Inherit:</th><td class="field-body"><p class="first"><code class="xref py py-class docutils literal notranslate"><span class="pre">QRunnable</span></code></p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Description:</th><td class="field-body"><p class="first">This class inherit from QRunnable -&gt; can run as separate task.</p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">DataProcessing.DataProcessingManager.</span></code><code class="sig-name descname"><span class="pre">DataProcessingManager</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">received_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_config_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/DataProcessingManager.html#DataProcessingManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DataProcessing.DataProcessingManager.DataProcessingManager" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list">
+<dt class="field-odd">Inherit</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">QRunnable</span></code></p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>This class inherit from QRunnable -&gt; can run as separate task.</p>
 <p>Takes care of data processing flow.</p>
 <p>Data to superior task are being passed with Qt Signal.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>received_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.9)"><em>bytearray</em></a>) – Received data in raw format.</li>
-<li><strong>data_config_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a><em>[</em><a class="reference internal" href="config.html#Config.CanBus.CanDataConfig.CanDataConfig" title="Config.CanBus.CanDataConfig.CanDataConfig"><em>CanDataConfig</em></a><em>]</em>) – List of data configurations</li>
+</dd>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>received_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.9)"><em>bytearray</em></a>) – Received data in raw format.</p></li>
+<li><p><strong>data_config_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.9)"><em>list</em></a><em>[</em><a class="reference internal" href="config.html#Config.CanBus.CanDataConfig.CanDataConfig" title="Config.CanBus.CanDataConfig.CanDataConfig"><em>CanDataConfig</em></a><em>]</em>) – List of data configurations</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
+</dd>
+</dl>
+<dl class="py method">
 <dt id="DataProcessing.DataProcessingManager.DataProcessingManager.run">
-<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/DataProcessingManager.html#DataProcessingManager.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#DataProcessing.DataProcessingManager.DataProcessingManager.run" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><dl class="first last docutils">
-<dt>Runs data processing sequence:</dt>
-<dd><ol class="first last arabic simple">
-<li>Split received data to ID and Data.</li>
-<li>Decode and processed data based on configuration.</li>
-<li>Send data to superior task with QtSignal</li>
+<code class="sig-name descname"><span class="pre">run</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/DataProcessingManager.html#DataProcessingManager.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DataProcessing.DataProcessingManager.DataProcessingManager.run" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>Runs data processing sequence:</dt><dd><ol class="arabic simple">
+<li><p>Split received data to ID and Data.</p></li>
+<li><p>Decode and processed data based on configuration.</p></li>
+<li><p>Send data to superior task with QtSignal</p></li>
 </ol>
 </dd>
 </dl>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="DataProcessing.DataProcessingManager.DataSignal">
-<em class="property">class </em><code class="descclassname">DataProcessing.DataProcessingManager.</code><code class="descname">DataSignal</code><a class="reference internal" href="../_modules/DataProcessing/DataProcessingManager.html#DataSignal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#DataProcessing.DataProcessingManager.DataSignal" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Inherit:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">QObject</span></code></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Description:</th><td class="field-body">Helper class for <a class="reference internal" href="#DataProcessing.DataProcessingManager.DataProcessingManager" title="DataProcessing.DataProcessingManager.DataProcessingManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataProcessingManager</span></code></a> allowing usage of Qt Signal.</td>
-</tr>
-</tbody>
-</table>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">DataProcessing.DataProcessingManager.</span></code><code class="sig-name descname"><span class="pre">DataSignal</span></code><a class="reference internal" href="../_modules/DataProcessing/DataProcessingManager.html#DataSignal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DataProcessing.DataProcessingManager.DataSignal" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Inherit</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">QObject</span></code></p>
+</dd>
+<dt class="field-even">Description</dt>
+<dd class="field-even"><p>Helper class for <a class="reference internal" href="#DataProcessing.DataProcessingManager.DataProcessingManager" title="DataProcessing.DataProcessingManager.DataProcessingManager"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataProcessingManager</span></code></a> allowing usage of Qt Signal.</p>
+</dd>
+</dl>
 </dd></dl>
 
-</div>
-<div class="section" id="module-DataProcessing.RawData">
+</section>
+<section id="module-DataProcessing.RawData">
 <span id="rawdata"></span><h2>RawData<a class="headerlink" href="#module-DataProcessing.RawData" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<dl class="py class">
 <dt id="DataProcessing.RawData.RawData">
-<em class="property">class </em><code class="descclassname">DataProcessing.RawData.</code><code class="descname">RawData</code><span class="sig-paren">(</span><em>raw_data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/RawData.html#RawData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#DataProcessing.RawData.RawData" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">This class takes raw received data from remote device.</p>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">DataProcessing.RawData.</span></code><code class="sig-name descname"><span class="pre">RawData</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/RawData.html#RawData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DataProcessing.RawData.RawData" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><p>This class takes raw received data from remote device.</p>
 <p>Used to split raw data into ID and data part.</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>raw_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.9)"><em>bytearray</em></a>) – Received data from remote device in its raw format.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – Raw data are not a bytearray.</li>
-<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – Raw data do not have 12 bytes.</li>
+</dd>
+<dt class="field-even">Parameters</dt>
+<dd class="field-even"><p><strong>raw_data</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytearray" title="(in Python v3.9)"><em>bytearray</em></a>) – Received data from remote device in its raw format.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.9)"><strong>TypeError</strong></a> – Raw data are not a bytearray.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.9)"><strong>ValueError</strong></a> – Raw data do not have 12 bytes.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
+</dd>
+</dl>
+<dl class="py method">
 <dt id="DataProcessing.RawData.RawData.split_data">
-<code class="descname">split_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/RawData.html#RawData.split_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#DataProcessing.RawData.RawData.split_data" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Description:</th><td class="field-body"><p class="first">Split ID and data part from raw_data.</p>
+<code class="sig-name descname"><span class="pre">split_data</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/DataProcessing/RawData.html#RawData.split_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#DataProcessing.RawData.RawData.split_data" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list">
+<dt class="field-odd">Description</dt>
+<dd class="field-odd"><p>Split ID and data part from raw_data.</p>
 <p>Data will be returned in binary code with fixed length 64 bit.</p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
-<li>ID (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>)</li>
-<li>Data (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) -&gt; (in python bin is str with leading ‘0b’)</li>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>ID (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>)</p></li>
+<li><p>Data (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>) -&gt; (in python bin is str with leading ‘0b’)</p></li>
 </ul>
 </p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

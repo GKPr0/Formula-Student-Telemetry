@@ -1,8 +1,7 @@
 
 
-
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
   
@@ -14,6 +13,7 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
 
   
   
@@ -29,21 +29,10 @@
   <![endif]-->
   
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'1.0.1',
-              LANGUAGE:'en',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -69,7 +58,7 @@
 
           
             
-            <img src="_static/formula-1-text.png" class="logo" alt="Logo"/>
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -102,18 +91,19 @@
               
             
             
-              <p class="caption"><span class="caption-text">Starting</span></p>
+              <p><span class="caption-text">Starting</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installing.html">Configuration of Project Environment</a></li>
 </ul>
-<p class="caption"><span class="caption-text">User Manual</span></p>
+<p><span class="caption-text">User Manual</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="user/overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user/comSettings.html">Communication Settings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user/canSettings.html">Can Message Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user/displayTypes.html">Display Types</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Code Documentation</span></p>
+<p><span class="caption-text">Code Documentation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="code/communication.html">Communication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="code/config.html">Config</a></li>
@@ -194,6 +184,7 @@
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
  | <a href="#K"><strong>K</strong></a>
@@ -214,6 +205,8 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="code/gui.html#GUI.MainWindow.MainWindow.activate_current_tab">activate_current_tab() (GUI.MainWindow.MainWindow method)</a>
+</li>
       <li><a href="code/gui.html#GUI.OverviewTab.OverviewTab.OverviewTab.add_config_variable">add_config_variable() (GUI.OverviewTab.OverviewTab.OverviewTab method)</a>
 
       <ul>
@@ -306,8 +299,6 @@
         <li><a href="code/gui.html#GUI.CommunicationWindow.WifiSettings.WifiSettingWindow.check_port">(GUI.CommunicationWindow.WifiSettings.WifiSettingWindow static method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="code/canExceptions.html#Exceptions.CanCheck.check_raw_data">check_raw_data() (in module Exceptions.CanCheck)</a>
 </li>
       <li><a href="code/gui.html#GUI.UpdateWindow.WarningWindow.WarningWindow.check_start_bit">check_start_bit() (GUI.UpdateWindow.WarningWindow.WarningWindow method)</a>
@@ -316,6 +307,8 @@
         <li><a href="code/canExceptions.html#Exceptions.CanCheck.check_start_bit">(in module Exceptions.CanCheck)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="code/canExceptions.html#Exceptions.CanCheck.check_unit">check_unit() (in module Exceptions.CanCheck)</a>
 </li>
       <li><a href="code/config.html#Config.CanBus.CanConfigHandler.CanConfigHandler.check_update_parameter_type">check_update_parameter_type() (Config.CanBus.CanConfigHandler.CanConfigHandler static method)</a>
@@ -338,20 +331,55 @@
 </li>
       <li><a href="code/config.html#Config.Communication.ComConfigHandler.ComConfigHandler">ComConfigHandler (class in Config.Communication.ComConfigHandler)</a>
 </li>
-      <li><a href="code/communication.html#module-Communication.ComBase">Communication.ComBase (module)</a>
+      <li>
+    Communication.ComBase
+
+      <ul>
+        <li><a href="code/communication.html#module-Communication.ComBase">module</a>
 </li>
-      <li><a href="code/communication.html#module-Communication.SerialCom">Communication.SerialCom (module)</a>
+      </ul></li>
+      <li>
+    Communication.SerialCom
+
+      <ul>
+        <li><a href="code/communication.html#module-Communication.SerialCom">module</a>
 </li>
-      <li><a href="code/communication.html#module-Communication.SocketClient">Communication.SocketClient (module)</a>
+      </ul></li>
+      <li>
+    Communication.SocketClient
+
+      <ul>
+        <li><a href="code/communication.html#module-Communication.SocketClient">module</a>
 </li>
-      <li><a href="code/config.html#module-Config.CanBus.CanConfigHandler">Config.CanBus.CanConfigHandler (module)</a>
+      </ul></li>
+      <li>
+    Config.CanBus.CanConfigHandler
+
+      <ul>
+        <li><a href="code/config.html#module-Config.CanBus.CanConfigHandler">module</a>
 </li>
-      <li><a href="code/config.html#module-Config.CanBus.CanDataConfig">Config.CanBus.CanDataConfig (module)</a>
+      </ul></li>
+      <li>
+    Config.CanBus.CanDataConfig
+
+      <ul>
+        <li><a href="code/config.html#module-Config.CanBus.CanDataConfig">module</a>
 </li>
-      <li><a href="code/config.html#module-Config.Communication.ComConfigHandler">Config.Communication.ComConfigHandler (module)</a>
+      </ul></li>
+      <li>
+    Config.Communication.ComConfigHandler
+
+      <ul>
+        <li><a href="code/config.html#module-Config.Communication.ComConfigHandler">module</a>
 </li>
-      <li><a href="code/config.html#module-Config.ConfigHandler">Config.ConfigHandler (module)</a>
+      </ul></li>
+      <li>
+    Config.ConfigHandler
+
+      <ul>
+        <li><a href="code/config.html#module-Config.ConfigHandler">module</a>
 </li>
+      </ul></li>
       <li><a href="code/config.html#Config.ConfigHandler.ConfigHandler">ConfigHandler (class in Config.ConfigHandler)</a>
 </li>
       <li><a href="code/communication.html#Communication.ComBase.ComBase.connect_to_device">connect_to_device() (Communication.ComBase.ComBase method)</a>
@@ -384,16 +412,36 @@
 </li>
       <li><a href="code/dataProcessing.html#DataProcessing.DataProcessing.DataProcessing">DataProcessing (class in DataProcessing.DataProcessing)</a>
 </li>
+      <li>
+    DataProcessing.DataPoint
+
+      <ul>
+        <li><a href="code/dataProcessing.html#module-DataProcessing.DataPoint">module</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="code/dataProcessing.html#module-DataProcessing.DataPoint">DataProcessing.DataPoint (module)</a>
+      <li>
+    DataProcessing.DataProcessing
+
+      <ul>
+        <li><a href="code/dataProcessing.html#module-DataProcessing.DataProcessing">module</a>
 </li>
-      <li><a href="code/dataProcessing.html#module-DataProcessing.DataProcessing">DataProcessing.DataProcessing (module)</a>
+      </ul></li>
+      <li>
+    DataProcessing.DataProcessingManager
+
+      <ul>
+        <li><a href="code/dataProcessing.html#module-DataProcessing.DataProcessingManager">module</a>
 </li>
-      <li><a href="code/dataProcessing.html#module-DataProcessing.DataProcessingManager">DataProcessing.DataProcessingManager (module)</a>
+      </ul></li>
+      <li>
+    DataProcessing.RawData
+
+      <ul>
+        <li><a href="code/dataProcessing.html#module-DataProcessing.RawData">module</a>
 </li>
-      <li><a href="code/dataProcessing.html#module-DataProcessing.RawData">DataProcessing.RawData (module)</a>
-</li>
+      </ul></li>
       <li><a href="code/dataProcessing.html#DataProcessing.DataProcessingManager.DataProcessingManager">DataProcessingManager (class in DataProcessing.DataProcessingManager)</a>
 </li>
       <li><a href="code/dataProcessing.html#DataProcessing.DataProcessingManager.DataSignal">DataSignal (class in DataProcessing.DataProcessingManager)</a>
@@ -414,9 +462,22 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="code/gui.html#GUI.ErrorTab.ErrorWidget.ErrorWidget">ErrorWidget (class in GUI.ErrorTab.ErrorWidget)</a>
 </li>
-      <li><a href="code/canExceptions.html#module-Exceptions.CanCheck">Exceptions.CanCheck (module)</a>
+      <li>
+    Exceptions.CanCheck
+
+      <ul>
+        <li><a href="code/canExceptions.html#module-Exceptions.CanCheck">module</a>
 </li>
+      </ul></li>
       <li><a href="code/gui.html#GUI.GraphTabs.Graph.Graph.extend_data_storage">extend_data_storage() (GUI.GraphTabs.Graph.Graph method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="code/gui.html#GUI.MainWindow.MainWindow.fill_tabs_with_variables">fill_tabs_with_variables() (GUI.MainWindow.MainWindow method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -438,30 +499,92 @@
 </li>
       <li><a href="code/gui.html#GUI.GraphTabs.GraphTab.GraphTab">GraphTab (class in GUI.GraphTabs.GraphTab)</a>
 </li>
-      <li><a href="code/gui.html#module-GUI.CommunicationWindow.SerialSettings">GUI.CommunicationWindow.SerialSettings (module)</a>
+      <li>
+    GUI.CommunicationWindow.SerialSettings
+
+      <ul>
+        <li><a href="code/gui.html#module-GUI.CommunicationWindow.SerialSettings">module</a>
 </li>
-      <li><a href="code/gui.html#module-GUI.CommunicationWindow.WifiSettings">GUI.CommunicationWindow.WifiSettings (module)</a>
+      </ul></li>
+      <li>
+    GUI.CommunicationWindow.WifiSettings
+
+      <ul>
+        <li><a href="code/gui.html#module-GUI.CommunicationWindow.WifiSettings">module</a>
 </li>
+      </ul></li>
+      <li>
+    GUI.ErrorTab.ErrorTab
+
+      <ul>
+        <li><a href="code/gui.html#module-GUI.ErrorTab.ErrorTab">module</a>
+</li>
+      </ul></li>
+      <li>
+    GUI.ErrorTab.ErrorWidget
+
+      <ul>
+        <li><a href="code/gui.html#module-GUI.ErrorTab.ErrorWidget">module</a>
+</li>
+      </ul></li>
+      <li>
+    GUI.GraphTabs.Graph
+
+      <ul>
+        <li><a href="code/gui.html#module-GUI.GraphTabs.Graph">module</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="code/gui.html#module-GUI.ErrorTab.ErrorTab">GUI.ErrorTab.ErrorTab (module)</a>
+      <li>
+    GUI.GraphTabs.GraphTab
+
+      <ul>
+        <li><a href="code/gui.html#module-GUI.GraphTabs.GraphTab">module</a>
 </li>
-      <li><a href="code/gui.html#module-GUI.ErrorTab.ErrorWidget">GUI.ErrorTab.ErrorWidget (module)</a>
+      </ul></li>
+      <li>
+    GUI.MainWindow
+
+      <ul>
+        <li><a href="code/gui.html#module-GUI.MainWindow">module</a>
 </li>
-      <li><a href="code/gui.html#module-GUI.GraphTabs.Graph">GUI.GraphTabs.Graph (module)</a>
+      </ul></li>
+      <li>
+    GUI.OverviewTab.OverviewTab
+
+      <ul>
+        <li><a href="code/gui.html#module-GUI.OverviewTab.OverviewTab">module</a>
 </li>
-      <li><a href="code/gui.html#module-GUI.GraphTabs.GraphTab">GUI.GraphTabs.GraphTab (module)</a>
+      </ul></li>
+      <li>
+    GUI.OverviewTab.QmlObjectManager
+
+      <ul>
+        <li><a href="code/gui.html#module-GUI.OverviewTab.QmlObjectManager">module</a>
 </li>
-      <li><a href="code/gui.html#module-GUI.OverviewTab.OverviewTab">GUI.OverviewTab.OverviewTab (module)</a>
+      </ul></li>
+      <li>
+    GUI.Tab
+
+      <ul>
+        <li><a href="code/gui.html#module-GUI.Tab">module</a>
 </li>
-      <li><a href="code/gui.html#module-GUI.OverviewTab.QmlObjectManager">GUI.OverviewTab.QmlObjectManager (module)</a>
+      </ul></li>
+      <li>
+    GUI.UpdateWindow.UpdateWindow
+
+      <ul>
+        <li><a href="code/gui.html#module-GUI.UpdateWindow.UpdateWindow">module</a>
 </li>
-      <li><a href="code/gui.html#module-GUI.Tab">GUI.Tab (module)</a>
+      </ul></li>
+      <li>
+    GUI.UpdateWindow.WarningWindow
+
+      <ul>
+        <li><a href="code/gui.html#module-GUI.UpdateWindow.WarningWindow">module</a>
 </li>
-      <li><a href="code/gui.html#module-GUI.UpdateWindow.UpdateWindow">GUI.UpdateWindow.UpdateWindow (module)</a>
-</li>
-      <li><a href="code/gui.html#module-GUI.UpdateWindow.WarningWindow">GUI.UpdateWindow.WarningWindow (module)</a>
-</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -492,6 +615,8 @@
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="code/gui.html#GUI.MainWindow.MainWindow.let_tabs_generate_graphics">let_tabs_generate_graphics() (GUI.MainWindow.MainWindow method)</a>
+</li>
       <li><a href="code/config.html#Config.CanBus.CanConfigHandler.CanConfigHandler.load_from_config_file">load_from_config_file() (Config.CanBus.CanConfigHandler.CanConfigHandler method)</a>
 </li>
       <li><a href="code/config.html#Config.CanBus.CanConfigHandler.CanConfigHandler.load_selected_from_config_file">load_selected_from_config_file() (Config.CanBus.CanConfigHandler.CanConfigHandler method)</a>
@@ -502,20 +627,89 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="code/config.html#Config.Communication.ComConfigHandler.ComConfigHandler.load_wifi_info">load_wifi_info() (Config.Communication.ComConfigHandler.ComConfigHandler method)</a>
 </li>
-      <li><a href="code/logger.html#module-Logger.DataLogger">Logger.DataLogger (module)</a>
+      <li>
+    Logger.DataLogger
+
+      <ul>
+        <li><a href="code/logger.html#module-Logger.DataLogger">module</a>
 </li>
-      <li><a href="code/logger.html#module-Logger.Logger">Logger.Logger (module)</a>
+      </ul></li>
+      <li>
+    Logger.Logger
+
+      <ul>
+        <li><a href="code/logger.html#module-Logger.Logger">module</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="code/gui.html#GUI.GraphTabs.Graph.Graph.mousePressEvent">mousePressEvent() (GUI.GraphTabs.Graph.Graph method)</a>
+      <li><a href="code/gui.html#GUI.MainWindow.MainWindow">MainWindow (class in GUI.MainWindow)</a>
 </li>
+      <li>
+    module
+
+      <ul>
+        <li><a href="code/communication.html#module-Communication.ComBase">Communication.ComBase</a>
+</li>
+        <li><a href="code/communication.html#module-Communication.SerialCom">Communication.SerialCom</a>
+</li>
+        <li><a href="code/communication.html#module-Communication.SocketClient">Communication.SocketClient</a>
+</li>
+        <li><a href="code/config.html#module-Config.CanBus.CanConfigHandler">Config.CanBus.CanConfigHandler</a>
+</li>
+        <li><a href="code/config.html#module-Config.CanBus.CanDataConfig">Config.CanBus.CanDataConfig</a>
+</li>
+        <li><a href="code/config.html#module-Config.Communication.ComConfigHandler">Config.Communication.ComConfigHandler</a>
+</li>
+        <li><a href="code/config.html#module-Config.ConfigHandler">Config.ConfigHandler</a>
+</li>
+        <li><a href="code/dataProcessing.html#module-DataProcessing.DataPoint">DataProcessing.DataPoint</a>
+</li>
+        <li><a href="code/dataProcessing.html#module-DataProcessing.DataProcessing">DataProcessing.DataProcessing</a>
+</li>
+        <li><a href="code/dataProcessing.html#module-DataProcessing.DataProcessingManager">DataProcessing.DataProcessingManager</a>
+</li>
+        <li><a href="code/dataProcessing.html#module-DataProcessing.RawData">DataProcessing.RawData</a>
+</li>
+        <li><a href="code/canExceptions.html#module-Exceptions.CanCheck">Exceptions.CanCheck</a>
+</li>
+        <li><a href="code/gui.html#module-GUI.CommunicationWindow.SerialSettings">GUI.CommunicationWindow.SerialSettings</a>
+</li>
+        <li><a href="code/gui.html#module-GUI.CommunicationWindow.WifiSettings">GUI.CommunicationWindow.WifiSettings</a>
+</li>
+        <li><a href="code/gui.html#module-GUI.ErrorTab.ErrorTab">GUI.ErrorTab.ErrorTab</a>
+</li>
+        <li><a href="code/gui.html#module-GUI.ErrorTab.ErrorWidget">GUI.ErrorTab.ErrorWidget</a>
+</li>
+        <li><a href="code/gui.html#module-GUI.GraphTabs.Graph">GUI.GraphTabs.Graph</a>
+</li>
+        <li><a href="code/gui.html#module-GUI.GraphTabs.GraphTab">GUI.GraphTabs.GraphTab</a>
+</li>
+        <li><a href="code/gui.html#module-GUI.MainWindow">GUI.MainWindow</a>
+</li>
+        <li><a href="code/gui.html#module-GUI.OverviewTab.OverviewTab">GUI.OverviewTab.OverviewTab</a>
+</li>
+        <li><a href="code/gui.html#module-GUI.OverviewTab.QmlObjectManager">GUI.OverviewTab.QmlObjectManager</a>
+</li>
+        <li><a href="code/gui.html#module-GUI.Tab">GUI.Tab</a>
+</li>
+        <li><a href="code/gui.html#module-GUI.UpdateWindow.UpdateWindow">GUI.UpdateWindow.UpdateWindow</a>
+</li>
+        <li><a href="code/gui.html#module-GUI.UpdateWindow.WarningWindow">GUI.UpdateWindow.WarningWindow</a>
+</li>
+        <li><a href="code/logger.html#module-Logger.DataLogger">Logger.DataLogger</a>
+</li>
+        <li><a href="code/logger.html#module-Logger.Logger">Logger.Logger</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="code/gui.html#GUI.GraphTabs.Graph.Graph.mousePressEvent">mousePressEvent() (GUI.GraphTabs.Graph.Graph method)</a>
+</li>
       <li><a href="code/gui.html#GUI.GraphTabs.Graph.Graph.mouseReleaseEvent">mouseReleaseEvent() (GUI.GraphTabs.Graph.Graph method)</a>
 </li>
   </ul></td>
@@ -532,6 +726,16 @@
 <h2 id="O">O</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="code/gui.html#GUI.MainWindow.MainWindow.open_about_dialog">open_about_dialog() (GUI.MainWindow.MainWindow method)</a>
+</li>
+      <li><a href="code/gui.html#GUI.MainWindow.MainWindow.open_com_setting_window">open_com_setting_window() (GUI.MainWindow.MainWindow method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="code/gui.html#GUI.MainWindow.MainWindow.open_documentation_window">open_documentation_window() (GUI.MainWindow.MainWindow method)</a>
+</li>
+      <li><a href="code/gui.html#GUI.MainWindow.MainWindow.open_update_window">open_update_window() (GUI.MainWindow.MainWindow method)</a>
+</li>
       <li><a href="code/gui.html#GUI.OverviewTab.OverviewTab.OverviewTab">OverviewTab (class in GUI.OverviewTab.OverviewTab)</a>
 </li>
   </ul></td>
@@ -539,6 +743,10 @@
 
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="code/gui.html#GUI.MainWindow.MainWindow.push_data_to_tabs">push_data_to_tabs() (GUI.MainWindow.MainWindow method)</a>
+</li>
+  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="code/logger.html#Logger.DataLogger.DataLogger.push_raw_can">push_raw_can() (Logger.DataLogger.DataLogger method)</a>
 </li>
@@ -582,9 +790,13 @@
         <li><a href="code/gui.html#GUI.CommunicationWindow.WifiSettings.WifiSettingWindow.save_settings">(GUI.CommunicationWindow.WifiSettings.WifiSettingWindow method)</a>
 </li>
       </ul></li>
+      <li><a href="code/gui.html#GUI.MainWindow.MainWindow.send_com_request">send_com_request() (GUI.MainWindow.MainWindow method)</a>
+</li>
       <li><a href="code/communication.html#Communication.SerialCom.SerialCom">SerialCom (class in Communication.SerialCom)</a>
 </li>
       <li><a href="code/gui.html#GUI.CommunicationWindow.SerialSettings.SerialSettingWindow">SerialSettingWindow (class in GUI.CommunicationWindow.SerialSettings)</a>
+</li>
+      <li><a href="code/gui.html#GUI.MainWindow.MainWindow.set_data_config_list">set_data_config_list() (GUI.MainWindow.MainWindow method)</a>
 </li>
       <li><a href="code/logger.html#Logger.DataLogger.DataLogger.set_save_path">set_save_path() (Logger.DataLogger.DataLogger method)</a>
 </li>
@@ -594,10 +806,10 @@
 </li>
       <li><a href="code/gui.html#GUI.UpdateWindow.UpdateWindow.UpdateWindow.setup_dynamic_title">setup_dynamic_title() (GUI.UpdateWindow.UpdateWindow.UpdateWindow method)</a>
 </li>
-      <li><a href="code/gui.html#GUI.GraphTabs.Graph.Graph.setup_graph">setup_graph() (GUI.GraphTabs.Graph.Graph method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="code/gui.html#GUI.GraphTabs.Graph.Graph.setup_graph">setup_graph() (GUI.GraphTabs.Graph.Graph method)</a>
+</li>
       <li><a href="code/logger.html#Logger.Logger.setup_logger">setup_logger() (in module Logger.Logger)</a>
 </li>
       <li><a href="code/gui.html#GUI.CommunicationWindow.SerialSettings.SerialSettingWindow.show_actual_baud_rate">show_actual_baud_rate() (GUI.CommunicationWindow.SerialSettings.SerialSettingWindow method)</a>
@@ -611,6 +823,8 @@
 </li>
       </ul></li>
       <li><a href="code/gui.html#GUI.UpdateWindow.UpdateWindow.UpdateWindow.show_data">show_data() (GUI.UpdateWindow.UpdateWindow.UpdateWindow method)</a>
+</li>
+      <li><a href="code/gui.html#GUI.MainWindow.MainWindow.show_variable_list_used_in_current_tab">show_variable_list_used_in_current_tab() (GUI.MainWindow.MainWindow method)</a>
 </li>
       <li><a href="code/gui.html#GUI.UpdateWindow.WarningWindow.WarningWindow.show_warning_window">show_warning_window() (GUI.UpdateWindow.WarningWindow.WarningWindow static method)</a>
 </li>
@@ -646,7 +860,11 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="code/gui.html#GUI.CommunicationWindow.SerialSettings.SerialSettingWindow.update_available_ports">update_available_ports() (GUI.CommunicationWindow.SerialSettings.SerialSettingWindow method)</a>
 </li>
+      <li><a href="code/gui.html#GUI.MainWindow.MainWindow.update_can_msg">update_can_msg() (GUI.MainWindow.MainWindow method)</a>
+</li>
       <li><a href="code/gui.html#GUI.UpdateWindow.UpdateWindow.UpdateWindow.update_config">update_config() (GUI.UpdateWindow.UpdateWindow.UpdateWindow method)</a>
+</li>
+      <li><a href="code/gui.html#GUI.MainWindow.MainWindow.update_connection_status">update_connection_status() (GUI.MainWindow.MainWindow method)</a>
 </li>
       <li><a href="code/gui.html#GUI.ErrorTab.ErrorWidget.ErrorWidget.update_data">update_data() (GUI.ErrorTab.ErrorWidget.ErrorWidget method)</a>
 

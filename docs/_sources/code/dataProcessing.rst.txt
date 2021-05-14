@@ -1,3 +1,5 @@
+.. _Data processing code:
+
 ****************
 Data Processing
 ****************

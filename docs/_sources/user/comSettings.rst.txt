@@ -1,3 +1,5 @@
+.. _Communication:
+
 ***********************
 Communication Settings
 ***********************
