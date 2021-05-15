@@ -8,7 +8,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Can Message Settings &mdash; CanReader 1.0.1 documentation</title>
+  <title>Can Message Settings &mdash; CAN Reader 1.0.1 documentation</title>
   
 
   
@@ -41,8 +41,8 @@
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Display Types" href="displayTypes.html" />
-    <link rel="prev" title="Communication Settings" href="comSettings.html" /> 
+    <link rel="next" title="Communication Settings" href="comSettings.html" />
+    <link rel="prev" title="Overview" href="overview.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -102,8 +102,8 @@
 <p><span class="caption-text">User Manual</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="comSettings.html">Communication Settings</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Can Message Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="comSettings.html">Communication Settings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="displayTypes.html">Display Types</a></li>
 </ul>
 <p><span class="caption-text">Code Documentation</span></p>
@@ -129,7 +129,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">CanReader</a>
+          <a href="../index.html">CAN Reader</a>
         
       </nav>
 
@@ -183,6 +183,37 @@
             
   <section id="can-message-settings">
 <span id="can-settings"></span><h1>Can Message Settings<a class="headerlink" href="#can-message-settings" title="Permalink to this headline">¶</a></h1>
+<div class="line-block">
+<div class="line">One of the key features of the application is the ability to set the CAN specification for individual variables.</div>
+<div class="line">The list of all variables is in the case of dashboard displayed on the right side of the application.</div>
+<div class="line">In case of other views, only those variables that occur in that view are listed.</div>
+</div>
+<div class="line-block">
+<div class="line">The user can open a settings window for any variable.</div>
+<div class="line">This is done either by selecting one of the variables and then clicking on update button or by double-clicking on any of them.</div>
+</div>
+<img alt="CAN message settings" src="../_images/Can_settings.PNG" />
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line">The user can set the following parameters:</div>
+</div>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><strong>Endian</strong> - The user can choose between a small and a large endian.</p></li>
+<li><p><strong>ID</strong> - CAN message identifier. Must be in HEX format with maximum length of 8 characters.</p></li>
+<li><p><strong>Start bit</strong> - Bit offset in the data part of the CAN message. It must be within range 0 - 63.</p></li>
+<li><p><strong>Length</strong> - Length of the region of interest in bits. Must be within range 1-63.</p></li>
+<li><p><strong>Multiplier</strong> - Multiplier can be any real number.</p></li>
+<li><p><strong>Offset</strong> - Offset can be any real number. Together with the multiplier they are used to get the real value from CAN message.</p></li>
+</ol>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="line-block">
+<div class="line">In the current version of the application user cannot change the name, unit nor position or widget in which the variable will be displayed.</div>
+<div class="line">If necessary, these properties can be modified directly in the configuration application file.</div>
+</div>
+</div>
 </section>
 
 
@@ -191,8 +222,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="displayTypes.html" class="btn btn-neutral float-right" title="Display Types" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="comSettings.html" class="btn btn-neutral float-left" title="Communication Settings" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="comSettings.html" class="btn btn-neutral float-right" title="Communication Settings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="overview.html" class="btn btn-neutral float-left" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

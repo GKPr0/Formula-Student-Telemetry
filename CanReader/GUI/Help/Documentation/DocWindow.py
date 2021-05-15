@@ -19,7 +19,7 @@ class DocWindow(QMainWindow):
         self.setWindowTitle("Documentation")
         self.setWindowIcon(QIcon(os.path.join(sys.path[0], "Images/question_black.svg")))
 
-        doc_path = os.path.abspath(os.path.join(sys.path[0], "../Docs/build/html/index.html"))
+        doc_path = os.path.abspath(os.path.join(sys.path[0], "../Docs/index.html"))
 
         self.browser = QWebEngineView()
         self.browser.setUrl(QUrl.fromLocalFile(doc_path))

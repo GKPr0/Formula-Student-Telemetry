@@ -31,12 +31,10 @@ GUI Overview
 ================
 
 .. image:: ../img/Overview_anotation.png
-    :width: 800
     :alt:   CAN Reader Overview
 
 |
-
-The application consists following 11 parts:
+| The application consists following 11 parts:
 
 1. :ref:`Dashboard <Dashboard>`.
 

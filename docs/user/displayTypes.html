@@ -8,7 +8,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Display Types &mdash; CanReader 1.0.1 documentation</title>
+  <title>Display Types &mdash; CAN Reader 1.0.1 documentation</title>
   
 
   
@@ -42,7 +42,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Communication" href="../code/communication.html" />
-    <link rel="prev" title="Can Message Settings" href="canSettings.html" /> 
+    <link rel="prev" title="Communication Settings" href="comSettings.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -102,8 +102,8 @@
 <p><span class="caption-text">User Manual</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="comSettings.html">Communication Settings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="canSettings.html">Can Message Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="comSettings.html">Communication Settings</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Display Types</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#dashboard">Dashboard</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#graph-tab">Graph tab</a></li>
@@ -134,7 +134,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">CanReader</a>
+          <a href="../index.html">CAN Reader</a>
         
       </nav>
 
@@ -190,12 +190,57 @@
 <h1>Display Types<a class="headerlink" href="#display-types" title="Permalink to this headline">¶</a></h1>
 <section id="dashboard">
 <span id="id1"></span><h2>Dashboard<a class="headerlink" href="#dashboard" title="Permalink to this headline">¶</a></h2>
+<img alt="Dashboard" src="../_images/overview_tab_full.PNG" />
 </section>
 <section id="graph-tab">
 <span id="id2"></span><h2>Graph tab<a class="headerlink" href="#graph-tab" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">The second way of displaying data is to display individual variables in charts.</div>
+<div class="line">Each tab forms a group of charts that are logically related.</div>
+<div class="line">For example, the “Engine” tab displays engine-related data, such as RPM, valve opening, fuel injection time, etc.</div>
+</div>
+<img alt="Graph tab" src="../_images/graph_tab_full.PNG" />
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line">Each graph can be controlled separately.</div>
+<div class="line">The <strong>left mouse button</strong> is used to move arbitrarily in the graph.</div>
+<div class="line">The <strong>mouse wheel</strong> controls zooming in or out.</div>
+<div class="line">The <strong>right mouse button</strong> opens option menu.</div>
+</div>
+<div class="line-block">
+<div class="line">In the menu user can set axes range, grid display, drawing method, etc.</div>
+<div class="line">There is also the option to export data in .csv format.</div>
+<div class="line">Alternatively, the user can save the whole graph, or just a part of it, as an image in a standard format such as .png, .jpg or vector .svg.</div>
+</div>
+<div class="line-block">
+<div class="line">In the case user want to go back to the latest data,  he can do so by pressing the <strong>“c”</strong>  or the <strong>“f”</strong> key.</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<div class="line-block">
+<div class="line">At this version the user cannot add, move or remove individual charts directly in the application.</div>
+<div class="line">In case he would like to set what, where and in what order will be displayed, then he can edit the configuration file that contains all this information.</div>
+</div>
+</div>
 </section>
 <section id="error-tab">
 <span id="id3"></span><h2>Error tab<a class="headerlink" href="#error-tab" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">The last type of display is a panel showing errors of individual formula components.</div>
+<div class="line">All indicators in this panel are connected to the binary variables.</div>
+</div>
+<img alt="Error tab" src="../_images/Error_tab_full.PNG" />
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line">The indicator can take one of the following three states:</div>
+</div>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><strong>OK</strong> - This state is indicated by a green indicator and means that everything is OK.</p></li>
+<li><p><strong>Error</strong> - This state is indicated by a red indicator and indicates an occurrence of error. In addition to changing the indicator, the time when the error occurred and the restart button are displayed. The error does not disappear until the user manually restarts it. This ensures that the user is aware of the error, even if he is not currently on the error bar.</p></li>
+<li><p><strong>No data</strong> - This state is indicated by a yellow indicator and means that the current state has not been received since startup, or last restart.</p></li>
+</ol>
+</div></blockquote>
 </section>
 </section>
 
@@ -206,7 +251,7 @@
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="../code/communication.html" class="btn btn-neutral float-right" title="Communication" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="canSettings.html" class="btn btn-neutral float-left" title="Can Message Settings" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="comSettings.html" class="btn btn-neutral float-left" title="Communication Settings" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

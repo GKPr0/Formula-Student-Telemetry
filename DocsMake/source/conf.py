@@ -23,7 +23,7 @@ sys.setrecursionlimit(1000)
 
 # -- Project information -----------------------------------------------------
 
-project = 'CanReader'
+project = 'CAN Reader'
 copyright = '2021, Ondrej Vacek'
 author = u'Ondrej Vacek'
 copyright = author

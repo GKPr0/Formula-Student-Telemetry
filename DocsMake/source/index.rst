@@ -14,8 +14,8 @@ Content
     :maxdepth: 2
 
     user/overview
-    user/comSettings
     user/canSettings
+    user/comSettings
     user/displayTypes
 
 .. toctree::

@@ -8,7 +8,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Communication Settings &mdash; CanReader 1.0.1 documentation</title>
+  <title>Communication Settings &mdash; CAN Reader 1.0.1 documentation</title>
   
 
   
@@ -41,8 +41,8 @@
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Can Message Settings" href="canSettings.html" />
-    <link rel="prev" title="Overview" href="overview.html" /> 
+    <link rel="next" title="Display Types" href="displayTypes.html" />
+    <link rel="prev" title="Can Message Settings" href="canSettings.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -102,12 +102,12 @@
 <p><span class="caption-text">User Manual</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="canSettings.html">Can Message Settings</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Communication Settings</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#wi-fi-communication">Wi-Fi Communication</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#serial-communication">Serial Communication</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="canSettings.html">Can Message Settings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="displayTypes.html">Display Types</a></li>
 </ul>
 <p><span class="caption-text">Code Documentation</span></p>
@@ -133,7 +133,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">CanReader</a>
+          <a href="../index.html">CAN Reader</a>
         
       </nav>
 
@@ -189,9 +189,31 @@
 <span id="communication"></span><h1>Communication Settings<a class="headerlink" href="#communication-settings" title="Permalink to this headline">¶</a></h1>
 <section id="wi-fi-communication">
 <h2>Wi-Fi Communication<a class="headerlink" href="#wi-fi-communication" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">The first way a user can communicate with a formula is through Wi-Fi directly.</div>
+<div class="line">To be able to use this type of communication you must be connected to the same network as formula.</div>
+<div class="line"><br /></div>
+<div class="line">The user must set the IP address so it corresponds with the setting of the device in the formula.</div>
+<div class="line">The user must also set the port on which to open communication channel. This setting must be also identical to that in the formula.</div>
+</div>
+<img alt="Wi-Fi communication settings" src="../_images/WifiSettings.PNG" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 </section>
 <section id="serial-communication">
 <h2>Serial Communication<a class="headerlink" href="#serial-communication" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">The second way a user can communicate with a formula is through serial communication.</div>
+<div class="line">In this type of communication the application receives data from a physically connected interface that communicates directly with formula. Meaning user need aditional hardware to used this type of communication.</div>
+<div class="line"><br /></div>
+<div class="line">The user must set the COM port to which is additional device connected.</div>
+<div class="line">The user must also set the baud speed on which the app will communicate with external device. This setting must be identical to that in the device.</div>
+</div>
+<img alt="Serial communication settings" src="../_images/SerialSettings.PNG" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 </section>
 </section>
 
@@ -201,8 +223,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="canSettings.html" class="btn btn-neutral float-right" title="Can Message Settings" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="overview.html" class="btn btn-neutral float-left" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="displayTypes.html" class="btn btn-neutral float-right" title="Display Types" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="canSettings.html" class="btn btn-neutral float-left" title="Can Message Settings" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
