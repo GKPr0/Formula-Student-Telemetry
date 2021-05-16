@@ -19,7 +19,7 @@
 ## CAN Reader
 * CAN Reader is application used to processed and visualize received CAN bus data.
 * Source code can be found [here](https://github.com/GKPr0/Telemetry/tree/master/CanReader).
-* For more info see [documentation](https://gkpr0.github.io/Telemetry/).
+* For more info see [documentation](https://gkpr0.github.io/Formula-Student-Telemetry/about.html).
 
 ![CAN Reader preview]( DocsMake/source/img/overview_tab_full.PNG)
 
