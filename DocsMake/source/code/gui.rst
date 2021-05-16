@@ -58,6 +58,18 @@ Graph
 .. automodule:: GUI.GraphTabs.Graph
    :members:
 
+Help
+================
+
+About window
+--------------
+.. automodule:: GUI.Help.AboutWindow.AboutDialog
+   :members:
+
+Documentation
+--------------
+.. automodule:: GUI.Help.Documentation.DocWindow
+   :members:
 
 Overview Tab
 ================
