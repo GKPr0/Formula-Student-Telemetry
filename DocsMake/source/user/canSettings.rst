@@ -31,4 +31,4 @@ Can Message Settings
 
 .. note::
     | In the current version of the application user cannot change the name, unit nor position or widget in which the variable will be displayed.
-    | If necessary, these properties can be modified directly in the configuration application file.
+    | If necessary, these properties can be modified directly in the configuration file.
