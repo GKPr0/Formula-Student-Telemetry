@@ -15,8 +15,8 @@ About
     - The advantage of this is the higher transmission speed and simplicity of connection.
     - The disadvantage of this is the relatively limited range.
 2. Formula -> ESP32 -> User
-    - In this variant, the formula communicates with an intermediate member (ESP32-based device), which transmits the received data to the application via a serial line.
-    - The advantage of this is a sharp increase in range (theoretically over 1 km).
+    - In this variant, the formula communicates with an intermediate member (ESP32-based device), which transmits the received data to the application via a serial port.
+    - The advantage of this is a huge increase in range (theoretically over 1 km).
     - The disadvantage of this method is the limited transmission speed (250 kb/s) and the need for additional equipment.
 
 .. image:: img/Telemetrie.png
