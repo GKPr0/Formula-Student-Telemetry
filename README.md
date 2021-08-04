@@ -1,4 +1,4 @@
-## Telemetry
+## Telemetry [![CodeFactor](https://www.codefactor.io/repository/github/gkpr0/formula-student-telemetry/badge)](https://www.codefactor.io/repository/github/gkpr0/formula-student-telemetry)
 
 * Designed for formula student team [FS TUL Racing](https://www.fstulracing.cz/).
 * The system was developed as part of a bachelor's thesis.
