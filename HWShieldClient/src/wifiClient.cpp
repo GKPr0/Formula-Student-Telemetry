@@ -7,58 +7,57 @@ WiFiClient client;
 
 void wifiSetupOrReconnect()
 {
-	if(WiFi.status() != WL_CONNECTED)
-  { 
-    //Make Sure Everything Is Reset
-    client.stop();
-    WiFi.disconnect();
+	if(WiFi.status() == WL_CONNECTED)
+     return;
+  
+  //Make Sure Everything Is Reset
+  client.stop();
+  WiFi.disconnect();
 
-    delay(50);
-    // Set wifi mode as station
-    DEBUG_PRINTLN("Setting Wifi mode to station (STA)");
-    WiFi.mode(WIFI_STA);
+  delay(50);
+  // Set wifi mode as station
+  DEBUG_PRINTLN("Setting Wifi mode to station (STA)");
+  WiFi.mode(WIFI_STA);
 
-    // Set communication protocol
-    if(esp_wifi_set_protocol(WIFI_IF_STA, wifi_protocol) != ESP_OK)
-    {
-      DEBUG_PRINTLN("Setting WiFi protocol failed");
-      ESP.restart();
-    }
-
-		delay(50);
-    // Set tx max power
-    if(esp_wifi_set_max_tx_power(wifi_tx_power) != ESP_OK)
-    {
-      DEBUG_PRINTLN("Setting max tx power failed");
-      ESP.restart();
-    }
-
-		delay(50);
-    // Connect to server
-    if(WiFi.begin(ssid, password) ==  WL_CONNECT_FAILED)
-    {
-      DEBUG_PRINTLN("Connecting to server failed");
-       ESP.restart();
-    }
-
-    delay(50);
-
-    // Check if client is connected
-    uint8_t fail_count = 0;
-    while (WiFi.status() != WL_CONNECTED)
-    {
-      if(++fail_count > 8)
-      {
-        DEBUG_PRINTLN("Failed to get connection info");
-        ESP.restart();
-      }
-      delay(100);
-    }
-
-    printWiFiInfo();
-    connectToFormula();
-
+  // Set communication protocol
+  if(esp_wifi_set_protocol(WIFI_IF_STA, wifi_protocol) != ESP_OK)
+  {
+    DEBUG_PRINTLN("Setting WiFi protocol failed");
+    ESP.restart();
   }
+
+  delay(50);
+  // Set tx max power
+  if(esp_wifi_set_max_tx_power(wifi_tx_power) != ESP_OK)
+  {
+    DEBUG_PRINTLN("Setting max tx power failed");
+    ESP.restart();
+  }
+
+  delay(50);
+  // Connect to server
+  if(WiFi.begin(ssid, password) ==  WL_CONNECT_FAILED)
+  {
+    DEBUG_PRINTLN("Connecting to server failed");
+    ESP.restart();
+  }
+
+  delay(50);
+
+  // Check if client is connected
+  uint8_t fail_count = 0;
+  while (WiFi.status() != WL_CONNECTED)
+  {
+    if(++fail_count > 8)
+    {
+      DEBUG_PRINTLN("Failed to get connection info");
+      ESP.restart();
+    }
+    delay(100);
+  }
+
+  printWiFiInfo();
+  connectToFormula();
 }
 
 void wifiHandler(void *parameter)
@@ -90,18 +89,4 @@ void connectToFormula()
   DEBUG_PRINTLN("Connection established");
 	client.flush();
 	delay(50);
-}
-
-void printWiFiInfo()
-{
-	int8_t power = 0;
-  esp_wifi_get_max_tx_power(&power);
-  DEBUG_PRINT("Max tx power set to: ");
-  DEBUG_PRINT((float)(power/4));
-  DEBUG_PRINTLN("dBm");
-
-  uint8_t protocol;
-  esp_wifi_get_protocol(WIFI_IF_AP, &protocol);
-  DEBUG_PRINT("Protocol set to:");
-  DEBUG_PRINTLN(protocol);
 }

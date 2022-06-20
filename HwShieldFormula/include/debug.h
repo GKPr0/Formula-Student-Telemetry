@@ -5,7 +5,8 @@
 #include <esp_wifi.h>
 #include "can.h"
 
-extern bool debug_enabled;
+static bool debug_enabled;
+
 
 #define DEBUG_PRINTLN(msg) if(debug_enabled) Serial.println(msg)
 #define DEBUG_PRINT(msg, args...) if(debug_enabled) Serial.print(msg, ##args)

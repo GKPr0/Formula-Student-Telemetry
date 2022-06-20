@@ -16,14 +16,14 @@ TaskHandle_t serverTask;
 // COM settings
 const uint baud_rate = 256000;
 
-// Config pin numbers
-const int debugPin = GPIO_NUM_15; 
-const int wifiModePin = GPIO_NUM_33;
-
 // Queue init
 const size_t msg_queue_size = 1000; 
 const size_t msg_send_count = 700;
 QueueHandle_t messageQueue =  xQueueCreate(msg_queue_size, sizeof(CanMessage));
+
+// Config pin numbers
+const int debugPin = GPIO_NUM_15; 
+const int wifiModePin = GPIO_NUM_33;
 
 //Default user config
 bool debug_enabled = false;
@@ -57,6 +57,8 @@ void setup() {
   Serial.begin(baud_rate);
 
   applyUserConfig();
+
+  DEBUG_PRINTLN("Starting formula shield");
 
   canSetup();
   delay(50);

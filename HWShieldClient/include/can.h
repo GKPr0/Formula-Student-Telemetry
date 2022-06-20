@@ -9,10 +9,6 @@ struct CanMessage{
   uint8_t msg[msg_size];
 };
 
-void printBinary(byte b);
 
-void printHex(byte b);
-
-void printCanMsg(CanMessage &msg);
 
 #endif
