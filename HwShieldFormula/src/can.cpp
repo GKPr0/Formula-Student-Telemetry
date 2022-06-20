@@ -1,4 +1,5 @@
 #include "can.h"
+#include "debug.h"
 
 // the variable name CAN_cfg is fixed, do not change 
 CAN_device_t CAN_cfg;
@@ -15,10 +16,10 @@ void canSetup()
   
   // Initialize CAN Module
   if(ESP32Can.CANInit() != 0){
-    Serial.println("CAN failed to initialize");
+    DEBUG_PRINTLN("CAN failed to initialize");
     ESP.restart();
   }
-  Serial.println("CAN setup complete");
+  DEBUG_PRINTLN("CAN setup complete");
 }
 
 void canHandler(void *parameter) 
@@ -36,7 +37,7 @@ void canHandler(void *parameter)
         //printCanMsg(canMsg);
         if(xQueueSend( messageQueue, (void *) &canMsg, 100*portTICK_PERIOD_MS) != pdPASS)
         {
-          Serial.println("Failed to send Can message to queue");
+          DEBUG_PRINTLN("Failed to send Can message to queue");
         }
       }
     }
@@ -62,49 +63,3 @@ CanMessage convertCanFrameToCanMessage(CAN_frame_t &dataPack)
   return canMsg;
 }
 
-void printBinary(byte b) 
-{
-  for (int i = 7; i >= 0; i-- )
-  {
-    Serial.print((b >> i) & 0X01);
-  }
-  Serial.print(" ");
-}
-
-void printHex(byte b) 
-{
-   if (b < 10) {Serial.print("0");}
-
-   Serial.print(b, HEX);
-   Serial.print(" ");
-
-}
-
-void printCanMsg(CanMessage &msg)
-{
-  for(int i = 0; i < msg_size; i++){
-    if(i == 0)
-      Serial.print("ID: ");
-    else if(i == 4)
-      Serial.print("Data: ");
-    printHex(msg.msg[i]);
-  }
-  Serial.print("\n");
-}
-
-void generateTestData(uint32_t id, uint8_t *data)
-{
-  for(int i(0); i < 4; i ++){
-    *data = ((uint8_t*)&id)[3-i];
-    data++;
-  }
-
-  data[4] = (uint8_t) 215;
-  data[5] = (uint8_t) 196;
-  data[6] = (uint8_t) 0;
-  data[7] = (uint8_t) 0;
-  data[8] = (uint8_t) 128;
-  data[9] = (uint8_t) 13;
-  data[10] = (uint8_t) 32;
-  data[11] = (uint8_t) 64;
-}

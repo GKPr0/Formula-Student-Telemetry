@@ -1,6 +1,7 @@
 #include "server.h"
 #include <esp_wifi.h>
 #include "can.h"
+#include "debug.h"
 
 WiFiServer server(port); 
 
@@ -15,7 +16,7 @@ void serverSetup()
   // Způsobuje problémy
   if(esp_wifi_set_protocol(WIFI_IF_AP, wifi_protocol) != ESP_OK)
   {
-    Serial.println("Setting WiFi protocol failed");
+    DEBUG_PRINTLN("Setting WiFi protocol failed");
     ESP.restart();
   }
 
@@ -24,7 +25,7 @@ void serverSetup()
   // Set tx max power
   if(esp_wifi_set_max_tx_power(wifi_tx_power) != ESP_OK)
   {
-    Serial.println("Setting max tx power failed");
+    DEBUG_PRINTLN("Setting max tx power failed");
     ESP.restart();
   }
 
@@ -32,16 +33,16 @@ void serverSetup()
 
   if(!WiFi.softAP(ssid, password)) // softAP(ssid, password, channel, hidden, num_of_clients)
   {
-    Serial.println("Starting AP failed");
+    DEBUG_PRINTLN("Starting AP failed");
     ESP.restart();
   }
 
   delay(50);
 
   // Configurating the AP
-  if(!WiFi.softAPConfig(local_IP, gateway, subnet))
+  if(!WiFi.softAPConfig(server_IP, gateway, subnet))
   {
-    Serial.println("AP failed to configurate");
+    DEBUG_PRINTLN("AP failed to configurate");
     ESP.restart();
   }
   
@@ -63,7 +64,7 @@ void serverHandler(void *parameter){
 				#ifndef TEST
 				if( uxQueueMessagesWaiting(messageQueue) > msg_send_count)
 				{
-          Serial.println("Sending data");
+          DEBUG_PRINTLN("Sending data");
 					uint8_t dataToSend[msg_send_count * msg_size];
 					CanMessage canMsg;
 					for(int i = 0; i < msg_send_count; i++)
@@ -88,22 +89,4 @@ void serverHandler(void *parameter){
 	}
 }
 
-void printWiFiInfo()
-{
-  IPAddress IP = WiFi.softAPIP();
-  
-  Serial.println("Network " + String(ssid) +" is running");
-  Serial.print("AP IP address: ");
-  Serial.println(IP);
 
-  int8_t power = 0;
-  esp_wifi_get_max_tx_power(&power);
-  Serial.print("Max tx power set to: ");
-  Serial.print((float)(power/4));
-  Serial.println("dBm");
-
-  uint8_t protocol;
-  esp_wifi_get_protocol(WIFI_IF_AP, &protocol);
-  Serial.print("Protocol set to:");
-  Serial.println(protocol);
-}

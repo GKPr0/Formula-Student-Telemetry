@@ -3,42 +3,60 @@
 #include "freertos/task.h"
 #include "server.h"
 #include "can.h"
+#include "debug.h"
 #include "soc/timer_group_struct.h"
 #include "soc/timer_group_reg.h"
 
+//Uncomment following line to enable TEST mode (simalution of can messages)
+//#define TEST
+
 TaskHandle_t canTask;
 TaskHandle_t serverTask;
+
+// COM settings
+const uint baud_rate = 256000;
+
+// Config pin numbers
+const int debugPin = GPIO_NUM_15; 
+const int wifiModePin = GPIO_NUM_33;
 
 // Queue init
 const size_t msg_queue_size = 1000; 
 const size_t msg_send_count = 700;
 QueueHandle_t messageQueue =  xQueueCreate(msg_queue_size, sizeof(CanMessage));
 
-void test(void *param){
-  for(;;){
-    if( uxQueueMessagesWaiting(messageQueue) > msg_send_count)
-    {
-      Serial.println("Sending data");
-      uint8_t dataToSend[msg_send_count * msg_size];
-      CanMessage canMsg;
-      for(int i = 0; i < msg_send_count; i++)
-      {
-        if(xQueueReceive(messageQueue, &(canMsg), (TickType_t) 0) == pdPASS)
-        {
-          printCanMsg(canMsg);
-          memcpy(dataToSend + msg_size * i, canMsg.msg, msg_size);
-        }
-      }
+//Default user config
+bool debug_enabled = false;
+uint8_t wifi_protocol = 8; // 7=802.11/b/g/r, 8=802.11lr
 
-      for(int i = 0; i < msg_send_count * msg_size; i++){
-        Serial.print(dataToSend[i]);
-      }
-    }
+void applyUserConfig()
+{
+  pinMode(debugPin, INPUT_PULLUP);
+  pinMode(wifiModePin, INPUT_PULLUP);
+
+  attachInterrupt(digitalPinToInterrupt(debugPin), [](){ESP.restart();}, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(wifiModePin), [](){ESP.restart();}, CHANGE);
+
+  int isProductionMode = digitalRead(debugPin);
+  int isLRWifiMode = digitalRead(wifiModePin);
+
+  if(isProductionMode == LOW){
+    debug_enabled = true;
+    DEBUG_PRINTLN("Debug mode");
+  }
+
+  if(isLRWifiMode == LOW){
+    wifi_protocol = 7;
+    DEBUG_PRINTLN("802.11.b/g/n mode");
+  }else{
+    DEBUG_PRINTLN("802.11.LR mode");
   }
 }
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(baud_rate);
+
+  applyUserConfig();
 
   canSetup();
   delay(50);
@@ -69,6 +87,7 @@ void setup() {
     0);              /* Core where the task should run */
   
   delay(50);
+
 }
 
 void loop() {
