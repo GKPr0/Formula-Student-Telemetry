@@ -46,7 +46,14 @@ class OverviewTab(QQuickWidget, Tab):
             "WBO_sensor": QmlObjectManager(16),
             "FP_sensor" : QmlObjectManager(17),
             "CLT_sensor": QmlObjectManager(18),
-            "knock_detect": QmlObjectManager(19)
+            "knock_detect": QmlObjectManager(19),
+            "bspd_safety": QmlObjectManager(20),
+            "cockpit_safety": QmlObjectManager(21),
+            "left_safety": QmlObjectManager(22),
+            "right_safety": QmlObjectManager(23),
+            "bots_safety": QmlObjectManager(24),
+            "inertia_safety": QmlObjectManager(25),
+            "speed": QmlObjectManager(26),
         }
 
         for key in self.object_dict:

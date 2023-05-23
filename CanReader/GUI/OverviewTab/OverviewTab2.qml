@@ -12,18 +12,34 @@ Item {
     Connections {
         target: slider
         onValueChanged: {
-            rpmGauge.value = slider.value
-            cltGauge.value = slider.value
-            oilTmpGauge.value = slider.value
-            oilPressureGauge.value = slider.value
-            fuelPressureGauge.value = slider.value
-            fl_dumper.value = slider.value + 5
-            fr_dumper.value = slider.value + 5
-            rl_dumper.value = slider.value - 5
-            rr_dumper.value = slider.value - 5
-            throttleGauge.value = slider.value
-            brakeGauge.value = slider.value
-            batteryValue.text = slider.value
+            rpmGauge.value = slider.value;
+            cltGauge.value = slider.value;
+            oilTmpGauge.value = slider.value;
+            oilPressureGauge.value = slider.value;
+            fuelPressureGauge.value = slider.value;
+            fl_dumper.value = slider.value + 5;
+            fr_dumper.value = slider.value + 5;
+            rl_dumper.value = slider.value - 5;
+            rr_dumper.value = slider.value - 5;
+            throttleGauge.value = slider.value;
+            brakeGauge.value = slider.value;
+            batteryValue.text = slider.value;
+            if(slider.value > 50){
+                bspd_safety.value = 1;
+                cockpit_safety.value = 1;
+                left_safety.value = 1;
+                right_safety.value = 1;
+                bots_safety.value = 1;
+                inertia_safety.value = 1;
+            }else{
+                bspd_safety.value = 0;
+                cockpit_safety.value = 0;
+                left_safety.value = 0;
+                right_safety.value = 0;
+                bots_safety.value = 0;
+                inertia_safety.value = 0;
+            }
+            speed.value = slider.value;
         }
     }
 
@@ -99,6 +115,13 @@ Item {
     }
 
     Connections {
+        target: speed
+        onValeChanged: {
+            speedValue.text = speed.value;
+        }
+    }
+
+    Connections {
         target: gear
         onValueChanged:{
             if(parseInt(gear.value) === 0){
@@ -117,6 +140,78 @@ Item {
                 fuelPumpState.active = true;
             }else{
                 fuelPumpState.active = false;
+            }
+        }
+    }
+
+    Connections {
+        target: bspd_safety
+        onValueChanged:{
+            bspdState.active = true;
+            if(parseInt(bspd_safety.value) === 1){
+                bspdState.color = Qt.rgba(0 , 255, 0, 0.5);
+            }else{
+                bspdState.color = Qt.rgba(255, 0, 0, 0.5);
+            }
+        }
+    }
+
+    Connections {
+        target: cockpit_safety
+        onValueChanged:{
+            cockpitState.active = true;
+            if(parseInt(cockpit_safety.value) === 1){
+                cockpitState.color = Qt.rgba(0 , 255, 0, 0.5);
+            }else{
+                cockpitState.color = Qt.rgba(255, 0, 0, 0.5);
+            }
+        }
+    }
+
+    Connections {
+        target: left_safety
+        onValueChanged:{
+            leftState.active = true;
+            if(parseInt(left_safety.value) === 1){
+                leftState.color = Qt.rgba(0 , 255, 0, 0.5);
+            }else{
+                leftState.color = Qt.rgba(255, 0, 0, 0.5);
+            }
+        }
+    }
+
+    Connections {
+        target: right_safety
+        onValueChanged:{
+                rightState.active = true;
+            if(parseInt(right_safety.value) === 1){
+                rightState.color = Qt.rgba(0 , 255, 0, 0.5);
+            }else{
+                rightState.color = Qt.rgba(255, 0, 0, 0.5);
+            }
+        }
+    }
+
+    Connections {
+        target: bots_safety
+        onValueChanged:{
+                botsState.active = true;
+            if(parseInt(bots_safety.value) === 1){
+                botsState.color = Qt.rgba(0 , 255, 0, 0.5);
+            }else{
+                botsState.color = Qt.rgba(255, 0, 0, 0.5);
+            }
+        }
+    }
+
+    Connections {
+        target: inertia_safety
+        onValueChanged:{
+                inertiaSwitchState.active = true;
+            if(parseInt(inertia_safety.value) === 1){
+                inertiaSwitchState.color = Qt.rgba(0 , 255, 0, 0.5);
+            }else{
+                inertiaSwitchState.color = Qt.rgba(255, 0, 0, 0.5);
             }
         }
     }
@@ -672,6 +767,7 @@ Item {
                     anchors.horizontalCenterOffset: -parseInt(parent.width / 3.2)
                     anchors.verticalCenterOffset: -parseInt(parent.height / 6)
                     anchors.horizontalCenter: parent.horizontalCenter
+                    color: Qt.rgba(0 , 255, 0, 0.5)
 
                     Label {
                         id: bspdLabel
@@ -697,6 +793,8 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenterOffset: parseInt(parent.height / 4)
                     anchors.horizontalCenterOffset: 0
+                    color: Qt.rgba(0 , 255, 0, 0.5)
+
                     Label {
                         id: cockpitLabel
                         x: 0
@@ -721,6 +819,8 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenterOffset: parseInt(parent.height / 4)
                     anchors.horizontalCenterOffset: -parseInt(parent.width / 3.2)
+                    color: Qt.rgba(0 , 255, 0, 0.5)
+
                     Label {
                         id: leftLabel
                         x: 0
@@ -746,6 +846,8 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenterOffset: parseInt(parent.height / 4)
                     anchors.horizontalCenterOffset: parseInt(parent.width / 3.2)
+                    color: Qt.rgba(0 , 255, 0, 0.5)
+
                     Label {
                         id: rightLabel
                         x: 0
@@ -770,6 +872,8 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenterOffset: -parseInt(parent.height / 6)
                     anchors.horizontalCenterOffset: 0
+                    color: Qt.rgba(0 , 255, 0, 0.5)
+
                     Label {
                         id: botsLabel
                         x: 0
@@ -794,6 +898,8 @@ Item {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenterOffset: -parseInt(parent.height / 6)
                     anchors.horizontalCenterOffset: parseInt(parent.width / 3.2)
+                    color: Qt.rgba(0 , 255, 0, 0.5)
+
                     Label {
                         id: inertiaSwitchLabel
                         x: 0
