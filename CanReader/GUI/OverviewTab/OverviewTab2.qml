@@ -54,8 +54,6 @@ Item {
             rlDumperGauge.maximumValue = parseInt(rlDumperGauge.value + 25/2)
             rrDumperGauge.minimumValue = parseInt(rrDumperGauge.value - 25/2)
             rrDumperGauge.maximumValue = parseInt(rrDumperGauge.value + 25/2)
-            coolantFanState.active = true;
-            fuelPumpState.active = true;
         }
     }
 
