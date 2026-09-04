@@ -125,8 +125,15 @@ class SocketClient(ComBase):
             :raises OSError:
                 IP address is not in a valid format.
         """
-        try:
-            socket.inet_aton(address)
+	try:
+   	    parts = address.split(".")
+
+    	    if len(parts) != 4 or any(
+                not part.isdigit() or not 0 <= int(part) <= 255
+        	for part in parts
+    	    ):
+        	raise OSError
+
         except OSError:
             error_msg = "IP address is not valid."
             logging.exception(error_msg)
